@@ -1,5 +1,4 @@
-**/lectures
-**/notes
-/notes
+lectures
+notes
 **/*.out
 **/.vscode
