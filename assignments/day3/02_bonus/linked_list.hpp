@@ -1,3 +1,6 @@
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
+
 #include <iostream>
 
 typedef struct struct_list_element{
@@ -18,3 +21,5 @@ class LinkedList {
         void printList();
         void * getObject(unsigned int index);
 };
+
+#endif

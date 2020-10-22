@@ -35,5 +35,10 @@ void LinkedList::remove(unsigned int index) {
 }
 
 void * LinkedList::getObject(unsigned int index) {
-    return findElement(index)->object;
+    list_element *element = findElement(index);
+    void *object = nullptr;
+    if (element != nullptr) {
+        object = element->object;
+    }
+    return object;
 }
