@@ -2,9 +2,7 @@
 
 void Workshop::addRecord(std::string customer_name, std::string date, service_enum service_type) {
     Record* record = new Record(customer_name, date, service_type);
-    std::cout << "hejhej1" << std::endl;
     this->records->add(record, 0);
-    std::cout << "hejhej2" << std::endl;
 }
 
 void Workshop::printRecords() {
@@ -19,6 +17,10 @@ void Workshop::printRecords() {
     }
 }
 
+Workshop::Workshop() {
+    this->records = new LinkedList();
+}
+
 Workshop::~Workshop() {
     LinkedList *list = this->records;
     int i = 0;
@@ -29,4 +31,5 @@ Workshop::~Workshop() {
         i++;
         object = list->getObject(i);
     }
+    delete list;
 }

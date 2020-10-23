@@ -10,7 +10,7 @@ list_element * LinkedList::findElement(unsigned int index){
 }
 
 void LinkedList::add(void *object, unsigned int index) {
-    list_element *current_element = this->first_element;
+    list_element *current_element;
     if (this->first_element == nullptr) {
         this->first_element = new list_element;
         current_element = this->first_element;
