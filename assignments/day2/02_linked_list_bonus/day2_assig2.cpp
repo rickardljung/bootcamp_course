@@ -2,8 +2,7 @@
 #include <time.h>
 
 typedef struct struct_list_element{
-    //int number = 1337;
-
+    int number = 1337;
     struct struct_list_element *next = nullptr;
 } list_element;
 
