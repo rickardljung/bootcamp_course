@@ -3,3 +3,6 @@ notes
 *.out
 *.vscode
 *.gch
+build
+*.so
+*.o
