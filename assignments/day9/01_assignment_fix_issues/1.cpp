@@ -27,7 +27,7 @@ void printBool (bool _b) {
 }
 // YOU ARE NOT ALLOWED TO CHANGE THE RETURN TYPE
 void resizeForMe(char * &a, size_t _newSize) {
-    delete a;
+    delete [] a;
     a = new char[_newSize];
 }
 
