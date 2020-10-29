@@ -24,7 +24,6 @@ void Ringbuffer<T, size>::add(T item) {
 
     //ringbuffer full, oldest item is overwritten
     if (get_index%size == add_index%size && add_index > get_index) {
-        std::cout << "hej" << std::endl;
         get_index++;
     }
 
@@ -34,8 +33,7 @@ void Ringbuffer<T, size>::add(T item) {
 template <typename T, size_t size>
 T Ringbuffer<T, size>::get() {
     T next_item = buffer[get_index%size];
-    //std::cout << std::endl << "get: " << get_index << std::endl;
-    //std::cout << "add: " << add_index << std::endl;
+    // add_index-1 is where the last element was added
     if (get_index < (add_index-1)) {
         get_index++;
     }
