@@ -1,0 +1,3 @@
+sudo apt install libpcap-dev
+sudo tcpdump -c 1 -w packet.pcap
+
