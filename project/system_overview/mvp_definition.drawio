@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-11-03T10:51:04.104Z" agent="5.0 (X11)" etag="wkNf1v1RWc5x_kou20ar" version="13.8.7" type="github">
+<mxfile host="app.diagrams.net" modified="2020-11-03T12:19:53.150Z" agent="5.0 (X11)" etag="GJ3oT-X8X3OSg8GG1Nkn" version="13.8.7" type="github">
   <diagram id="4gPb9WcIgXjrIo89H_NN" name="Page-1">
-    <mxGraphModel dx="828" dy="1577" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1201" dy="1791" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -9,12 +9,6 @@
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-1" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="360" y="-30" width="30" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="LRADezUdAs_8Ui7dfhWK-2" value="Yes" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-3" target="LRADezUdAs_8Ui7dfhWK-41">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="400" y="646" as="sourcePoint" />
-            <mxPoint x="375" y="366" as="targetPoint" />
-          </mxGeometry>
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-5" target="LRADezUdAs_8Ui7dfhWK-80">
           <mxGeometry relative="1" as="geometry">
@@ -28,6 +22,11 @@
         <mxCell id="LRADezUdAs_8Ui7dfhWK-61" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="LRADezUdAs_8Ui7dfhWK-60">
           <mxGeometry x="-0.255" y="-2" relative="1" as="geometry">
             <mxPoint y="124.41" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LRADezUdAs_8Ui7dfhWK-116" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="LRADezUdAs_8Ui7dfhWK-11">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="375" y="600" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-5" value="Acc. pedal pressed" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
@@ -102,31 +101,36 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="LRADezUdAs_8Ui7dfhWK-115" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-3" target="LRADezUdAs_8Ui7dfhWK-112">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-3" value="Ignition request on" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
           <mxGeometry x="310" y="210" width="130" height="130" as="geometry" />
         </mxCell>
-        <mxCell id="LRADezUdAs_8Ui7dfhWK-41" value="Turn on engine" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="315" y="386" width="120" height="60" as="geometry" />
+        <mxCell id="LRADezUdAs_8Ui7dfhWK-117" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-41" target="LRADezUdAs_8Ui7dfhWK-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="220" y="500" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="220" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LRADezUdAs_8Ui7dfhWK-41" value="Turn on engine and set idle RPM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="160" y="390" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-56" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" vertex="1" parent="1">
-          <mxGeometry x="360" y="1530" width="30" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="LRADezUdAs_8Ui7dfhWK-72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-41" target="LRADezUdAs_8Ui7dfhWK-5">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="375" y="390" as="sourcePoint" />
-          </mxGeometry>
+          <mxGeometry x="360" y="1550" width="30" height="30" as="geometry" />
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-69" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-66" target="LRADezUdAs_8Ui7dfhWK-80">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="630" y="1100" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="590" y="480" />
-              <mxPoint x="590" y="1085" />
+              <mxPoint x="560" y="1085" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-66" value="Turn off simulation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="530" y="410" width="120" height="60" as="geometry" />
+          <mxGeometry x="500" y="410" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-83" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-80" target="LRADezUdAs_8Ui7dfhWK-82">
           <mxGeometry relative="1" as="geometry" />
@@ -150,33 +154,27 @@
         <mxCell id="LRADezUdAs_8Ui7dfhWK-100" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-84" target="LRADezUdAs_8Ui7dfhWK-56">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="220" y="1545" />
+              <mxPoint x="230" y="1565" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-84" value="Shift up and set new RPM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="160" y="1360" width="120" height="60" as="geometry" />
+          <mxGeometry x="170" y="1360" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-95" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-90" target="LRADezUdAs_8Ui7dfhWK-56">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="LRADezUdAs_8Ui7dfhWK-105" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-90" target="LRADezUdAs_8Ui7dfhWK-92">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="550" y="1410" as="targetPoint" />
-          </mxGeometry>
+        <mxCell id="LRADezUdAs_8Ui7dfhWK-119" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-90" target="LRADezUdAs_8Ui7dfhWK-118">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-90" value="RPM under Y" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
           <mxGeometry x="325" y="1360" width="100" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="LRADezUdAs_8Ui7dfhWK-109" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-92" target="LRADezUdAs_8Ui7dfhWK-56">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="600" y="1545" />
-            </Array>
-          </mxGeometry>
+        <mxCell id="LRADezUdAs_8Ui7dfhWK-124" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-92" target="LRADezUdAs_8Ui7dfhWK-56">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-92" value="Shift down set new RPM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="540" y="1450" width="120" height="60" as="geometry" />
+          <mxGeometry x="480" y="1535" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-102" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-96" target="LRADezUdAs_8Ui7dfhWK-101">
           <mxGeometry x="0.4032" relative="1" as="geometry">
@@ -187,13 +185,44 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-96" value="Max gear" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="170" y="1198.92" width="100" height="100" as="geometry" />
+          <mxGeometry x="180" y="1198.92" width="100" height="100" as="geometry" />
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-103" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-101" target="LRADezUdAs_8Ui7dfhWK-56">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="LRADezUdAs_8Ui7dfhWK-101" value="Decrease RPM by Z" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="20" y="1360" width="120" height="60" as="geometry" />
+          <mxGeometry x="40" y="1360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LRADezUdAs_8Ui7dfhWK-113" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-112" target="LRADezUdAs_8Ui7dfhWK-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LRADezUdAs_8Ui7dfhWK-114" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-112" target="LRADezUdAs_8Ui7dfhWK-41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LRADezUdAs_8Ui7dfhWK-112" value="Engine on" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="325" y="370" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="LRADezUdAs_8Ui7dfhWK-120" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-118" target="LRADezUdAs_8Ui7dfhWK-121">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="700" y="1410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LRADezUdAs_8Ui7dfhWK-122" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-118" target="LRADezUdAs_8Ui7dfhWK-92">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LRADezUdAs_8Ui7dfhWK-118" value="Min gear" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="490" y="1360" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="LRADezUdAs_8Ui7dfhWK-125" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="LRADezUdAs_8Ui7dfhWK-121" target="LRADezUdAs_8Ui7dfhWK-56">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="1620" />
+              <mxPoint x="375" y="1620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LRADezUdAs_8Ui7dfhWK-121" value="Set idle RPM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="640" y="1380" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
