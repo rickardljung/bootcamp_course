@@ -29,10 +29,10 @@ public:
     }
 
 private:
-    bool inited = false;    
+    bool inited = false;
     pcap_t * pcap;
-    const u_char *data;    
+    const u_char *data;
     struct pcap_pkthdr *header;
-    char errbuff[PCAP_ERRBUF_SIZE];    
+    char errbuff[PCAP_ERRBUF_SIZE];
 };
 #endif // PCAPOPENNER_H
