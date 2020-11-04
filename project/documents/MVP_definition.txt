@@ -1,0 +1,17 @@
+D GROUP: MVP Definition
+
+1. Goal is to create a simulation of a vehicle drivetrain that consits of an input handler, 
+engine module, gearbox and output visualisation.
+  
+    a) Input handler:
+        -Takes user keyboard input and interprets it according to drivetrain expectations,
+        -Sends interpreted user input on VCAN.
+    b) Drivetrain:
+        -Receives VCAN messages from input handler and acts accordingly on them,
+        -Engine module emulating behaviour of a combustion engine,
+        -Gearbox module emulating bahaviour of an automatic gearbox,
+        -Commucicates on VCAN its status.
+    c) Output handler:
+        -Receives VCAN data sent by drivetrain and displays them to a user.
+
+
