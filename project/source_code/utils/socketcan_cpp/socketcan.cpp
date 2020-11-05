@@ -62,11 +62,11 @@ namespace scpp
     }
     bool SocketCan::Initialize(const std::string &interface)
     {
-        bool return_value = 0; //1 means error
+        bool return_value = 1; //1 means OK
         if (SocketCan::open(interface) != scpp::STATUS_OK)
         {
             std::cout << "Cannot OPEN VCAN" << std::endl;
-            return_value = 1;
+            return_value = 0;
         }
         return return_value;
     }
