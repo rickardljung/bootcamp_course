@@ -14,13 +14,18 @@ const unsigned int key_DOWN = 116;
 const unsigned int key_LEFT = 113;
 const unsigned int key_RIGHT = 114;
 const unsigned int key_SPACE = 65;
+struct mykey
+{
+    uint8_t key;
+    bool read;
 
+};
 class InputReader{
     public:
         InputReader();
         ~InputReader();
-        uint8_t ReadInputs();
-        void InterpretInput(uint8_t key);
+        void ReadInputs(struct mykey *K);
+        void InterpretInput(struct mykey *K);
         void EncodeArray(uint8_t *arr);
     private:
         uint8_t AccValue = 0;
