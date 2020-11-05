@@ -3,23 +3,29 @@
 uint8_t InputReader::ReadInputs(){
     XNextEvent(display, &event);
     uint8_t returnval;
-    /* keyboard events */
-    if (event.type == KeyPress)
+    while(true)
     {
-        //printf( "KeyPress: %x\n", event.xkey.keycode );
-        returnval = event.xkey.keycode;
+        /* keyboard events */
+        if (event.type == KeyPress)
+        {
+            //printf( "KeyPress: %x\n", event.xkey.keycode );
+            returnval = event.xkey.keycode;
+        }
+        /*else if (event.type == KeyRelease)
+        {
+            printf( "KeyRelease: %x\n", event.xkey.keycode );
+            returnval = event.xkey.keycode;
+        }*/
+        else{
+            returnval = 0;
+        }
+         if(returnval == ESCAPE) //if ESC is pressed
+        {
+            break;
+        }
+        
+       InputReader::InterpretInput(returnval); 
     }
-    /*else if (event.type == KeyRelease)
-    {
-        printf( "KeyRelease: %x\n", event.xkey.keycode );
-        returnval = event.xkey.keycode;
-    }*/
-    else{
-        returnval = 0;
-    }
-    
-    return returnval;
-    
 }
 
 InputReader::~InputReader(){

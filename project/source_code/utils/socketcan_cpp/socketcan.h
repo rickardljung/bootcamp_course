@@ -40,10 +40,12 @@ namespace scpp
     {
     public:
         SocketCan();
+        SocketCan(const std::string &interface);        
         SocketCan(const SocketCan &) = delete;
         SocketCan & operator=(const SocketCan &) = delete;
         SocketCanStatus open(const std::string & can_interface, int32_t read_timeout_ms = 3, SocketMode mode = MODE_CAN_MTU);
         SocketCanStatus write(const CanFrame & msg);
+        SocketCanStatus write(const uint8_t *payload, uint8_t id, uint8_t len);
         SocketCanStatus read(CanFrame & msg);
         SocketCanStatus close();
         const std::string & interfaceName() const;
