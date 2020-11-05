@@ -50,15 +50,25 @@ namespace scpp
     SocketCan::SocketCan()
     {
     }
-    SocketCan::SocketCan(const std::string &interface) 
+    SocketCan::SocketCan(const std::string &interface)
     {
-    
-        if (SocketCan::open(interface) != scpp::STATUS_OK) 
+
+        if (SocketCan::open(interface) != scpp::STATUS_OK)
         {
 
             std::cout << "Cannot OPEN VCAN" << std::endl;
             exit (-1);
         }
+    }
+    bool SocketCan::Initialize(const std::string &interface)
+    {
+        bool return_value = 0; //1 means error
+        if (SocketCan::open(interface) != scpp::STATUS_OK)
+        {
+            std::cout << "Cannot OPEN VCAN" << std::endl;
+            return_value = 1;
+        }
+        return return_value;
     }
     SocketCanStatus SocketCan::open(const std::string & can_interface, int32_t read_timeout_ms, SocketMode mode)
     {
@@ -145,15 +155,15 @@ namespace scpp
         msg.can_id = id;
         msg.len = len;
         memcpy(msg.data, payload,msg.len);
-        
-        if (::write(m_socket, &msg, int(m_socket_mode)) != int(m_socket_mode)) 
+
+        if (::write(m_socket, &msg, int(m_socket_mode)) != int(m_socket_mode))
         {
             perror("write");
             return STATUS_WRITE_ERROR;
         }
         std::cout << "message sent" << std::endl;
         return STATUS_OK;
-                
+
     }
     SocketCanStatus SocketCan::write(const CanFrame & msg)
     {
