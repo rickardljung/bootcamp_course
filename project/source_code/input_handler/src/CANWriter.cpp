@@ -1,22 +1,26 @@
 #include "CANWriter.h"
-
-void send_input(uint8_t *payload){
-    //receive user input
-    //interpret input, range check
-    //decode to CAN payload
-    //send on vcan
-
-    scpp::SocketCan socket;
+void initialise_CAN(scpp::SocketCan &socket, scpp::CanFrame &can_frame)
+{
     if (socket.open("vcan0") != scpp::STATUS_OK) {
         std::cout << "Cannot open vcan0." << std::endl;
         std::cout << "Check whether the vcan0 interface is up!" << std::endl;
         exit (-1);
     }
+        can_frame.id = 1;
+        can_frame.len = 4;
 
-    scpp::CanFrame can_frame;
 
-    can_frame.id = 1;
-    can_frame.len = 4;
+}
+void send_input(uint8_t *payload){
+    //receive user input
+    //interpret input, range check
+    //decode to CAN payload
+    //send on vcan
+ 
+
+
+    
+
 
     for(int i=0; i<can_frame.len; i++)
     {

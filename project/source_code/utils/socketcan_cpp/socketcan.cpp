@@ -11,6 +11,7 @@
 #include <net/if.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
+#include <iostream>
 
 #include <linux/can/raw.h>
 /* CAN DLC to real data length conversion helpers */
@@ -48,6 +49,16 @@ namespace scpp
 {
     SocketCan::SocketCan()
     {
+    }
+    SocketCan::SocketCan(const std::string &interface) 
+    {
+    
+        if (SocketCan::open(interface) != scpp::STATUS_OK) 
+        {
+
+            std::cout << "Cannot OPEN VCAN" << std::endl;
+            exit (-1);
+        }
     }
     SocketCanStatus SocketCan::open(const std::string & can_interface, int32_t read_timeout_ms, SocketMode mode)
     {
@@ -127,6 +138,22 @@ namespace scpp
         }
 
         return STATUS_OK;
+    }
+    SocketCanStatus SocketCan::write(const uint8_t *payload, uint8_t id, uint8_t len)
+    {
+        canfd_frame msg;
+        msg.can_id = id;
+        msg.len = len;
+        memcpy(msg.data, payload,msg.len);
+        
+        if (::write(m_socket, &msg, int(m_socket_mode)) != int(m_socket_mode)) 
+        {
+            perror("write");
+            return STATUS_WRITE_ERROR;
+        }
+        std::cout << "message sent" << std::endl;
+        return STATUS_OK;
+                
     }
     SocketCanStatus SocketCan::write(const CanFrame & msg)
     {
