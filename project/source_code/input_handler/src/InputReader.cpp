@@ -1,30 +1,35 @@
 #include "InputReader.h"
 
-uint8_t InputReader::ReadInputs(){
-    XNextEvent(display, &event);
-    uint8_t returnval;
+void InputReader::ReadInputs(struct mykey *K){
+    
+    
     while(true)
     {
+        XNextEvent(display, &event);
         /* keyboard events */
         if (event.type == KeyPress)
         {
             //printf( "KeyPress: %x\n", event.xkey.keycode );
-            returnval = event.xkey.keycode;
+
+            K->key = event.xkey.keycode;
+            K->read = false;
+            //std::cout<< "key pressed" << *key << std::endl;
         }
         /*else if (event.type == KeyRelease)
         {
             printf( "KeyRelease: %x\n", event.xkey.keycode );
             returnval = event.xkey.keycode;
         }*/
-        else{
-            returnval = 0;
-        }
-         if(returnval == ESCAPE) //if ESC is pressed
+ 
+        
+        
+        if(K->key == ESCAPE) //if ESC is pressed
         {
             break;
         }
         
-       InputReader::InterpretInput(returnval); 
+
+        
     }
 }
 
@@ -59,66 +64,77 @@ InputReader::InputReader(){
 }
 
 
-void InputReader::InterpretInput(uint8_t key){
+void InputReader::InterpretInput(struct mykey *K){
     
-    if(key == key_UP) //user pressing acc pedal
+    if(K->key == key_UP) //user pressing acc pedal
     {
         AccValue+=10;
         if(AccValue > 100)
         {
             AccValue = 100;
         }
+        K->read = true;
     }
-    else if(key == key_DOWN) //user releasing acc pedal
+    else if(K->key == key_DOWN) //user releasing acc pedal
     {
         AccValue-=10;
         if(AccValue == 246) // -10 = 246 for uint8
         {
             AccValue = 0;
         }
+        K->read = true;
     }
-    else if(key == key_LEFT) //user pressing brake pedal
+    else if(K->key == key_LEFT) //user pressing brake pedal
     {
         BrkValue+=20;
         if(BrkValue > 100)
         {
             BrkValue = 100;
         }
+        K->read = true;
     }
-    else if(key == key_RIGHT) //user releasing brake pedal
+    else if(K->key== key_RIGHT) //user releasing brake pedal
     {
         BrkValue-=20;
         if(BrkValue == 236) // -20 = 236 for uint8
         {
             BrkValue = 0;
         }
+        K->read = true;
     }
-    else if(key == key_SPACE) //user toggles ignition request
+    else if(K->key== key_SPACE) //user toggles ignition request
     {
         if(IgnReq)
         {
             IgnReq = 0;
         }
+        
         else
         {
             IgnReq = 1;
         }
+        K->read = true;
     }
-    else if(key == key_p)
+    else if(K->key == key_p)
     {
         GearPosReq = P;
+        K->read = true;
     }
-    else if(key == key_n)
+    
+    else if(K->key == key_n)
     {
         GearPosReq = N;
+        K->read = true;
     }
-    else if(key == key_d)
+    else if(K->key == key_d)
     {
         GearPosReq = D;
+        K->read = true;
     }
-    else if(key == key_r)
+    else if(K->key == key_r)
     {
         GearPosReq = R;
+        K->read = true;
     }
     
     /*std::cout << "AccValue: " << (int)AccValue << std::endl;
