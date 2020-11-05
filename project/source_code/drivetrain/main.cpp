@@ -7,8 +7,8 @@
 int main() {
 
 
-    Ringbuffer<user_input, 50> buffer;
-    CanReader reader(&buffer); //thread which will write to buffer
+    //Ringbuffer<user_input, 50> buffer;
+    //CanReader reader(&buffer); //thread which will write to buffer
 
     /*
     Vehicle v(&buffer);

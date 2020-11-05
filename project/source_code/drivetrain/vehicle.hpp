@@ -25,7 +25,11 @@ Vehicle::Vehicle(user_input *input) {
 }
 
 void Vehicle::run() {
-    engine;
+    while() {
+        //get information from buffer
+        //run simulation
+    }
+
 }
 
 void Vehicle::calculateSpeed() {
