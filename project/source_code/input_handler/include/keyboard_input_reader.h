@@ -5,6 +5,9 @@
 #include <atomic>
 
 enum GearPos : uint8_t {P=0, N=1, D=2, R=3};
+const uint8_t msg_id = 1;
+const uint8_t msg_len = 5;
+
 const unsigned int escape = 9;
 const unsigned int key_r = 27;
 const unsigned int key_p = 33;
@@ -15,8 +18,7 @@ const unsigned int key_down = 116;
 const unsigned int key_left = 113;
 const unsigned int key_right = 114;
 const unsigned int key_space = 65;
-const uint8_t msg_id = 1;
-const uint8_t msg_len = 5;
+
 struct mykey 
         {
             uint8_t key;
