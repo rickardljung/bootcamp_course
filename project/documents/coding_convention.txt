@@ -1,0 +1,25 @@
+SOURCE CODE FILES:
+	* all lower case
+	* underscore_separated
+	* include: *.h
+	* source: *.cpp
+
+CLASSES/STRUCTS & FUNCTIONS:
+	* CamelCase starting with uppercase	
+	* get and set functions may be named like variables since they often correspond to actual member variables
+
+VARIABLES & FUNCTION PARAMETERS:
+	* all lower case
+	* underscore_separated
+
+ENUMS:
+enum class UrlTableError {
+  kOk = 0,
+  kOutOfMemory,
+  kMalformedInput,
+};
+
+GENERAL:
+	* avoid using abbreviations
+
+For more info see: https://google.github.io/styleguide/cppguide.html#Function_Names
