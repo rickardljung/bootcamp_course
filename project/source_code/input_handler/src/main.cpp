@@ -1,4 +1,4 @@
-#include "InputReader.h"
+#include "keyboard_input_reader.h"
 #include "socketcan.h"
 #include <thread>
 #include <chrono>
@@ -38,7 +38,7 @@ int main(){
             input_reader.EncodeArray(payload);
 
             //if ESC is pressed exit the loop
-            if(the_key.key == ESCAPE)
+            if(the_key.key == escape)
             {
                 t1_done.exchange(true);
                 break;
