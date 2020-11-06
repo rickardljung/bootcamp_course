@@ -3,8 +3,8 @@
 #include "user_input.h"
 #include "can_buffer.h"
 
-void CanBuffer::Add(UserInput *input) {  //this will be replaced by ringbuffer
-    received_can_data = *input;
+void CanBuffer::Add(uint8_t *data) {  //this will be replaced by ringbuffer
+    this->received_can_data = data;
 }
 
 user_input_struct CanBuffer::Pull() {            //this will be replaced by ringbuffer

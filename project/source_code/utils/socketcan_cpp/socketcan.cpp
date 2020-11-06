@@ -65,7 +65,7 @@ namespace scpp
         bool return_value = 1; //1 means OK
         if (SocketCan::open(interface) != scpp::STATUS_OK)
         {
-            std::cout << "Cannot OPEN VCAN" << std::endl;
+            std::cout << "Cannot OPEN VCAN: " << interface << std::endl;
             return_value = 0;
         }
         return return_value;
@@ -161,7 +161,7 @@ namespace scpp
             perror("write");
             return STATUS_WRITE_ERROR;
         }
-        std::cout << "message sent" << std::endl;
+        //std::cout << "message sent" << std::endl;
         return STATUS_OK;
 
     }

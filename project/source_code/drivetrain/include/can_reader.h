@@ -10,15 +10,15 @@
 class CanReader {
     private:
         std::thread read_can_thread;
-        scpp::SocketCan socket_can;
-        void Run();
+        scpp::SocketCan *socket;
+        void Run(uint8_t message_id);
         bool stop_thread = false;
         bool thread_stopped = false;
         bool socket_initialized = false;
     public:
-        CanReader();
+        CanReader(scpp::SocketCan *socket);
         ~CanReader();
-        bool Initialize(std::string can_network_name);
+        scpp::SocketCan * get_socket();
 };
 
 #endif

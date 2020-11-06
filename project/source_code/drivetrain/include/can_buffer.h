@@ -11,14 +11,15 @@ class CanBuffer
             static CanBuffer    instance;
             return instance;
         }
-        void Add(UserInput *input);
+        void Add(uint8_t *data);
         UserInput Pull();
 
         CanBuffer(CanBuffer const&)       = delete;
         void operator=(CanBuffer const&)  = delete;
     private:
         CanBuffer() {};
-        user_input_struct received_can_data; //this will be replaced by ringbuffer
+        //UserInput received_can_data; //this will be replaced by ringbuffer
+        uint8_t received_can_data[8];
 };
 
 #endif

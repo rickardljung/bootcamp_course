@@ -7,20 +7,20 @@
 #include <thread>
 
 int main() {
+    bool return_value = 0;
+    scpp::SocketCan socket;
 
-    CanReader reader;
-
-    if (!reader.Initialize("vcan0"))
+    if (socket.Initialize("vcan0"))
     {
-        std::cout << "Cannot open vcan0." << std::endl;
-        std::cout << "Check whether the vcan0 interface is up!" << std::endl;
-        //TODO exit all objects gracefully
-        return 1;
+        //starts new thread reading can messages and writes to can_buffer
+        CanReader reader(&socket);
+
+        //starts simulation reading from can_buffer in main thread. Creates thread writing ouput "socket"
+        Vehicle vehicle(&socket);
+    } else
+    {
+        return_value = 1;
     }
 
-    while (1) // main thread will run the simulation
-    {
-        std::cout << "Acc: " << static_cast<int>(CanBuffer::GetInstance().Pull().accelerator_pedal) << std::endl;
-        for (size_t i = 0; i < 9999; i++); //STUPID SLEEP?
-    }
+    return return_value;
 }
