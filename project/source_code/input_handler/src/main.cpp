@@ -37,8 +37,7 @@ int main(){
         }
         
     }
-    std::cout << "1" << std::endl << std::flush;
+    
     t1.join();
-    std::cout << "2" << std::endl << std::flush;
     return returnval;
 }
