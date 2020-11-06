@@ -21,5 +21,20 @@ enum class UrlTableError {
 
 GENERAL:
 	* avoid using abbreviations
+	* Try to come up with a name that is verydescriptive of your functions or variables purpose.
+	* In order to improve readablility in doxygen (tool used for software visualisation) please use:
+
+			/*!
+			* This is function description
+			* @param payload the purpose of the payload argument
+			* @return Nothind is returned
+			*/
+
+		Rught above function definition, same goes for class and other definitions,
+		for more guidance regarding documenting the code please look here: https://www.doxygen.nl/manual/docblocks.html#specialblock
+		On how to use doxygen please read here: https://stackoverflow.com/questions/4755913/how-to-use-doxygen-to-create-uml-class-diagrams-from-c-source
+		
+
+
 
 For more info see: https://google.github.io/styleguide/cppguide.html#Function_Names
