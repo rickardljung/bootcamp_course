@@ -6,3 +6,4 @@ add_executable(main src/InputReader.cpp
                     src/Main.cpp 
                     ../utils/socketcan_cpp/socketcan.cpp)
 target_link_libraries(main PUBLIC X11 pthread)
+#set(CMAKE_BUILD_TYPE Debug)

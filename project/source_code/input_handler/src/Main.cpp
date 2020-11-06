@@ -1,54 +1,65 @@
 #include "InputReader.h"
-#include "CANWriter.h"
+#include "socketcan.h"
 #include <thread>
-const uint8_t msg_id = 1;
-const uint8_t msg_len = 4;
+#include <chrono>
 
 
 int main(){
-    //initiate key board reading
-    InputReader IR;
-    scpp::SocketCan socket("vcan0");
-    //scpp::CanFrame can_frame;
-    uint8_t Payload[4] = {0, 0, 0, 0};
-    struct mykey K;
 
-  
+    //initiate key board reading
+    InputReader input_reader;
+
+    //initiate vcan0
+    scpp::SocketCan socket("vcan0");
+
+    //payload to be sent in canframe
+    uint8_t payload[msg_len];
+
+    //storage for keyboard input
+    struct mykey the_key;
+
+    //to know if thread 1 is finished
+    std::atomic<bool> t1_done;
+    t1_done.exchange(false);
+
+    
     std::thread t1(
     [&](){
-        IR.ReadInputs(&K);
+        while(true){
+            //get input from user
+            input_reader.ReadInputs(&the_key, &t1_done); 
+
+            //interpret user input
+            if(the_key.read == false)
+            {
+                input_reader.InterpretInput(&the_key);  
+            }
+            //encode into array
+            input_reader.EncodeArray(payload);
+
+            //if ESC is pressed exit the loop
+            if(the_key.key == ESCAPE)
+            {
+                t1_done.exchange(true);
+                break;
+            }
+        }
     }
     );
-    while(1){
-        //get input from user   - DONE
-        //interpret user input  - DONE
 
-        //encode into array     - DONE
-        
-        //send array to CANWRITER - DONE
+    while(true){
+        //send array to CANWRITER
+        socket.write(payload, msg_id, msg_len);
 
-        //key = IR.ReadInputs();
-        if(K.read == False)
-        {
-            IR.InterpretInput(&K);
-        }
-        //IR.InterpretInput(IR.ReadInputs());
-       
-        
-        IR.EncodeArray(Payload);
-        socket.write(Payload, msg_id, msg_len);
-        //send_input(Payload);
-        /*for(int i=0; i<4; i++)
-        {
-            std::cout << "Payload [" << i << "]: " << (int)Payload[i] << std::endl;
-        }*/
-        //delay ??s
-
-        if(K.key == ESCAPE)
+        //if thread 1 finished, break
+        bool b1, b2=true;
+        if(t1_done.compare_exchange_strong(b2,b1))
         {
             break;
         }
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
-    t1.join();    
+
+    t1.join();
     return 0;
 }
