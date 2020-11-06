@@ -2,17 +2,17 @@
 //https://stackoverflow.com/questions/1008019/c-singleton-design-pattern
 #ifndef CAN_BUFFER_H
 #define CAN_BUFFER_H
-#include "user_input.hpp"
+#include "user_input.h"
 
 class CanBuffer
 {
     public:
-        static CanBuffer& getInstance(){
+        static CanBuffer& GetInstance(){
             static CanBuffer    instance;
             return instance;
         }
-        void add(user_input_struct *input);
-        user_input_struct pull();
+        void Add(UserInput *input);
+        UserInput Pull();
 
         CanBuffer(CanBuffer const&)       = delete;
         void operator=(CanBuffer const&)  = delete;

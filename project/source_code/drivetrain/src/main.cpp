@@ -1,11 +1,9 @@
-//#include "vehicle.hpp"
-#include "user_input.hpp"
-// #include "can_reader.hpp"
-// #include "ringbuffer.hpp"
+#include "vehicle.h"
+#include "user_input.h"
 #include <iostream>
-#include "can_buffer.hpp"
+#include "can_buffer.h"
 #include "socketcan.h"
-#include "drivetrain_input_reader.hpp"
+#include "drivetrain_input_reader.h"
 #include <thread>
 
 int main() {
@@ -20,6 +18,7 @@ int main() {
     }
 
     while (1) { // main thread will run the simulation
-        std::cout << "Acc: " << static_cast<int>(CanBuffer::getInstance().pull().acc) << std::endl;
+        std::cout << "Acc: " << static_cast<int>(CanBuffer::GetInstance().Pull().accelerator_pedal) << std::endl;
+        for (size_t i = 0; i < 9999; i++); //STUPID SLEEP?
     }
 }

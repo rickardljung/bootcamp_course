@@ -1,7 +1,0 @@
-
-class Gearbox {
-    private:
-
-    public:
-
-};
