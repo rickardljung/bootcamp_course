@@ -1,36 +1,37 @@
 #include "keyboard_input_reader.h"
-void InputReader::Run(struct mykey *k, std::atomic<bool> *done, uint8_t *arr)
+void InputReader::Run(uint8_t *arr)
 {
+    is_running = true;
     while(true)
     {
         //read user input
-        ReadInputs(k, done); 
+        ReadInputs(); 
 
         //interpret user input
-        if(k->read == false)
+        if(the_key.read == false)
         {
-            InterpretInput(k);  
+            InterpretInput();  
         }
         //encode into array
         EncodeArray(arr);
 
-        if(k->key == escape)
+        if(the_key.key == escape)
         {
-            done->exchange(true);
+            is_running = false;
             break;
         }
     }
+    
 }
-void InputReader::ReadInputs(struct mykey *k, std::atomic<bool> *done)
+void InputReader::ReadInputs()
 {
         XNextEvent(display, &event);
         /* keyboard events */
         if (event.type == KeyPress)
         {
             //printf( "KeyPress: %x\n", event.xkey.keycode );
-
-            k->key = event.xkey.keycode;
-            k->read = false;
+            the_key.key = event.xkey.keycode;
+            the_key.read = false;
             //std::cout<< "key pressed" << *key << std::endl;
         }
         /*else if (event.type == KeyRelease)
@@ -71,46 +72,46 @@ InputReader::InputReader()
 }
 
 
-void InputReader::InterpretInput(struct mykey *k)
+void InputReader::InterpretInput()
 {
     
-    if(k->key == key_up) //user pressing acc pedal
+    if(the_key.key == key_up) //user pressing acc pedal
     {
         acc_value+=10;
         if(acc_value > 100)
         {
             acc_value = 100;
         }
-        k->read = true;
+        the_key.read = true;
     }
-    else if(k->key == key_down) //user releasing acc pedal
+    else if(the_key.key == key_down) //user releasing acc pedal
     {
         acc_value-=10;
         if(acc_value == 246) // -10 = 246 for uint8
         {
             acc_value = 0;
         }
-        k->read = true;
+        the_key.read = true;
     }
-    else if(k->key == key_left) //user pressing brake pedal
+    else if(the_key.key == key_left) //user pressing brake pedal
     {
         brk_value+=20;
         if(brk_value > 100)
         {
             brk_value = 100;
         }
-        k->read = true;
+        the_key.read = true;
     }
-    else if(k->key== key_right) //user releasing brake pedal
+    else if(the_key.key== key_right) //user releasing brake pedal
     {
         brk_value-=20;
         if(brk_value == 236) // -20 = 236 for uint8
         {
             brk_value = 0;
         }
-        k->read = true;
+        the_key.read = true;
     }
-    else if(k->key== key_space) //user toggles ignition request
+    else if(the_key.key== key_space) //user toggles ignition request
     {
         if(ign_req)
         {
@@ -121,32 +122,32 @@ void InputReader::InterpretInput(struct mykey *k)
         {
             ign_req = 1;
         }
-        k->read = true;
+        the_key.read = true;
     }
-    else if(k->key == key_p)
+    else if(the_key.key == key_p)
     {
         gear_pos_req = P;
-        k->read = true;
+        the_key.read = true;
     }
     
-    else if(k->key == key_n)
+    else if(the_key.key == key_n)
     {
         gear_pos_req = N;
-        k->read = true;
+        the_key.read = true;
     }
-    else if(k->key == key_d)
+    else if(the_key.key == key_d)
     {
         gear_pos_req = D;
-        k->read = true;
+        the_key.read = true;
     }
-    else if(k->key == key_r)
+    else if(the_key.key == key_r)
     {
         gear_pos_req = R;
-        k->read = true;
+        the_key.read = true;
     }
-    else if(k->key == escape){
+    else if(the_key.key == escape){
         end_sim = 1;
-        k->read = true;
+        the_key.read = true;
     }
     
     /*std::cout << "acc_value: " << (int)acc_value << std::endl;
