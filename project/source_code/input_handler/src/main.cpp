@@ -14,29 +14,19 @@ int main(){
 
     //payload to be sent in canframe
     uint8_t payload[msg_len];
-
-    //storage for keyboard input
-    struct mykey the_key;
-
-    //to know if thread 1 is finished
-    std::atomic<bool> t1_done;
-    t1_done.exchange(false);
-
     
     std::thread t1(
     [&](){
             //run input_reader
-            input_reader.Run(&the_key, &t1_done, payload);
+            input_reader.Run(payload);
     }
-    );
-
-    while(true){
+    );    
+    while(true)
+    {
         //send CAN-message
         socket.write(payload, msg_id, msg_len);
-
-        //if thread 1 finished, break
-        bool b1, b2=true;
-        if(t1_done.compare_exchange_strong(b2,b1))
+        
+        if(!input_reader.is_running)
         {
             break;
         }

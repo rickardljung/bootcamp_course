@@ -17,21 +17,22 @@ const unsigned int key_right = 114;
 const unsigned int key_space = 65;
 const uint8_t msg_id = 1;
 const uint8_t msg_len = 5;
-struct mykey
-{
-    uint8_t key;
-    bool read;
-
-};
+struct mykey 
+        {
+            uint8_t key;
+            bool read;
+        };
 class InputReader{
     public:
         InputReader();
         ~InputReader();
-        void Run(struct mykey *k, std::atomic<bool> *done, uint8_t *arr);
-        void ReadInputs(struct mykey *k, std::atomic<bool> *done);
-        void InterpretInput(struct mykey *k);
+        void Run(uint8_t *arr);
+        void ReadInputs();
+        void InterpretInput();
         void EncodeArray(uint8_t *arr);
+        bool is_running = 0;
     private:
+        mykey the_key;
         uint8_t acc_value = 0;
         uint8_t brk_value = 0;
         GearPos gear_pos_req = P;
