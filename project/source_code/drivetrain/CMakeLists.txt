@@ -5,7 +5,7 @@ include_directories(include ../utils/socketcan_cpp)
 add_executable(drivetrain src/can_buffer.cpp
                     src/main.cpp
                     src/vehicle.cpp
-                    src/drivetrain_input_reader.cpp
+                    src/can_reader.cpp
                     src/gearbox_simulator.cpp
                     src/engine_simulator.cpp
 

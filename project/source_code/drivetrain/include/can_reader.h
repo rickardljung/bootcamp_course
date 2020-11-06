@@ -1,5 +1,5 @@
-#ifndef DRIVETRAIN_INPUT_READER_H
-#define DRIVETRAIN_INPUT_READER_H
+#ifndef can_reader_H
+#define can_reader_H
 
 #include "user_input.h"
 #include "can_buffer.h"
@@ -7,7 +7,7 @@
 #include "socketcan.h"
 #include <string>
 
-class DriveTrainReader {
+class CanReader {
     private:
         std::thread read_can_thread;
         scpp::SocketCan socket_can;
@@ -16,8 +16,8 @@ class DriveTrainReader {
         bool thread_stopped = false;
         bool socket_initialized = false;
     public:
-        DriveTrainReader();
-        ~DriveTrainReader();
+        CanReader();
+        ~CanReader();
         bool Initialize(std::string can_network_name);
 };
 
