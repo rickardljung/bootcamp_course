@@ -6,3 +6,5 @@ notes
 build
 *.so
 *.o
+html
+latex
