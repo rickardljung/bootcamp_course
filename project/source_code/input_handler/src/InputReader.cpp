@@ -1,10 +1,6 @@
 #include "InputReader.h"
 
-void InputReader::ReadInputs(struct mykey *K){
-    
-    
-    while(true)
-    {
+void InputReader::ReadInputs(struct mykey *K, std::atomic<bool> *done){
         XNextEvent(display, &event);
         /* keyboard events */
         if (event.type == KeyPress)
@@ -19,24 +15,13 @@ void InputReader::ReadInputs(struct mykey *K){
         {
             printf( "KeyRelease: %x\n", event.xkey.keycode );
             returnval = event.xkey.keycode;
-        }*/
- 
-        
-        
-        if(K->key == ESCAPE) //if ESC is pressed
-        {
-            break;
-        }
-        
-
-        
-    }
+        }*/    
 }
 
 InputReader::~InputReader(){
     /* close connection to server */
     XAutoRepeatOn(display);
-    XCloseDisplay(display);
+    XCloseDisplay(display);    
 }
 InputReader::InputReader(){
     
@@ -136,6 +121,10 @@ void InputReader::InterpretInput(struct mykey *K){
         GearPosReq = R;
         K->read = true;
     }
+    else if(K->key == ESCAPE){
+        EndSim = 1;
+        K->read = true;
+    }
     
     /*std::cout << "AccValue: " << (int)AccValue << std::endl;
     std::cout << "BrkValue: " << (int)BrkValue << std::endl;
@@ -157,4 +146,5 @@ void InputReader::EncodeArray(uint8_t *arr){
     arr[1] = BrkValue;
     arr[2] = GearPosReq;
     arr[3] = IgnReq;
+    arr[4] = EndSim;
 }

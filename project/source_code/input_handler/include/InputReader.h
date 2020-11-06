@@ -2,6 +2,7 @@
 #define INPUTREADER_H
 #include <iostream>
 #include <X11/Xlib.h>
+#include <atomic>
 
 enum GearPos : uint8_t {P=0, N=1, D=2, R=3};
 const unsigned int ESCAPE = 9;
@@ -14,6 +15,8 @@ const unsigned int key_DOWN = 116;
 const unsigned int key_LEFT = 113;
 const unsigned int key_RIGHT = 114;
 const unsigned int key_SPACE = 65;
+const uint8_t msg_id = 1;
+const uint8_t msg_len = 5;
 struct mykey
 {
     uint8_t key;
@@ -24,7 +27,7 @@ class InputReader{
     public:
         InputReader();
         ~InputReader();
-        void ReadInputs(struct mykey *K);
+        void ReadInputs(struct mykey *K, std::atomic<bool> *done);
         void InterpretInput(struct mykey *K);
         void EncodeArray(uint8_t *arr);
     private:
@@ -32,6 +35,7 @@ class InputReader{
         uint8_t BrkValue = 0;
         GearPos GearPosReq = P;
         uint8_t IgnReq = 0;
+        uint8_t EndSim = 0;
         Display *display;
         Window window;
         XEvent event;
