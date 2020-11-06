@@ -1,6 +1,28 @@
 #include "keyboard_input_reader.h"
+void InputReader::Run(struct mykey *k, std::atomic<bool> *done, uint8_t *arr)
+{
+    while(true)
+    {
+        //read user input
+        ReadInputs(k, done); 
 
-void InputReader::ReadInputs(struct mykey *k, std::atomic<bool> *done){
+        //interpret user input
+        if(k->read == false)
+        {
+            InterpretInput(k);  
+        }
+        //encode into array
+        EncodeArray(arr);
+
+        if(k->key == escape)
+        {
+            done->exchange(true);
+            break;
+        }
+    }
+}
+void InputReader::ReadInputs(struct mykey *k, std::atomic<bool> *done)
+{
         XNextEvent(display, &event);
         /* keyboard events */
         if (event.type == KeyPress)
@@ -18,14 +40,14 @@ void InputReader::ReadInputs(struct mykey *k, std::atomic<bool> *done){
         }*/    
 }
 
-InputReader::~InputReader(){
+InputReader::~InputReader()
+{
     /* close connection to server */
     XAutoRepeatOn(display);
     XCloseDisplay(display);    
 }
-InputReader::InputReader(){
-    
- 
+InputReader::InputReader()
+{ 
     /* open connection with the server */
     display = XOpenDisplay(NULL);
     if (display == NULL)
@@ -49,7 +71,8 @@ InputReader::InputReader(){
 }
 
 
-void InputReader::InterpretInput(struct mykey *k){
+void InputReader::InterpretInput(struct mykey *k)
+{
     
     if(k->key == key_up) //user pressing acc pedal
     {
@@ -141,7 +164,8 @@ void InputReader::InterpretInput(struct mykey *k){
     }*/
 }
 
-void InputReader::EncodeArray(uint8_t *arr){
+void InputReader::EncodeArray(uint8_t *arr)
+{
     arr[0] = acc_value;
     arr[1] = brk_value;
     arr[2] = gear_pos_req;

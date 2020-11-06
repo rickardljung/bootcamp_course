@@ -25,30 +25,13 @@ int main(){
     
     std::thread t1(
     [&](){
-        while(true){
-            //get input from user
-            input_reader.ReadInputs(&the_key, &t1_done); 
-
-            //interpret user input
-            if(the_key.read == false)
-            {
-                input_reader.InterpretInput(&the_key);  
-            }
-            //encode into array
-            input_reader.EncodeArray(payload);
-
-            //if ESC is pressed exit the loop
-            if(the_key.key == escape)
-            {
-                t1_done.exchange(true);
-                break;
-            }
-        }
+            //run input_reader
+            input_reader.Run(&the_key, &t1_done, payload);
     }
     );
 
     while(true){
-        //send array to CANWRITER
+        //send CAN-message
         socket.write(payload, msg_id, msg_len);
 
         //if thread 1 finished, break

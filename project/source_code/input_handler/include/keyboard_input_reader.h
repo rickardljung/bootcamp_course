@@ -27,6 +27,7 @@ class InputReader{
     public:
         InputReader();
         ~InputReader();
+        void Run(struct mykey *k, std::atomic<bool> *done, uint8_t *arr);
         void ReadInputs(struct mykey *k, std::atomic<bool> *done);
         void InterpretInput(struct mykey *k);
         void EncodeArray(uint8_t *arr);
