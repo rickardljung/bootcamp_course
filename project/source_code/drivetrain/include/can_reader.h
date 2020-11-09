@@ -16,7 +16,7 @@ class CanReader {
         bool thread_stopped = false;
         bool socket_initialized = false;
     public:
-        CanReader(scpp::SocketCan *socket);
+        CanReader(scpp::SocketCan *socket, uint8_t message_id);
         ~CanReader();
         scpp::SocketCan * get_socket();
 };

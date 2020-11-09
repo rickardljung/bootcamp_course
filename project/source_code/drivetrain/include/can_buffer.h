@@ -12,7 +12,7 @@ class CanBuffer
             return instance;
         }
         void Add(uint8_t *data);
-        UserInput Pull();
+        uint8_t * Pull();
 
         CanBuffer(CanBuffer const&)       = delete;
         void operator=(CanBuffer const&)  = delete;

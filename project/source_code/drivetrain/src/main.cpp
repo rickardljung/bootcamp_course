@@ -13,7 +13,7 @@ int main() {
     if (socket.Initialize("vcan0"))
     {
         //starts new thread reading can messages and writes to can_buffer
-        CanReader reader(&socket);
+        CanReader reader(&socket, 1);
 
         //starts simulation reading from can_buffer in main thread. Creates thread writing ouput "socket"
         Vehicle vehicle(&socket);

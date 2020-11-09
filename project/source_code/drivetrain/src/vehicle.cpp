@@ -16,7 +16,9 @@ void Vehicle::Run() {
     while(this->simulation_running) {
         //get information from buffer
         //run simulation
-        int acc_pedal = static_cast<int>(CanBuffer::GetInstance().Pull().accelerator_pedal);
+        //TODO: if statement checking if a "end simulation" is received
+        uint8_t *data = (CanBuffer::GetInstance().Pull());
+        int acc_pedal = static_cast<int>(data[0]);
         std::cout << "Acc: " << acc_pedal << std::endl;
 
         payload[0] = acc_pedal*2;
