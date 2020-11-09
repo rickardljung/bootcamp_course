@@ -1,13 +1,14 @@
 cmake_minimum_required(VERSION 3.5.1)
 project(drivetrain)
-include_directories(include ../utils/socketcan_cpp)
+include_directories(include ../utils/include)
 
-add_executable(drivetrain src/can_buffer.cpp
+add_executable(drivetrain
                     src/main.cpp
                     src/vehicle.cpp
-                    src/can_reader.cpp
                     src/gearbox_simulator.cpp
                     src/engine_simulator.cpp
 
-                    ../utils/socketcan_cpp/socketcan.cpp)
+                    ../utils/src/can_buffer.cpp
+                    ../utils/src/can_reader.cpp
+                    ../utils/src/socketcan.cpp)
 target_link_libraries(drivetrain PUBLIC pthread)
