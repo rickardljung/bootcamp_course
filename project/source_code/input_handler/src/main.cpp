@@ -32,7 +32,7 @@ int main(){
     );    
     while(true)
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(3));
         //send CAN-message
         socket.write(payload, msg_id, msg_len);
         if(!input_reader.is_running)

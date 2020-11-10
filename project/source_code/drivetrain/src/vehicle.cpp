@@ -21,8 +21,8 @@ void Vehicle::Run() {
         if(!input->end_simulation)
         {
             //run simulation
-            payload[0] = input->accelerator_pedal * 2;
-            socket->write(payload, 2, 1);
+            // payload[0] = input->accelerator_pedal * 2;
+            // socket->write(payload, 2, 1);
             std::this_thread::sleep_for(std::chrono::milliseconds(20));
         } else
         {

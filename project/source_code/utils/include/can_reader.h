@@ -17,6 +17,7 @@ class CanReader {
         bool socket_initialized = false;
     public:
         CanReader(scpp::SocketCan *socket, uint8_t message_id);
+
         ~CanReader();
         scpp::SocketCan * get_socket();
 };

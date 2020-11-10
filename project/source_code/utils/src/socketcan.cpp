@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #include <net/if.h>
 #include <sys/ioctl.h>
@@ -137,10 +138,21 @@ namespace scpp
         //setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
 
 // LINUX
+
+        int flags = fcntl(m_socket, F_GETFL, 0);
+        flags |= O_NONBLOCK;
+        int result = fcntl(m_socket, F_SETFL, flags);
+        if ( result != 0 ) {
+            return STATUS_NOT_OK;
+        }
+
+
         struct timeval tv;
         tv.tv_sec = 0;  /* 30 Secs Timeout */
         tv.tv_usec = m_read_timeout_ms * 1000;  // Not init'ing this can cause strange errors
-        setsockopt(m_socket, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv,sizeof(struct timeval));
+        int optval =7;
+    //    setsockopt(m_socket, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv,sizeof(struct timeval));
+        setsockopt(m_socket, SOL_SOCKET, SO_PRIORITY, &optval,sizeof(struct timeval));
 
         if (bind(m_socket, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
             perror("bind");
@@ -196,7 +208,14 @@ namespace scpp
 
         // Read in a CAN frame
         auto num_bytes = ::read(m_socket, &frame, CANFD_MTU);
-        if (num_bytes != CAN_MTU && num_bytes != CANFD_MTU)
+        std::cout << num_bytes << std::endl;        
+        if(num_bytes==0){
+            return STATUS_NOTHING_TO_READ;
+        }
+        else if (num_bytes == -1) {
+            return STATUS_NOTHING_TO_READ;
+        } 
+        else if (num_bytes != CAN_MTU /*&& num_bytes != CANFD_MTU*/)
         {
             //perror("Can read error");
             return STATUS_READ_ERROR;

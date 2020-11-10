@@ -34,6 +34,8 @@ namespace scpp
         STATUS_WRITE_ERROR = 1 << 7,
         STATUS_READ_ERROR = 1 << 8,
         STATUS_BIND_ERROR = 1 << 9,
+        STATUS_NOTHING_TO_READ,
+        STATUS_NOT_OK
     };
 
     class SocketCan

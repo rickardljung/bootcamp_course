@@ -8,7 +8,36 @@
 
 int main() {
     bool return_value = 0;
+
     scpp::SocketCan socket;
+    auto result = socket.Initialize("vcan0");
+    if (result!=scpp::STATUS_OK) {
+            std::cout << "Nothing to read " << result <<std::endl;
+            return 0;
+    }
+
+    size_t i=0;
+
+    while (1)
+    {
+        
+        scpp::CanFrame fr;
+        result  = socket.read(fr);
+        if ((result == scpp::STATUS_OK)) {            
+            fr.id = 3;
+            socket.write(fr);
+            std::cout << "Nothing to read1 " << std::endl;
+        } 
+        else if (result == scpp::STATUS_NOTHING_TO_READ)
+        {
+            std::cout << "Nothing to read2 " << std::endl;
+            if(++i>2){break;}
+        }
+        else{
+            std::cout << "Nothing to read " << result <<std::endl; break;}
+    }
+    
+    return 1;
 
     if (socket.Initialize("vcan0"))
     {

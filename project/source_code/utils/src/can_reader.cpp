@@ -3,19 +3,36 @@
 
 CanReader::CanReader(scpp::SocketCan *socket, uint8_t message_id) {
     this->socket = socket;
-    read_can_thread = std::thread(&CanReader::Run, this, message_id);
-    read_can_thread.detach();
+    this->read_can_thread = std::thread(&CanReader::Run, this, message_id);
+    this->read_can_thread.detach();
 }
 
 void CanReader::Run(uint8_t message_id) {
+
+    const uint8_t msg_id = 2;
+    const uint8_t msg_len = 1;
+    //payload to be sent in canframe
+    uint8_t payload[msg_len];
+
     while (!this->stop_thread)
     {
         scpp::CanFrame fr;
-        if (this->socket->read(fr) == scpp::STATUS_OK)
+        auto result = this->socket->read(fr);
+        if ((result == scpp::STATUS_OK) || (result == scpp::STATUS_NOTHING_TO_READ))
         {
-            if (fr.id == message_id) {
+            if(fr.id == 1)
+            {
+                
+            }
+            else if (fr.id == message_id) {
+                std::cout << "Received Acc: " << static_cast<int>(fr.data[0]) << std::endl;
+
+                payload[0] = fr.data[0] * 3;
+                socket->write(payload, 2, 1);
+
                 CanBuffer::GetInstance().Add(fr.data);
             }
+
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
         }
     }
