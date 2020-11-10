@@ -11,7 +11,7 @@ class CanBuffer
             static CanBuffer    instance;
             return instance;
         }
-        void Add(uint8_t *data);
+        void Add(uint8_t data[]);
         uint8_t * Pull();
 
         CanBuffer(CanBuffer const&)       = delete;
