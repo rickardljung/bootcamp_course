@@ -1,3 +1,4 @@
+#include "can_fr_handler.h"
 #include "keyboard_input_reader.h"
 #include "socketcan.h"
 #include <thread>
@@ -19,11 +20,14 @@ int main(){
     //payload to be sent in canframe
     uint8_t payload[msg_len];
     
+    //struct containing user input values
+    UserInput user_input;
+
     //create a thread for running the InputReader
     std::thread t1(
     [&](){
             //run input_reader
-            input_reader.Run(payload);
+            input_reader.Run(payload, &user_input);
     }
     );    
     while(true)
@@ -35,7 +39,6 @@ int main(){
         {
             break;
         }
-        
         
     }
     

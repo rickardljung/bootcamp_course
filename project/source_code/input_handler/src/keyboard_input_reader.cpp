@@ -1,5 +1,6 @@
 #include "keyboard_input_reader.h"
-void InputReader::Run(uint8_t *arr)
+
+void InputReader::Run(uint8_t *arr, UserInput *user_input)
 {
     is_running = true;
     while(true)
@@ -10,12 +11,12 @@ void InputReader::Run(uint8_t *arr)
         //interpret user input
         if(the_key.read == false)
         {
-            InterpretInput();  
+            InterpretInput(user_input);  
         }
         //encode into array
-        EncodeArray(arr);
+        EncodeArray(arr, user_input);
 
-        if(the_key.key == escape)
+        if(the_key.key == key_escape)
         {
             is_running = false;
             break;
@@ -72,81 +73,82 @@ InputReader::InputReader()
 }
 
 
-void InputReader::InterpretInput()
+void InputReader::InterpretInput(UserInput *user_input)
 {
     
     if(the_key.key == key_up) //user pressing acc pedal
     {
-        acc_value+=10;
-        if(acc_value > 100)
+        user_input->accelerator_pedal+=10;
+        //acc_value+=10;
+        if(user_input->accelerator_pedal > 100)
         {
-            acc_value = 100;
+            user_input->accelerator_pedal = 100;
         }
         the_key.read = true;
     }
     else if(the_key.key == key_down) //user releasing acc pedal
     {
-        acc_value-=10;
-        if(acc_value == 246) // -10 = 246 for uint8
+        user_input->accelerator_pedal-=10;
+        if(user_input->accelerator_pedal == 246) // -10 = 246 for uint8
         {
-            acc_value = 0;
+            user_input->accelerator_pedal = 0;
         }
         the_key.read = true;
     }
     else if(the_key.key == key_left) //user pressing brake pedal
     {
-        brk_value+=20;
-        if(brk_value > 100)
+        user_input->brake_pedal+=20;
+        if(user_input->brake_pedal > 100)
         {
-            brk_value = 100;
+            user_input->brake_pedal = 100;
         }
         the_key.read = true;
     }
     else if(the_key.key== key_right) //user releasing brake pedal
     {
-        brk_value-=20;
-        if(brk_value == 236) // -20 = 236 for uint8
+        user_input->brake_pedal-=20;
+        if(user_input->brake_pedal == 236) // -20 = 236 for uint8
         {
-            brk_value = 0;
+            user_input->brake_pedal = 0;
         }
         the_key.read = true;
     }
     else if(the_key.key== key_space) //user toggles ignition request
     {
-        if(ign_req)
+        if(user_input->ignition == 1)
         {
-            ign_req = 0;
+            user_input->ignition = 0;
         }
         
         else
         {
-            ign_req = 1;
+            user_input->ignition = 1;
         }
         the_key.read = true;
     }
     else if(the_key.key == key_p)
     {
-        gear_pos_req = P;
+        user_input->gear_position = P;
         the_key.read = true;
     }
     
     else if(the_key.key == key_n)
     {
-        gear_pos_req = N;
+        user_input->gear_position = N;
         the_key.read = true;
     }
     else if(the_key.key == key_d)
     {
-        gear_pos_req = D;
+        user_input->gear_position = D;
         the_key.read = true;
     }
     else if(the_key.key == key_r)
     {
-        gear_pos_req = R;
+        user_input->gear_position = R;
         the_key.read = true;
     }
-    else if(the_key.key == escape){
-        end_sim = 1;
+    else if(the_key.key == key_escape){
+        user_input->end_simulation = 1;
         the_key.read = true;
     }
     
@@ -165,11 +167,11 @@ void InputReader::InterpretInput()
     }*/
 }
 
-void InputReader::EncodeArray(uint8_t *arr)
+void InputReader::EncodeArray(uint8_t *arr, UserInput *user_input)
 {
-    arr[0] = acc_value;
-    arr[1] = brk_value;
-    arr[2] = gear_pos_req;
-    arr[3] = ign_req;
-    arr[4] = end_sim;
+    arr[0] = user_input->accelerator_pedal;
+    arr[1] = user_input->brake_pedal;
+    arr[2] = user_input->gear_position;
+    arr[3] = user_input->ignition;
+    arr[4] = user_input->end_simulation;
 }
