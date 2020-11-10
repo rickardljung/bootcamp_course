@@ -10,6 +10,8 @@ int main() {
     bool return_value = 0;
     scpp::SocketCan socket;
 
+    std::cout << "very important print out!" << std::endl;
+
     if (socket.Initialize("vcan0"))
     {
         //starts new thread reading can messages and writes to can_buffer
