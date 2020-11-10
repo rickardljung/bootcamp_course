@@ -28,13 +28,14 @@ int main(){
     );    
     while(true)
     {
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
         //send CAN-message
         socket.write(payload, msg_id, msg_len);
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
         if(!input_reader.is_running)
         {
             break;
         }
+        
         
     }
     
