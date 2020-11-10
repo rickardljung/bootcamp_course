@@ -11,7 +11,6 @@ class Vehicle {
         Engine engine();
         Gearbox gearbox();
         void Run();
-        bool simulation_running = true;
         scpp::SocketCan *socket;
     public:
         Vehicle(scpp::SocketCan *socket);
