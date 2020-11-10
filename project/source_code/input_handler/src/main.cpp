@@ -27,13 +27,14 @@ int main(){
     std::thread t1(
     [&](){
             //run input_reader
-            input_reader.Run(payload, &user_input);
+            input_reader.Run(&user_input);
     }
     );    
     while(true)
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
         //send CAN-message
+        EncodePayload(payload, &user_input);
         socket.write(payload, msg_id, msg_len);
         if(!input_reader.is_running)
         {

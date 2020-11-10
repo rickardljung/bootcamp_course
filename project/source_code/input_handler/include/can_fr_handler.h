@@ -14,4 +14,7 @@ typedef struct user_input_struct {
     uint8_t end_simulation=0;
 } UserInput;
 
+void EncodePayload(uint8_t *_payload, UserInput *user_input);
+
+
 #endif
