@@ -3,7 +3,7 @@
 #include <iostream>
 #include <X11/Xlib.h>
 #include <atomic>
-#include "can_fr_handler.h"
+
 
 
 const unsigned int key_escape = 9;
@@ -26,10 +26,10 @@ class InputReader{
     public:
         InputReader();
         ~InputReader();
-        void Run(uint8_t *arr, UserInput *user_input);
+        void Run(UserInput *user_input);
         void ReadInputs();
         void InterpretInput(UserInput *user_input);
-        void EncodeArray(uint8_t *arr, UserInput *user_input);
+        //void EncodeArray(uint8_t *arr, UserInput *user_input);
         bool is_running = 0;
     private:
         mykey the_key;

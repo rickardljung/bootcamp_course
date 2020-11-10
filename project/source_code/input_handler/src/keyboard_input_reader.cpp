@@ -1,6 +1,8 @@
+#include "can_fr_handler.h"
 #include "keyboard_input_reader.h"
 
-void InputReader::Run(uint8_t *arr, UserInput *user_input)
+
+void InputReader::Run(UserInput *user_input)
 {
     is_running = true;
     while(true)
@@ -14,7 +16,7 @@ void InputReader::Run(uint8_t *arr, UserInput *user_input)
             InterpretInput(user_input);  
         }
         //encode into array
-        EncodeArray(arr, user_input);
+        //EncodePayload(_payload, user_input);
 
         if(the_key.key == key_escape)
         {
@@ -79,7 +81,6 @@ void InputReader::InterpretInput(UserInput *user_input)
     if(the_key.key == key_up) //user pressing acc pedal
     {
         user_input->accelerator_pedal+=10;
-        //acc_value+=10;
         if(user_input->accelerator_pedal > 100)
         {
             user_input->accelerator_pedal = 100;
@@ -165,13 +166,4 @@ void InputReader::InterpretInput(UserInput *user_input)
         case(R) :   std::cout << "gear_pos_req: R" << std::endl;
                     break;
     }*/
-}
-
-void InputReader::EncodeArray(uint8_t *arr, UserInput *user_input)
-{
-    arr[0] = user_input->accelerator_pedal;
-    arr[1] = user_input->brake_pedal;
-    arr[2] = user_input->gear_position;
-    arr[3] = user_input->ignition;
-    arr[4] = user_input->end_simulation;
 }
