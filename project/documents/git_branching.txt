@@ -3,6 +3,9 @@ git checkout -b rickards_branch
 git remote add rickards_branch https://github.com/rickardljung/bootcamp_course.git
 git push --set-upstream origin rickards_branch 
 
+CREATE PULL REQUEST:
+
+
 OTHER COMMANDS:
 List branches: git branch -a
 Change branch: git checkout <branch name>
