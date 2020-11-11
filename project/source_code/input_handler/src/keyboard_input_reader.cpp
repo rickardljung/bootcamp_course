@@ -1,11 +1,15 @@
-#include "can_fr_handler.h"
+#include "user_input.h"
 #include "keyboard_input_reader.h"
-
-
+#include <iostream>
+/*!
+	* Runs the main function of InputReader, calls functions ReadInputs and InterpretInput. Exits while loop when esc key is pressed.
+	* @param user_input fills in values in the user_input struct.
+	* @return Nothing is returned
+*/
 void InputReader::Run(UserInput *user_input)
 {
     is_running = true;
-    while(true)
+    while(is_running)
     {
         //read user input
         ReadInputs(); 
@@ -15,41 +19,41 @@ void InputReader::Run(UserInput *user_input)
         {
             InterpretInput(user_input);  
         }
-        //encode into array
-        //EncodePayload(_payload, user_input);
 
         if(the_key.key == key_escape)
         {
             is_running = false;
-            break;
         }
-    }
-    
+    }   
 }
+/*!
+	* Reads inputs from keyboard and stores it in the_key (blocking function).
+	* @return Nothing is returned
+*/
 void InputReader::ReadInputs()
 {
         XNextEvent(display, &event);
         /* keyboard events */
         if (event.type == KeyPress)
         {
-            //printf( "KeyPress: %x\n", event.xkey.keycode );
             the_key.key = event.xkey.keycode;
             the_key.read = false;
-            //std::cout<< "key pressed" << *key << std::endl;
         }
-        /*else if (event.type == KeyRelease)
-        {
-            printf( "KeyRelease: %x\n", event.xkey.keycode );
-            returnval = event.xkey.keycode;
-        }*/    
 }
-
+/*!
+	* Destructor for class InputReader, closes the display and resets settings for the keyboard.
+	* @return Nothing is returned
+*/
 InputReader::~InputReader()
 {
     /* close connection to server */
     XAutoRepeatOn(display);
     XCloseDisplay(display);    
 }
+/*!
+	* Constructor for class InputReader, opens a display and changes settings wanted for the keyboard reading.
+	* @return Nothing is returned
+*/
 InputReader::InputReader()
 { 
     /* open connection with the server */
@@ -74,7 +78,11 @@ InputReader::InputReader()
     XAutoRepeatOff(display);
 }
 
-
+/*!
+	* Controls what different key presses should be interpreted as. For example pressing "key_up" increases acceleration by 10%.
+	* @param user_input values shall be stored in a UserInput struct.
+	* @return Nothing is returned
+*/
 void InputReader::InterpretInput(UserInput *user_input)
 {
     
@@ -120,7 +128,6 @@ void InputReader::InterpretInput(UserInput *user_input)
         {
             user_input->ignition = 0;
         }
-        
         else
         {
             user_input->ignition = 1;
@@ -152,18 +159,4 @@ void InputReader::InterpretInput(UserInput *user_input)
         user_input->end_simulation = 1;
         the_key.read = true;
     }
-    
-    /*std::cout << "acc_value: " << (int)acc_value << std::endl;
-    std::cout << "brk_value: " << (int)brk_value << std::endl;
-    std::cout << "IgnReq: " << (int)IgnReq << std::endl;
-    switch (gear_pos_req){
-        case(P) :   std::cout << "gear_pos_req: P" << std::endl;
-                    break;
-        case(N) :   std::cout << "gear_pos_req: N" << std::endl;
-                    break;
-        case(D) :   std::cout << "gear_pos_req: D" << std::endl;
-                    break;
-        case(R) :   std::cout << "gear_pos_req: R" << std::endl;
-                    break;
-    }*/
 }

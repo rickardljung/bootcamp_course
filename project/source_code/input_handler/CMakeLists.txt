@@ -3,7 +3,7 @@ project(InputHandler)
 include_directories(include ../utils/include)
 
 add_executable(input_handler    src/main.cpp
-                                src/can_fr_handler.cpp
+                                ../utils/src/user_input.cpp
                                 src/keyboard_input_reader.cpp 
                                 ../utils/src/socketcan.cpp)
 target_link_libraries(input_handler PUBLIC X11 pthread)
