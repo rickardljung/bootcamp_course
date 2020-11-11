@@ -22,7 +22,7 @@ int main(){
     if (socket.open("vcan0") == scpp::STATUS_OK)
     {
         //starts new thread reading can messages and writes to can_buffer
-        CanReader reader(&socket, 1);
+        CanReader reader(&socket, 2);
         while(1)
         {
             uint8_t *received_can_data = CanBuffer::GetInstance().Pull();
