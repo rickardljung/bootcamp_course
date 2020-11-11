@@ -1,5 +1,6 @@
 #include "user_input.h"
 #include "keyboard_input_reader.h"
+#include <iostream>
 
 void InputReader::Run(UserInput *user_input)
 {

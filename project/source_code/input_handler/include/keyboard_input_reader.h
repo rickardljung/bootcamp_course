@@ -1,8 +1,6 @@
 #ifndef KEYBOARD_INPUT_READER_H
 #define KEYBOARD_INPUT_READER_H
-#include <iostream>
 #include <X11/Xlib.h>
-#include <atomic>
 
 const unsigned int key_escape = 9;
 const unsigned int key_r = 27;
