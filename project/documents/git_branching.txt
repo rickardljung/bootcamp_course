@@ -1,0 +1,22 @@
+CREATE NEW BRANCH:
+git checkout -b rickards_branch
+git remote add rickards_branch https://github.com/rickardljung/bootcamp_course.git
+git push --set-upstream origin rickards_branch 
+
+CREATE PULL REQUEST:
+Go to github and head to the repository
+Press the "Pull requests" tab
+Press the green button "New pull request"
+Choose the branch you want to merge to master as "compare" 
+Press the green button "Create pull request"
+Repeat above instruction
+Add assignee to review your change to the right in the screen
+When the assignee have reviewed the changes can the pull request be merged to main (master)
+
+OTHER COMMANDS:
+List branches: git branch -a
+Change branch: git checkout <branch name>
+
+SOURCE:
+https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches
+https://devconnected.com/how-to-switch-branch-on-git/

@@ -10,11 +10,10 @@ class Vehicle {
     private:
         Engine engine();
         Gearbox gearbox();
-        void Run();
-        scpp::SocketCan *socket;
     public:
-        Vehicle(scpp::SocketCan *socket);
+        Vehicle() = default;
         bool Initialize();
+        void Run();
 };
 
 #endif
