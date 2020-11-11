@@ -14,27 +14,40 @@ void CanReader::Run(uint8_t message_id) {
     //payload to be sent in canframe
     uint8_t payload[msg_len];
 
+    size_t i=0;
+
     while (!this->stop_thread)
     {
         scpp::CanFrame fr;
         auto result = this->socket->read(fr);
-        if ((result == scpp::STATUS_OK) || (result == scpp::STATUS_NOTHING_TO_READ))
+        if (result == scpp::STATUS_OK)
         {
-            if(fr.id == 1)
-            {
-                
-            }
-            else if (fr.id == message_id) {
-                std::cout << "Received Acc: " << static_cast<int>(fr.data[0]) << std::endl;
+            if (fr.id == message_id) {
+               // std::cout << "Received Acc: " << static_cast<int>(fr.data[0]) << std::endl;
 
                 payload[0] = fr.data[0] * 3;
                 socket->write(payload, 2, 1);
 
                 CanBuffer::GetInstance().Add(fr.data);
             }
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
         }
+        else if(result == scpp::STATUS_NOTHING_TO_READ)
+        {
+            if(++i>20000)
+            {
+               break;
+            }
+            else   
+            {
+                continue;
+            }
+        }
+        else if (result != scpp::STATUS_OK) {
+            std::cout << "Error " << result <<std::endl;
+            break;
+        }
+        else i =0;
+        std::this_thread::sleep_for(std::chrono::milliseconds(3));
     }
     if (this->stop_thread) //TODO: promise instead??
     {

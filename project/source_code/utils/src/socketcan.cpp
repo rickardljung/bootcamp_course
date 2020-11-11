@@ -12,6 +12,8 @@
 #include "socketcan.h"
 #include <fcntl.h>
 
+namespace scpp{
+
 /** Returns true on success, or false if there was an error */
 bool SetSocketBlockingEnabled(int fd, bool blocking)
 {
@@ -62,7 +64,7 @@ SocketCanStatus SocketCan::open(const char *can_interface) {
     return STATUS_OK;
 }
 
-SocketCanStatus SocketCan::write(const uint32_t &_id, const uint8_t &_len, const uint8_t *_data) {
+SocketCanStatus SocketCan::write(const uint8_t *_data, const uint32_t &_id, const uint8_t &_len) {
     struct canfd_frame frame;
     memset(&frame, 0, sizeof(frame));
     frame.can_id = _id;
@@ -96,7 +98,7 @@ SocketCanStatus SocketCan::read(CanFrame & msg) {
     // Read in a CAN frame
     auto num_bytes = ::read(m_socket, &frame, CAN_MTU /*CANFD_MTU*/);
     if (num_bytes == 0 ||
-            (num_bytes != CAN_MTU && errno == 11)) return STATUS_NOTHING_2_READ;
+            (num_bytes != CAN_MTU && errno == 11)) return STATUS_NOTHING_TO_READ;
     else if (num_bytes != CAN_MTU) {
         std::cout <<errno<<" READ ERRORNO : " <<strerror(errno) << std::endl;
         return STATUS_READ_ERROR;
@@ -111,4 +113,5 @@ SocketCanStatus SocketCan::read(CanFrame & msg) {
 
 SocketCan::~SocketCan() {
     ::close(m_socket);
+}
 }

@@ -13,7 +13,7 @@ int main(){
 
     //initiate vcan0
     scpp::SocketCan socket;
-    if(!socket.Initialize("vcan0")){
+    if(socket.open("vcan0") != scpp::STATUS_OK){
         returnval = 1;
     }
 
