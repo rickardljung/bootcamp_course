@@ -1,6 +1,5 @@
 #include "vehicle.h"
 #include <iostream>
-#include <thread>
 
 /*!
 * Reads from the receive buffer, runs the simulation and writes the result to the transmit buffer

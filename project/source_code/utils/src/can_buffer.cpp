@@ -20,7 +20,7 @@ void CanBuffer::AddRx(uint8_t data[]) {  //this will be replaced by ringbuffer
     }
 }
 /*!
-* Adds data to be sent to the transmission (TX) buffer
+* Adds data to be sent to the transmit (TX) buffer
 * @param data data to be transmitted
 */
 void CanBuffer::AddTx(uint8_t data[]) {  //this will be replaced by ringbuffer

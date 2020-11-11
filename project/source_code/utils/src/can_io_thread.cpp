@@ -8,9 +8,9 @@
 * @param receive_message_id id of the messages to read
 * @param transmit_message_id id of the messages to transmit. 0 if nothing to transmit
 */
-CanIOThread::CanIOThread(scpp::SocketCan *socket, uint8_t receive_message_id, uint8_t transmit_message_id) {
+CanIOThread::CanIOThread(scpp::SocketCan *socket, std::promise<int> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) {
     this->socket = socket;
-    read_can_thread = std::thread(&CanIOThread::Run, this, receive_message_id, transmit_message_id);
+    read_can_thread = std::thread(&CanIOThread::Run, this, promise, receive_message_id, transmit_message_id);
     read_can_thread.detach();
 }
 
@@ -20,7 +20,7 @@ CanIOThread::CanIOThread(scpp::SocketCan *socket, uint8_t receive_message_id, ui
 * @param receive_message_id id of the messages to read
 * @param transmit_message_id id of the messages to transmit. 0 if nothing to transmit
 */
-void CanIOThread::Run(uint8_t receive_message_id, uint8_t transmit_message_id) {
+void CanIOThread::Run(std::promise<int> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) {
     uint8_t payload[8];
     while (!this->stop_thread)
     {
