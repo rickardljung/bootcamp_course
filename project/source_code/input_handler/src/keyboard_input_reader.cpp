@@ -4,27 +4,27 @@
 /*!
 	* Runs the main function of InputReader, calls functions ReadInputs and InterpretInput. Exits while loop when esc key is pressed.
 	* @param user_input fills in values in the user_input struct.
+    * @param mtx is the mutex lock used to not write/read to/from user_input struct at the same time from different threads.
 	* @return Nothing is returned
 */
-void InputReader::Run(UserInput *user_input)
+bool InputReader::Run(UserInput *user_input, std::mutex *mtx)
 {
-    is_running = true;
-    while(is_running)
+    bool returnval = true;
+    //read user input
+    ReadInputs(); 
+
+    //interpret user input
+    if(the_key.read == false)
+    {   
+        mtx->lock();
+        InterpretInput(user_input);
+        mtx->unlock();  
+    }
+    if(the_key.key == key_escape)
     {
-        //read user input
-        ReadInputs(); 
-
-        //interpret user input
-        if(the_key.read == false)
-        {
-            InterpretInput(user_input);  
-        }
-
-        if(the_key.key == key_escape)
-        {
-            is_running = false;
-        }
-    }   
+        returnval = false;
+    }
+    return returnval; 
 }
 /*!
 	* Reads inputs from keyboard and stores it in the_key (blocking function).

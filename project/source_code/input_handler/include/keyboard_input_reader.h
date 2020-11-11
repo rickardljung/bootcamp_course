@@ -1,6 +1,7 @@
 #ifndef KEYBOARD_INPUT_READER_H
 #define KEYBOARD_INPUT_READER_H
 #include <X11/Xlib.h>
+#include <mutex>
 
 const unsigned int key_escape = 9;
 const unsigned int key_r = 27;
@@ -23,10 +24,9 @@ class InputReader{
     public:
         InputReader();
         ~InputReader();
-        void Run(UserInput *user_input);
+        bool Run(UserInput *user_input, std::mutex *mtx);
         void ReadInputs();
         void InterpretInput(UserInput *user_input);
-        bool is_running = 0;
     private:
         mykey the_key;
         Display *display;

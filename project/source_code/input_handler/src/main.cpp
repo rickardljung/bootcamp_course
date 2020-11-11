@@ -3,6 +3,7 @@
 #include "socketcan.h"
 #include <thread>
 #include <chrono>
+#include <mutex>
 
 
 int main(){
@@ -10,6 +11,9 @@ int main(){
 
     //initiate key board reading
     InputReader input_reader;
+
+    //mutex for locking user_input
+    std::mutex user_input_mtx;
 
     //initiate vcan0
     scpp::SocketCan socket;
@@ -26,18 +30,25 @@ int main(){
 
         //create a thread for running the InputReader
         std::thread read_inputs(
-        [&](){
+        [&user_input, &input_reader, &user_input_mtx](){
                 //run input_reader
-                input_reader.Run(&user_input);
+                while(true)
+                {
+                    if(!input_reader.Run(&user_input, &user_input_mtx))
+                    {
+                        break;
+                    }
+                }
         }
         );    
         while(true)
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(20));
             //send CAN-message
-            EncodePayload(payload, &user_input);
+            EncodePayload(payload, &user_input, &user_input_mtx);
             socket.write(payload, msg_id, msg_len);
-            if(!input_reader.is_running)
+            
+            if(payload[4]) //end_simulation == 1
             {
                 break;
             }

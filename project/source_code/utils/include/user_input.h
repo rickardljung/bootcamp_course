@@ -1,6 +1,7 @@
 #ifndef USER_INPUT_H
 #define USER_INPUT_H
 #include <cstdint>
+#include <mutex>
 
 enum GearPos : uint8_t {P=0, N=1, D=2, R=3};
 const uint8_t msg_id = 1;
@@ -14,6 +15,6 @@ typedef struct user_input_struct {
     uint8_t end_simulation=0;
 } UserInput;
 
-void EncodePayload(uint8_t *_payload, UserInput *user_input);
+void EncodePayload(uint8_t *_payload, UserInput *user_input, std::mutex *mtx);
 
 #endif
