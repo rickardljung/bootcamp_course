@@ -1,5 +1,10 @@
 #include "user_input.h"
-
+/*!
+	* Fills the payload array that is to be sent on CAN with information from the UserInput struct.
+	* @param _payload array to be sent in a CAN frame.
+    * @param user_input struct to receive values from.
+	* @return Nothing is returned
+*/
 void EncodePayload(uint8_t *_payload, UserInput *user_input)
 {
     _payload[0] = user_input->accelerator_pedal;

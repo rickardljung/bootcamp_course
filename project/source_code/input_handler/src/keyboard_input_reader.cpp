@@ -1,11 +1,15 @@
 #include "user_input.h"
 #include "keyboard_input_reader.h"
 #include <iostream>
-
+/*!
+	* Runs the main function of InputReader, calls functions ReadInputs and InterpretInput. Exits while loop when esc key is pressed.
+	* @param user_input fills in values in the user_input struct.
+	* @return Nothing is returned
+*/
 void InputReader::Run(UserInput *user_input)
 {
     is_running = true;
-    while(true)
+    while(is_running)
     {
         //read user input
         ReadInputs(); 
@@ -19,11 +23,13 @@ void InputReader::Run(UserInput *user_input)
         if(the_key.key == key_escape)
         {
             is_running = false;
-            break;
         }
     }   
 }
-
+/*!
+	* Reads inputs from keyboard and stores it in the_key (blocking function).
+	* @return Nothing is returned
+*/
 void InputReader::ReadInputs()
 {
         XNextEvent(display, &event);
@@ -34,13 +40,20 @@ void InputReader::ReadInputs()
             the_key.read = false;
         }
 }
-
+/*!
+	* Destructor for class InputReader, closes the display and resets settings for the keyboard.
+	* @return Nothing is returned
+*/
 InputReader::~InputReader()
 {
     /* close connection to server */
     XAutoRepeatOn(display);
     XCloseDisplay(display);    
 }
+/*!
+	* Constructor for class InputReader, opens a display and changes settings wanted for the keyboard reading.
+	* @return Nothing is returned
+*/
 InputReader::InputReader()
 { 
     /* open connection with the server */
@@ -65,7 +78,11 @@ InputReader::InputReader()
     XAutoRepeatOff(display);
 }
 
-
+/*!
+	* Controls what different key presses should be interpreted as. For example pressing "key_up" increases acceleration by 10%.
+	* @param user_input values shall be stored in a UserInput struct.
+	* @return Nothing is returned
+*/
 void InputReader::InterpretInput(UserInput *user_input)
 {
     
