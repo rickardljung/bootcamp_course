@@ -25,7 +25,7 @@ int main(){
         UserInput user_input;
 
         //create a thread for running the InputReader
-        std::thread t1(
+        std::thread read_inputs(
         [&](){
                 //run input_reader
                 input_reader.Run(&user_input);
@@ -43,7 +43,7 @@ int main(){
             }
         }
     
-    t1.join();
+    read_inputs.join();
     }
     
 
