@@ -3,22 +3,21 @@
 #include <iostream>
 #include "can_buffer.h"
 #include "socketcan.h"
-#include "can_reader.h"
+#include "can_io_thread.h"
 #include <thread>
 
 int main() {
     bool return_value = 0;
     scpp::SocketCan socket;
 
-    std::cout << "very important print out!" << std::endl;
-
     if (socket.Initialize("vcan0"))
     {
         //starts new thread reading can messages and writes to can_buffer
-        CanReader reader(&socket, 1);
+        CanIOThread io_thread(&socket, 1, 2);
 
-        //starts simulation reading from can_buffer in main thread. Creates thread writing ouput "socket"
-        Vehicle vehicle(&socket);
+        //starts simulation reading from can_buffer in main thread.
+        Vehicle vehicle;
+        vehicle.Run();
     } else
     {
         return_value = 1;

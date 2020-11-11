@@ -9,6 +9,6 @@ add_executable(drivetrain
                     src/engine_simulator.cpp
 
                     ../utils/src/can_buffer.cpp
-                    ../utils/src/can_reader.cpp
+                    ../utils/src/can_io_thread.cpp
                     ../utils/src/socketcan.cpp)
 target_link_libraries(drivetrain PUBLIC pthread)
