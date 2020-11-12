@@ -23,8 +23,6 @@ void CanReader::Run(uint8_t message_id) {
         if (result == scpp::STATUS_OK)
         {
             if (fr.id == message_id) {
-               // std::cout << "Received Acc: " << static_cast<int>(fr.data[0]) << std::endl;
-
                 payload[0] = fr.data[0] * 3;
                 socket->write(payload, 2, 1);
 
