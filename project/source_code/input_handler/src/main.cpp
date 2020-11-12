@@ -18,12 +18,6 @@ int main(){
     }
     else
     {
-<<<<<<< HEAD
-        std::this_thread::sleep_for(std::chrono::milliseconds(3));
-        //send CAN-message
-        socket.write(payload, msg_id, msg_len);
-        if(!input_reader.is_running)
-=======
         //payload to be sent in canframe
         uint8_t payload[msg_len];
         
@@ -38,9 +32,8 @@ int main(){
         }
         );    
         while(true)
->>>>>>> e737c99ba1fe05ef31dbeb1a04011f87847dc37a
         {
-            std::this_thread::sleep_for(std::chrono::milliseconds(20));
+            std::this_thread::sleep_for(std::chrono::milliseconds(3));
             //send CAN-message
             EncodePayload(payload, &user_input);
             socket.write(payload, msg_id, msg_len);
