@@ -17,16 +17,6 @@ void Vehicle::Run() {
         //RUN SIMULATION ENGINE AND GEARBOX
         payload[0] = input->accelerator_pedal * 2;
         CanBuffer::GetInstance().AddTx(payload);
-
-        /*
-        std::cout << "accelerator_pedal: "  << static_cast<int>(input->accelerator_pedal) << std::endl;
-        std::cout << "break_pedal: "        << static_cast<int>(data[1]) << std::endl;
-        std::cout << "gear_position: "      << static_cast<int>(input->gear_position) << std::endl;
-        std::cout << "ignition: "           << static_cast<int>(input->ignition) << std::endl;
-        std::cout << "end_simulation: "     << static_cast<int>(input->end_simulation) << std::endl;
-        std::cout << "------------------------" << std::endl;
-        */
-
 }
 
 //void Vehicle::calculateSpeed() {

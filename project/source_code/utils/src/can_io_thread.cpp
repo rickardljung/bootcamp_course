@@ -20,7 +20,6 @@ CanIOThread::CanIOThread(scpp::SocketCan *socket, std::promise<void> *promise, u
 * @param transmit_message_id id of the messages to transmit. 0 if nothing to transmit
 */
 void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) {
-    uint8_t payload[8];
     while (1)
     {
         scpp::CanFrame fr;
@@ -52,9 +51,5 @@ void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, u
 * Destructor of CanIOThread. Informs the thread to stop (the Run function) and wait until it is done.
 */
 CanIOThread::~CanIOThread() {
-/*     this->stop_thread = true;
-    while (!thread_stopped) {
-        for (size_t i = 0; i < 9999; i++); //STUPID SLEEP?
-    } */
     this->thread.join();
 }
