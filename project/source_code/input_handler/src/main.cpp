@@ -20,7 +20,7 @@ int main(){
     {
         //payload to be sent in canframe
         uint8_t payload[msg_len];
-        
+
         //struct containing user input values
         UserInput user_input;
 
@@ -30,10 +30,10 @@ int main(){
                 //run input_reader
                 input_reader.Run(&user_input);
         }
-        );    
+        );
         while(true)
         {
-            std::this_thread::sleep_for(std::chrono::milliseconds(3));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
             //send CAN-message
             EncodePayload(payload, &user_input);
             socket.write(payload, msg_id, msg_len);
@@ -42,11 +42,11 @@ int main(){
                 break;
             }
         }
-    
+
     read_inputs.join();
     }
-    
 
-    
+
+
     return returnval;
 }
