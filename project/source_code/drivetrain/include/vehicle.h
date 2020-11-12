@@ -4,7 +4,7 @@
 #include "gearbox_simulator.h"
 #include "user_input.h"
 #include "can_buffer.h"
-#include "socketcan.h"
+#include <thread>
 
 class Vehicle {
     private:
