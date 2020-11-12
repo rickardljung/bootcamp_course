@@ -18,8 +18,3 @@ void Vehicle::Run() {
         payload[0] = input->accelerator_pedal * 2;
         CanBuffer::GetInstance().AddTx(payload);
 }
-
-//void Vehicle::calculateSpeed() {
-    //int rmp = gearbox->getRPM;
-    //int hej = engine->gethej;
-//}

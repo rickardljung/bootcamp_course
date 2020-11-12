@@ -13,7 +13,7 @@ int main(){
 
     //initiate vcan0
     scpp::SocketCan socket;
-    if(!socket.Initialize("vcan0")){
+    if(socket.open("vcan0") != scpp::STATUS_OK){
         returnval = 1;
     }
     else
@@ -33,7 +33,7 @@ int main(){
         );    
         while(true)
         {
-            std::this_thread::sleep_for(std::chrono::milliseconds(20));
+            std::this_thread::sleep_for(std::chrono::milliseconds(3));
             //send CAN-message
             EncodePayload(payload, &user_input);
             socket.write(payload, msg_id, msg_len);

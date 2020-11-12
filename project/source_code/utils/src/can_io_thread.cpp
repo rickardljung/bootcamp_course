@@ -23,7 +23,8 @@ void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, u
     while (1)
     {
         scpp::CanFrame fr;
-        if (this->socket->read(fr) == scpp::STATUS_OK)
+        auto result = this->socket->read(fr);
+        if (result == scpp::STATUS_OK)
         {
             //always stop thread if receiving "end simulation" command from user.
             if (fr.id == 1) {
@@ -37,13 +38,25 @@ void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, u
             if (fr.id == receive_message_id) {
                 CanBuffer::GetInstance().AddRx(fr.data);
             }
+        }        
+        else if(result == scpp::STATUS_NOTHING_TO_READ)
+        {
+            if(++i>2000) {break;}
+            else{continue;}
         }
+
+        else if (result != scpp::STATUS_OK) {
+            std::cout << "Error " << result <<std::endl;
+            break;
+        }
+        else i =0;
+      
         //transmit_message_id = 0 -> nothing to send
         if (transmit_message_id != 0)
         {
             this->socket->write(CanBuffer::GetInstance().PullTx(), transmit_message_id, 8);
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        std::this_thread::sleep_for(std::chrono::milliseconds(3));
     }
 }
 

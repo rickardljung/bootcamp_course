@@ -4,9 +4,15 @@
 
 int main() {
     bool return_value = 0;
-    scpp::SocketCan socket;
 
-    if (socket.Initialize("vcan0"))
+    scpp::SocketCan socket;
+    auto result = socket.open("vcan0");
+    if (result!=scpp::STATUS_OK) {
+            std::cout << "Nothing to read " << result <<std::endl;
+            return 0;
+    }
+
+    if (socket.open("vcan0") == scpp::STATUS_OK)
     {
         std::promise<void> promise;
         std::future<void> future = promise.get_future();
