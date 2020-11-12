@@ -11,7 +11,6 @@
 CanIOThread::CanIOThread(scpp::SocketCan *socket, std::promise<void> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) {
     this->socket = socket;
     this->thread = std::thread(&CanIOThread::Run, this, promise, receive_message_id, transmit_message_id);
-    // read_can_thread.detach();
 }
 
 /*!
@@ -22,7 +21,7 @@ CanIOThread::CanIOThread(scpp::SocketCan *socket, std::promise<void> *promise, u
 */
 void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) {
     uint8_t payload[8];
-    while (!this->stop_thread)
+    while (1)
     {
         scpp::CanFrame fr;
         if (this->socket->read(fr) == scpp::STATUS_OK)
@@ -47,10 +46,6 @@ void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, u
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
-/*     if (this->stop_thread) //TODO: promise instead??
-    {
-        thread_stopped = true;
-    } */
 }
 
 /*!

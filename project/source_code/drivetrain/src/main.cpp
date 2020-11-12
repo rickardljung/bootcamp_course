@@ -13,9 +13,8 @@ int main() {
         //starts new thread handling input and output on CAN. Uses can_buffer
         CanIOThread io_thread(&socket, &promise, 1, 2);
 
-        //starts simulation reading from can_buffer in main thread.
         Vehicle vehicle;
-
+        //starts simulation, reading and writing to can_buffer
         std::future_status status;
         while (status != std::future_status::ready) {
             status = future.wait_for(std::chrono::milliseconds(3));
