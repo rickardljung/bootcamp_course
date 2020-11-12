@@ -16,9 +16,10 @@ bool InputReader::Run(UserInput *user_input, std::mutex *mtx)
     //interpret user input
     if(the_key.read == false)
     {   
-        mtx->lock();
+        std::lock_guard<std::mutex> lock(*mtx);
+        //mtx->lock();
         InterpretInput(user_input);
-        mtx->unlock();  
+        //mtx->unlock();  
     }
     if(the_key.key == key_escape)
     {

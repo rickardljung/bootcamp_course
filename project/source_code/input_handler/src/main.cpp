@@ -45,7 +45,10 @@ int main(){
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(20));
             //send CAN-message
-            EncodePayload(payload, &user_input, &user_input_mtx);
+            {
+                std::lock_guard<std::mutex> lock (user_input_mtx);
+                EncodePayload(payload, &user_input);
+            }
             socket.write(payload, msg_id, msg_len);
             
             if(payload[4]) //end_simulation == 1
