@@ -9,22 +9,15 @@
 */
 void Vehicle::Run() {
     //payload to be sent in canframe
-    uint8_t payload[8];
+    uint8_t payload[8] = {0,0,0,0,0,0,0,0};
 
-    bool simulation_running = true;
-    while(simulation_running) {
         uint8_t *data =  CanBuffer::GetInstance().PullRx();
         UserInput *input = reinterpret_cast<UserInput*>(data);
-        if(!input->end_simulation)
-        {
-            //RUN SIMULATION ENGINE AND GEARBOX
-            payload[0] = input->accelerator_pedal * 2;
-            CanBuffer::GetInstance().AddTx(payload);
-            std::this_thread::sleep_for(std::chrono::milliseconds(20));
-        } else
-        {
-            simulation_running = false;
-        }
+
+        //RUN SIMULATION ENGINE AND GEARBOX
+        payload[0] = input->accelerator_pedal * 2;
+        CanBuffer::GetInstance().AddTx(payload);
+
         /*
         std::cout << "accelerator_pedal: "  << static_cast<int>(input->accelerator_pedal) << std::endl;
         std::cout << "break_pedal: "        << static_cast<int>(data[1]) << std::endl;
@@ -33,7 +26,7 @@ void Vehicle::Run() {
         std::cout << "end_simulation: "     << static_cast<int>(input->end_simulation) << std::endl;
         std::cout << "------------------------" << std::endl;
         */
-    }
+
 }
 
 //void Vehicle::calculateSpeed() {

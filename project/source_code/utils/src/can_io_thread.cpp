@@ -8,10 +8,10 @@
 * @param receive_message_id id of the messages to read
 * @param transmit_message_id id of the messages to transmit. 0 if nothing to transmit
 */
-CanIOThread::CanIOThread(scpp::SocketCan *socket, std::promise<int> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) {
+CanIOThread::CanIOThread(scpp::SocketCan *socket, std::promise<void> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) {
     this->socket = socket;
-    read_can_thread = std::thread(&CanIOThread::Run, this, promise, receive_message_id, transmit_message_id);
-    read_can_thread.detach();
+    this->thread = std::thread(&CanIOThread::Run, this, promise, receive_message_id, transmit_message_id);
+    // read_can_thread.detach();
 }
 
 /*!
@@ -20,7 +20,7 @@ CanIOThread::CanIOThread(scpp::SocketCan *socket, std::promise<int> *promise, ui
 * @param receive_message_id id of the messages to read
 * @param transmit_message_id id of the messages to transmit. 0 if nothing to transmit
 */
-void CanIOThread::Run(std::promise<int> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) {
+void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) {
     uint8_t payload[8];
     while (!this->stop_thread)
     {
@@ -32,7 +32,8 @@ void CanIOThread::Run(std::promise<int> *promise, uint8_t receive_message_id, ui
                 UserInput *input = reinterpret_cast<UserInput*>(fr.data);
                 if(input->end_simulation)
                 {
-                    this->stop_thread = true;
+                    promise->set_value();
+                    break;
                 }
             }
             if (fr.id == receive_message_id) {
@@ -46,18 +47,19 @@ void CanIOThread::Run(std::promise<int> *promise, uint8_t receive_message_id, ui
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
-    if (this->stop_thread) //TODO: promise instead??
+/*     if (this->stop_thread) //TODO: promise instead??
     {
         thread_stopped = true;
-    }
+    } */
 }
 
 /*!
 * Destructor of CanIOThread. Informs the thread to stop (the Run function) and wait until it is done.
 */
 CanIOThread::~CanIOThread() {
-    this->stop_thread = true;
+/*     this->stop_thread = true;
     while (!thread_stopped) {
         for (size_t i = 0; i < 9999; i++); //STUPID SLEEP?
-    }
+    } */
+    this->thread.join();
 }
