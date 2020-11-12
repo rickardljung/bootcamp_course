@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-if ["$1"]
 if [ -d "build" ]; then
   rm -rf build
 fi
