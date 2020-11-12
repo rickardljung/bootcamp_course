@@ -50,8 +50,8 @@ int main(){
                 EncodePayload(payload, &user_input);
             }
             socket.write(payload, msg_id, msg_len);
-            
-            if(payload[4]) //end_simulation == 1
+
+            if(payload[4]) //end_simulation == 1 TODO: signalling from thread instead
             {
                 break;
             }

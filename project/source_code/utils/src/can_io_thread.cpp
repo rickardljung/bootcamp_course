@@ -8,7 +8,7 @@
 * @param receive_message_id id of the messages to read
 * @param transmit_message_id id of the messages to transmit. 0 if nothing to transmit
 */
-CanIOThread::CanIOThread(scpp::SocketCan *socket, std::promise<void> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) {
+CanIOThread::CanIOThread(scpp::SocketCan *socket, std::promise<void> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) { //TODO break lines
     this->socket = socket;
     this->thread = std::thread(&CanIOThread::Run, this, promise, receive_message_id, transmit_message_id);
 }
@@ -19,9 +19,9 @@ CanIOThread::CanIOThread(scpp::SocketCan *socket, std::promise<void> *promise, u
 * @param receive_message_id id of the messages to read
 * @param transmit_message_id id of the messages to transmit. 0 if nothing to transmit
 */
-void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) {
+void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) { //TODO break, list of IDs to listed to. Do not need the promise {
     size_t i = 0;
-    while (1)
+    while (true)
     {
         scpp::CanFrame fr;
         auto result = this->socket->read(fr);
@@ -37,16 +37,16 @@ void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, u
                 }
             }
             if (fr.id == receive_message_id) {
-                CanBuffer::GetInstance().AddRx(fr.data);
+                CanBuffer::GetInstance().AddRx(fr.data); //TODO: not singleton?
             }
         }
-        else if(result == scpp::STATUS_NOTHING_TO_READ) //add timer?
+        else if(result == scpp::STATUS_NOTHING_TO_READ)
         {
-        if(++i>20000)
-        {
-            promise->set_value();
-            break;
-        }
+            if(++i>20000)
+            {
+                promise->set_value();
+                break;
+            }
             else{continue;}
         }
 

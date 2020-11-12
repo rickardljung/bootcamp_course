@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <mutex>
 
-enum GearPos : uint8_t {P=0, N=1, D=2, R=3};
+enum GearPos : uint8_t {P=0, N=1, D=2, R=3}; //TODO bitfield struct instead?
 const uint8_t msg_id = 1;
 const uint8_t msg_len = 5;
 

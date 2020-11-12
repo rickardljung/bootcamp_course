@@ -11,21 +11,21 @@ bool InputReader::Run(UserInput *user_input, std::mutex *mtx)
 {
     bool returnval = true;
     //read user input
-    ReadInputs(); 
+    ReadInputs();
 
     //interpret user input
     if(the_key.read == false)
-    {   
+    {
         std::lock_guard<std::mutex> lock(*mtx);
         //mtx->lock();
         InterpretInput(user_input);
-        //mtx->unlock();  
+        //mtx->unlock();
     }
     if(the_key.key == key_escape)
     {
         returnval = false;
     }
-    return returnval; 
+    return returnval;
 }
 /*!
 	* Reads inputs from keyboard and stores it in the_key (blocking function).
@@ -49,14 +49,14 @@ InputReader::~InputReader()
 {
     /* close connection to server */
     XAutoRepeatOn(display);
-    XCloseDisplay(display);    
+    XCloseDisplay(display);
 }
 /*!
 	* Constructor for class InputReader, opens a display and changes settings wanted for the keyboard reading.
 	* @return Nothing is returned
 */
 InputReader::InputReader()
-{ 
+{
     /* open connection with the server */
     display = XOpenDisplay(NULL);
     if (display == NULL)
@@ -64,16 +64,16 @@ InputReader::InputReader()
         fprintf(stderr, "Cannot open display\n");
         exit(1);
     }
- 
+
     s = DefaultScreen(display);
- 
+
     /* create window */
     window = XCreateSimpleWindow(display, RootWindow(display, s), 1, 1, 2, 2, 1,
                            BlackPixel(display, s), WhitePixel(display, s));
- 
+
     /* select kind of events we are interested in */
     XSelectInput(display, window, KeyPressMask | KeyReleaseMask );
- 
+
     /* map (show) the window */
     XMapWindow(display, window);
     XAutoRepeatOff(display);
@@ -86,10 +86,10 @@ InputReader::InputReader()
 */
 void InputReader::InterpretInput(UserInput *user_input)
 {
-    
+
     if(the_key.key == key_up) //user pressing acc pedal
     {
-        user_input->accelerator_pedal+=10;
+        user_input->accelerator_pedal+=10; //TODO const variables
         if(user_input->accelerator_pedal > 100)
         {
             user_input->accelerator_pedal = 100;
@@ -140,7 +140,7 @@ void InputReader::InterpretInput(UserInput *user_input)
         user_input->gear_position = P;
         the_key.read = true;
     }
-    
+
     else if(the_key.key == key_n)
     {
         user_input->gear_position = N;
