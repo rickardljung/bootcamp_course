@@ -21,7 +21,8 @@ void Vehicle::Run() {
             //RUN SIMULATION ENGINE AND GEARBOX
             payload[0] = input->accelerator_pedal * 2;
             CanBuffer::GetInstance().AddTx(payload);
-            std::this_thread::sleep_for(std::chrono::milliseconds(20));
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(3));
         } else
         {
             simulation_running = false;
