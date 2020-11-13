@@ -13,14 +13,15 @@ int main() {
         std::promise<void> promise;
         std::future<void> future = promise.get_future();
         //starts new thread handling input and output on CAN. Uses can_buffer
-        CanIOThread io_thread(&socket, &promise, 1, 2);
+        CanIOThread io_thread(&socket, &future, 1, 2);
 
         Vehicle vehicle;
         //starts simulation, reading and writing to can_buffer
-        std::future_status status;
-        while (status != std::future_status::ready) {
-            status = future.wait_for(std::chrono::milliseconds(3));
+        bool simulation_running = true;
+        while (simulation_running) {
+
             vehicle.Run();
+            std::this_thread::sleep_for(std::chrono::microseconds(10));
         }
     } else
     {

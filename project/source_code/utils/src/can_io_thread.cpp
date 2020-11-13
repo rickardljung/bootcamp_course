@@ -8,9 +8,9 @@
 * @param receive_message_id id of the messages to read
 * @param transmit_message_id id of the messages to transmit. 0 if nothing to transmit
 */
-CanIOThread::CanIOThread(scpp::SocketCan *socket, std::promise<void> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) { //TODO break lines
+CanIOThread::CanIOThread(scpp::SocketCan *socket, std::future<void> *future, uint8_t receive_message_id, uint8_t transmit_message_id) { //TODO break lines
     this->socket = socket;
-    this->thread = std::thread(&CanIOThread::Run, this, promise, receive_message_id, transmit_message_id);
+    this->thread = std::thread(&CanIOThread::Run, this, future, receive_message_id, transmit_message_id);
 }
 
 /*!
@@ -19,33 +19,35 @@ CanIOThread::CanIOThread(scpp::SocketCan *socket, std::promise<void> *promise, u
 * @param receive_message_id id of the messages to read
 * @param transmit_message_id id of the messages to transmit. 0 if nothing to transmit
 */
-void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, uint8_t transmit_message_id) { //TODO break, list of IDs to listed to. Do not need the promise {
+void CanIOThread::Run(std::future<void> *future, uint8_t receive_message_id, uint8_t transmit_message_id) { //TODO break, list of IDs to listed to. Do not need the promise {
     size_t i = 0;
-    while (true)
+    std::future_status future_status;
+    do
     {
+
         scpp::CanFrame fr;
         auto result = this->socket->read(fr);
         if (result == scpp::STATUS_OK)
         {
             i = 0;
-            if (fr.id == 1) { //always stop thread if receiving "end simulation" command from user.
+/*             if (fr.id == 1) { //always stop thread if receiving "end simulation" command from user.
                 UserInput *input = reinterpret_cast<UserInput*>(fr.data);
                 if(input->end_simulation)
                 {
                     promise->set_value();
                     break;
                 }
-            }
+            } */
             if (fr.id == receive_message_id) {
-                CanBuffer::GetInstance().AddRx(fr.data); //TODO: not singleton?
+                CanBuffer::GetInstance().AddRx(fr.data);
             }
         }
         else if(result == scpp::STATUS_NOTHING_TO_READ)
         {
             if(++i>20000)
             {
-                promise->set_value();
-                break;
+/*                 promise->set_value(); //Empty buffer
+                break; */
             }
             else{continue;}
         }
@@ -60,8 +62,8 @@ void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, u
         {
             this->socket->write(CanBuffer::GetInstance().PullTx(), transmit_message_id, 8);
         }
-        std::this_thread::sleep_for(std::chrono::microseconds(10));
-    }
+        future_status = future->wait_for(std::chrono::microseconds(10));
+    } while (future_status != std::future_status::ready);
 }
 
 /*!
