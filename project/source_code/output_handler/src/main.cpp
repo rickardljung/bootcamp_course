@@ -1,8 +1,13 @@
-#include "vehicle.h"
+#include <thread>
 #include "can_io_thread.h"
+#include <chrono>
 #include <iostream>
+#include "socketcan.h"
 
-int main() {
+using namespace scpp;
+
+int main(){
+
     bool return_value = 0;
 
     scpp::SocketCan socket;
@@ -12,15 +17,15 @@ int main() {
     {
         std::promise<void> promise;
         std::future<void> future = promise.get_future();
-        //starts new thread handling input and output on CAN. Uses can_buffer
-        CanIOThread io_thread(&socket, &promise, 1, 2);
+        //starts new thread reading can messages and writes to can_buffer
+        CanIOThread io_thread(&socket, &promise, 2, 0);
 
-        Vehicle vehicle;
-        //starts simulation, reading and writing to can_buffer
         std::future_status status;
         while (status != std::future_status::ready) {
-            status = future.wait_for(std::chrono::milliseconds(3));
-            vehicle.Run();
+            status = future.wait_for(std::chrono::milliseconds(100));
+            uint8_t *received_can_data = CanBuffer::GetInstance().PullRx();
+
+            std::cout << "Output Acc: " << static_cast<int>(received_can_data[0]) << std::endl;
         }
     } else
     {

@@ -13,7 +13,6 @@ Repeat above instruction
 Add assignee to review your change to the right in the screen
 When the assignee have reviewed the changes can the pull request be merged to main (master)
 
-
 OTHER COMMANDS:
 List branches: git branch -a
 Change branch: git checkout <branch name>

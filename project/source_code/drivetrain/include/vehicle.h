@@ -4,17 +4,16 @@
 #include "gearbox_simulator.h"
 #include "user_input.h"
 #include "can_buffer.h"
-#include "socketcan.h"
+#include <thread>
 
 class Vehicle {
     private:
         Engine engine();
         Gearbox gearbox();
-        void Run();
-        scpp::SocketCan *socket;
     public:
-        Vehicle(scpp::SocketCan *socket);
+        Vehicle() = default;
         bool Initialize();
+        void Run();
 };
 
 #endif
