@@ -12,16 +12,28 @@ int main() {
     {
         std::promise<void> promise;
         std::future<void> future = promise.get_future();
+        uint8_t receive_message_id[1] = {1};
+        size_t receive_message_id_size = 1;
         //starts new thread handling input and output on CAN. Uses can_buffer
-        CanIOThread io_thread(&socket, &promise, 1, 2);
+        CanIOThread io_thread(&socket, &future, receive_message_id, receive_message_id_size);
 
         Vehicle vehicle;
-        //starts simulation, reading and writing to can_buffer
-        std::future_status status;
-        while (status != std::future_status::ready) {
-            status = future.wait_for(std::chrono::milliseconds(3));
-            vehicle.Run();
+        int i = 0;
+        bool run_simulation = true;
+        while (run_simulation) {
+            std::this_thread::sleep_for(std::chrono::microseconds(5));
+            if (!CanBuffer::GetInstance().ReceiveBufferEmpty()) {
+                i = 0;
+                run_simulation = vehicle.Run();
+            } else
+            {
+                if(++i > 100000) // buffer is empty for over 1 second
+                {
+                    break;
+                } else {continue;}
+            }
         }
+        promise.set_value();
     } else
     {
         std::cout << "Failed to open socket: " << result <<std::endl;

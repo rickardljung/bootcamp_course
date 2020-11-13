@@ -12,8 +12,7 @@ class Vehicle {
         Gearbox gearbox();
     public:
         Vehicle() = default;
-        bool Initialize();
-        void Run();
+        bool Run();
 };
 
 #endif

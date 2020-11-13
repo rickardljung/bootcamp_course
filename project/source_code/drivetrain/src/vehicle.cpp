@@ -7,14 +7,27 @@
 * @param receive_message_id id of the messages to read
 * @param transmit_message_id id of the messages to transmit. 0 if nothing to transmit
 */
-void Vehicle::Run() {
+bool Vehicle::Run() {
     //payload to be sent in canframe
     uint8_t payload[8] = {0,0,0,0,0,0,0,0};
+    uint32_t transmit_id = 2;
+    uint8_t transmit_length = 1;
 
-        uint8_t *data =  CanBuffer::GetInstance().PullRx();
-        UserInput *input = reinterpret_cast<UserInput*>(data);
+    bool return_value = 0;
 
-        //RUN SIMULATION ENGINE AND GEARBOX
-        payload[0] = input->accelerator_pedal * 2;
-        CanBuffer::GetInstance().AddTx(payload);
+    CanData data =  CanBuffer::GetInstance().PullRx();
+    if (data.id == 1) //can data from input_handler
+    {
+        UserInput *input = reinterpret_cast<UserInput*>(data.payload);
+        if (input->end_simulation) {
+            return_value = 0;
+        } else
+        {
+            //RUN SIMULATION ENGINE AND GEARBOX
+            payload[0] = input->accelerator_pedal * 2;
+            CanBuffer::GetInstance().AddTx(&transmit_id, payload, &transmit_length);
+            return_value = 1;
+        }
+    }
+    return return_value;
 }

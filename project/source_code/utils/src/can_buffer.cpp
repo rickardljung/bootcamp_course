@@ -8,45 +8,56 @@
 * Adds received can data to the receive (RX) buffer
 * @param data received can data
 */
-void CanBuffer::AddRx(uint8_t data[]) {  //this will be replaced by ringbuffer
-
-    if(data!=nullptr)
-    {
-        std::memcpy(this->receive_can_data, data, sizeof(&data));
-    }
-    else
-    {
-        exit(-1);
-    }
+void CanBuffer::AddRx(uint32_t *id, uint8_t payload[], uint8_t *length)
+{
+    std::memcpy(this->receive_candata.payload, payload, sizeof(&payload));
+    this->receive_candata.id = *id;
+    this->receive_candata.length = *length;
+    this->receive_empty = false;
 }
 /*!
 * Adds data to be sent to the transmit (TX) buffer
 * @param data data to be transmitted
 */
-void CanBuffer::AddTx(uint8_t data[]) {  //this will be replaced by ringbuffer
-
-    if(data!=nullptr)
-    {
-        std::memcpy(this->transmit_can_data, data, sizeof(&data));
-    }
-    else
-    {
-        exit(-1);
-    }
-}
-
+void CanBuffer::AddTx(uint32_t *id, uint8_t payload[], uint8_t *length)
+{
+    std::memcpy(this->transmit_candata.payload, payload, sizeof(&payload));
+    this->transmit_candata.id = *id;
+    this->transmit_candata.length = *length;
+    this->transmit_empty = false;
 /*!
 * Pulls next data package from the receive (RX) buffer
 * @return received data
 */
-uint8_t * CanBuffer::PullRx() {            //this will be replaced by ringbuffer
-    return this->receive_can_data;
 }
-
+CanData CanBuffer::PullRx()
+{
+    this->receive_empty = true;
+    return this->receive_candata;
+}
 /*!
 * Pulls next data package from the transmit (TX) buffer
 * @return data to be transmitted
 */
-uint8_t * CanBuffer::PullTx() {            //this will be replaced by ringbuffer
-    return this->transmit_can_data;
+CanData CanBuffer::PullTx()
+{
+    this->transmit_empty = true;
+    return this->transmit_candata;
+}
+/*!
+* Check if receive buffer contains any elements
+* @return TRUE if receive buffer is empty
+*/
+bool CanBuffer::ReceiveBufferEmpty()
+{
+    return this->receive_empty;
+}
+
+/*!
+* Check if transmit buffer contains any elements
+* @return TRUE if transmit buffer is empty
+*/
+bool CanBuffer::TransmitBufferEmpty()
+{
+    return this->transmit_empty;
 }
