@@ -9,7 +9,10 @@ VERSION="0.2 - WORK IN PROGRESS BUGS EXPECTED"
 function usage
 {
   local txt=(
-    "Script $SCRIPT that enables only executing simulation or rebuilding it and then executing"
+    "Script $SCRIPT that enables only executing simulation or rebuilding it and then executing."
+    "Programs are executed in separate terminal tabs and after execution is terminated they"
+    "wait for any user input to be closed."
+    "" 
     "Usage: bash $SCRIPT [options]"
     ""
     "Options:"
@@ -17,6 +20,7 @@ function usage
     "  --version, -v  Script version"
     "  --build,   -b  Rebuild old version"
     "  --run,     -r  Run without rebuild"
+    "  --doxygen, -d  Run doxygen script execution"
   )
   printf "%s\n" "${txt[@]}"
 }
@@ -77,6 +81,37 @@ function run
   
 }
 
+function doxygen
+{
+  local txt=(
+    "Executing doxygen script"
+  )
+  printf "%s\n" "${txt[@]}"
+  cd ..
+  ls
+  cd documents
+  cd doxygen_code_documentation
+  ls
+  if [ -d "html" ]; then
+    echo removing html folder
+    rm -rf html
+  fi
+  if [ -d "latex" ]; then
+    echo removing latex folder
+    rm -rf latex
+  fi
+  #doxygen
+  gnome-terminal --geometry=260x25-0+0 --tab --title="input_handler" -e "bash -c 'doxygen'" 
+  # firefox = $(dpkg-query -W -f='${Status}' firefox | grep -c "ok installed") -eq 0;
+  # if [ firefox ]; then
+  # if [(dpkg-query -W -f='${Status}' firefox | grep -c "ok installed")]; then
+  #   echo opening index.html
+  #   firefox html/index.html
+  # fi
+  firefox html/index.html
+
+}
+
 while (( $# ))
 do
     case "$1" in
@@ -94,6 +129,10 @@ do
       ;;
       --build | -b)
           build
+          exit 0
+      ;;
+      --doxygen | -d)
+          doxygen
           exit 0
       ;;
 
