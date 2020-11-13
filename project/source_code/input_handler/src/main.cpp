@@ -17,14 +17,14 @@ int main(){
 
     //initiate vcan0
     scpp::SocketCan socket;
-    if(!socket.Initialize("vcan0")){
+    if(socket.open("vcan0") != scpp::STATUS_OK){
         returnval = 1;
     }
     else
     {
         //payload to be sent in canframe
         uint8_t payload[msg_len];
-        
+
         //struct containing user input values
         UserInput user_input;
 
@@ -40,27 +40,27 @@ int main(){
                     }
                 }
         }
-        );    
+        );
         while(true)
         {
-            std::this_thread::sleep_for(std::chrono::milliseconds(20));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
             //send CAN-message
             {
                 std::lock_guard<std::mutex> lock (user_input_mtx);
                 EncodePayload(payload, &user_input);
             }
             socket.write(payload, msg_id, msg_len);
-            
-            if(payload[4]) //end_simulation == 1
+
+            if(payload[4]) //end_simulation == 1 TODO: signalling from thread instead
             {
                 break;
             }
         }
-    
+
     read_inputs.join();
     }
-    
 
-    
+
+
     return returnval;
 }
