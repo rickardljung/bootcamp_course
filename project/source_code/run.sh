@@ -20,7 +20,7 @@ function usage
     "  --version, -v  Script version"
     "  --build,   -b  Rebuild old version"
     "  --run,     -r  Run without rebuild"
-    "  --doxygen, -d  Run doxygen script executionm, checks if installed, if no then it does it for you"
+    "  --doxygen, -d  Run doxygen script execution, checks if installed, if no then it does it for you"
   )
   printf "%s\n" "${txt[@]}"
 }
