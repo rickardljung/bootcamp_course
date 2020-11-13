@@ -4,7 +4,7 @@
 SCRIPT=$( basename "$0" )
 
 #Current version
-VERSION="0.1 - WORK IN PROGRESS BUGS EXPECTED"
+VERSION="0.2 - WORK IN PROGRESS BUGS EXPECTED"
 
 function usage
 {
@@ -73,8 +73,7 @@ function run
   )
   printf "%s\n" "${txt[@]}"
   cd build
-  gnome-terminal --tab --title="input_handler" -e "./input_handler/input_handler" --tab --title="drivetrain" -e "./drivetrain/drivetrain" --tab --title="output_handler" -e "./output_handler/output_handler"
-
+  gnome-terminal --geometry=260x25-0+0 --tab --title="input_handler" -e "bash -c './input_handler/input_handler; read -n1'" --tab --title="drivetrain" -e "bash -c './drivetrain/drivetrain; read -n1' " --tab --title="output_handler" -e "bash -c './output_handler/output_handler; read -n1' "
   
 }
 
