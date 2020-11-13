@@ -20,7 +20,7 @@ function usage
     "  --version, -v  Script version"
     "  --build,   -b  Rebuild old version"
     "  --run,     -r  Run without rebuild"
-    "  --doxygen, -d  Run doxygen script execution"
+    "  --doxygen, -d  Run doxygen script executionm, checks if installed, if no then it does it for you"
   )
   printf "%s\n" "${txt[@]}"
 }
@@ -88,10 +88,8 @@ function doxygen
   )
   printf "%s\n" "${txt[@]}"
   cd ..
-  ls
   cd documents
   cd doxygen_code_documentation
-  ls
   if [ -d "html" ]; then
     echo removing html folder
     rm -rf html
@@ -100,14 +98,17 @@ function doxygen
     echo removing latex folder
     rm -rf latex
   fi
-  #doxygen
+
+  REQUIRED_PKG="doxygen"
+  PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG|grep "install ok installed")
+  echo Checking for $REQUIRED_PKG: $PKG_OK
+  if [ "" = "$PKG_OK" ]; then
+    echo "No $REQUIRED_PKG. Setting up $REQUIRED_PKG."
+    sudo apt-get --yes install $REQUIRED_PKG 
+  fi
+
   gnome-terminal --geometry=260x25-0+0 --tab --title="input_handler" -e "bash -c 'doxygen'" 
-  # firefox = $(dpkg-query -W -f='${Status}' firefox | grep -c "ok installed") -eq 0;
-  # if [ firefox ]; then
-  # if [(dpkg-query -W -f='${Status}' firefox | grep -c "ok installed")]; then
-  #   echo opening index.html
-  #   firefox html/index.html
-  # fi
+
   firefox html/index.html
 
 }
