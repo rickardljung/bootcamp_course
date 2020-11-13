@@ -8,7 +8,7 @@
 
 class Vehicle {
     private:
-        Engine engine();
+        Engine engine;
         Gearbox gearbox();
     public:
         Vehicle() = default;

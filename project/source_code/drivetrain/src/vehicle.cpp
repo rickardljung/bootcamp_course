@@ -15,6 +15,8 @@ void Vehicle::Run() {
         UserInput *input = reinterpret_cast<UserInput*>(data);
 
         //RUN SIMULATION ENGINE AND GEARBOX
-        payload[0] = input->accelerator_pedal * 2;
+        engine.Run(input);
+        payload[0] = engine.get_sts();
+        payload[1] = engine.get_rpm()/(int)37;
         CanBuffer::GetInstance().AddTx(payload);
 }

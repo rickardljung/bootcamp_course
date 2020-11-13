@@ -44,6 +44,7 @@ void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, u
         {
             if(++i>20000)
             {
+                std::cout << "ended here" << std::endl;
                 promise->set_value();
                 break;
             }
@@ -58,7 +59,7 @@ void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, u
         //transmit_message_id = 0 -> nothing to send
         if (transmit_message_id != 0)
         {
-            this->socket->write(CanBuffer::GetInstance().PullTx(), transmit_message_id, 8);
+            //this->socket->write(CanBuffer::GetInstance().PullTx(), transmit_message_id, 8);
         }
         std::this_thread::sleep_for(std::chrono::microseconds(10));
     }

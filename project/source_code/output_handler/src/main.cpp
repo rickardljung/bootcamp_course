@@ -25,7 +25,8 @@ int main(){
             status = future.wait_for(std::chrono::milliseconds(100));
             uint8_t *received_can_data = CanBuffer::GetInstance().PullRx();
 
-            std::cout << "Output Acc: " << static_cast<int>(received_can_data[0]) << std::endl;
+            std::cout << "EngSts: " << static_cast<int>(received_can_data[0]) << std::endl;
+            std::cout << "RPM: " << static_cast<int>(received_can_data[1]*(int)37) << std::endl;
         }
     } else
     {
