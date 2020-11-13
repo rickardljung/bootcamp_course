@@ -829,7 +829,7 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = "../../source_code/drivetrain/include" "../../source_code/drivetrain/src" "../../source_code/input_handler/include" "../../source_code/input_handler/src"
+INPUT                  = "../../source_code/drivetrain/include" "../../source_code/drivetrain/src" "../../source_code/input_handler/include" "../../source_code/input_handler/src" "../../source_code/output_handler/src" "../../source_code/output_handler/include" "../../source_code/utils/src" "../../source_code/utils/include"
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
