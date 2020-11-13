@@ -7,12 +7,8 @@ int main() {
 
     scpp::SocketCan socket;
     auto result = socket.open("vcan0");
-    if (result!=scpp::STATUS_OK) {
-            std::cout << "Nothing to read " << result <<std::endl;
-            return 0;
-    }
 
-    if (socket.open("vcan0") == scpp::STATUS_OK)
+    if (result == scpp::STATUS_OK)
     {
         std::promise<void> promise;
         std::future<void> future = promise.get_future();
@@ -28,8 +24,8 @@ int main() {
         }
     } else
     {
+        std::cout << "Failed to open socket: " << result <<std::endl;
         return_value = 1;
     }
-
     return return_value;
 }
