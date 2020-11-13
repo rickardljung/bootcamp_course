@@ -42,7 +42,7 @@ void CanIOThread::Run(std::promise<void> *promise, uint8_t receive_message_id, u
         }
         else if(result == scpp::STATUS_NOTHING_TO_READ)
         {
-            if(++i>20000)
+            if(++i>100000)
             {
                 std::cout << "ended here" << std::endl;
                 promise->set_value();
