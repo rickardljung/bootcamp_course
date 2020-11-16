@@ -4,6 +4,7 @@
 #include <thread>
 #include <chrono>
 #include <mutex>
+#include <iostream>
 
 
 int main(){
@@ -17,7 +18,9 @@ int main(){
 
     //initiate vcan0
     scpp::SocketCan socket;
-    if(socket.open("vcan0") != scpp::STATUS_OK){
+    auto result = socket.open("vcan0");
+    if(result != scpp::STATUS_OK){
+        std::cout << "Failed to open socket: " << result <<std::endl;
         returnval = 1;
     }
     else

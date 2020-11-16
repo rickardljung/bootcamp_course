@@ -4,6 +4,12 @@
 #define CAN_BUFFER_H
 #include "user_input.h"
 
+typedef struct CanData_struct{
+    uint32_t id;
+    uint8_t payload[8];
+    uint8_t length;
+} CanData;
+
 class CanBuffer
 {
     public:
@@ -11,18 +17,21 @@ class CanBuffer
             static CanBuffer    instance;
             return instance;
         }
-        void AddTx(uint8_t data[]);
-        void AddRx(uint8_t data[]);
-        uint8_t * PullTx();
-        uint8_t * PullRx();
-
         CanBuffer(CanBuffer const&)       = delete;
         void operator=(CanBuffer const&)  = delete;
+        void AddTx(const uint32_t *id, uint8_t payload[], const uint8_t *length);
+        void AddRx(const uint32_t *id, uint8_t payload[], const uint8_t *length);
+        CanData PullTx();
+        CanData PullRx();
+        bool ReceiveBufferEmpty();
+        bool TransmitBufferEmpty();
     private:
         CanBuffer() {};
-        //UserInput received_can_data; //this will be replaced by ringbuffer
-        uint8_t receive_can_data[8];
-        uint8_t transmit_can_data[8];
+        //UserInput received_CanData; //this will be replaced by ringbuffer
+        CanData receive_candata;
+        CanData transmit_candata;
+        bool receive_empty = true;
+        bool transmit_empty = true;
 };
 
 #endif
