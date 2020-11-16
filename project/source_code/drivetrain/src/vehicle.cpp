@@ -20,7 +20,9 @@ bool Vehicle::Run()
         } else
         {
             //RUN SIMULATION ENGINE AND GEARBOX
-            payload[0] = input->accelerator_pedal * 2;
+            engine.Run(input);
+            payload[0] = this->engine.get_sts();
+            payload[1] = static_cast<uint8_t>(this->engine.get_rpm() / (int)37);
             CanBuffer::GetInstance().AddTx(&transmit_id, payload, &transmit_length);
             return_value = 1;
         }
