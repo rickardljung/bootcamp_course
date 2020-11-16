@@ -66,7 +66,15 @@ function build
   cd build
   cmake ..
   make
-  run
+  if [ "$?" -eq 0 ] 
+  then
+    echo "make succeeded"
+    run
+  else 
+    echo "make failed"
+    echo "Check log for errors in code"
+  fi
+
   
 }
 
@@ -77,7 +85,9 @@ function run
   )
   printf "%s\n" "${txt[@]}"
   cd build
-  gnome-terminal --geometry=260x25-0+0 --tab --title="input_handler" -e "bash -c './input_handler/input_handler; read -n1'" --tab --title="drivetrain" -e "bash -c './drivetrain/drivetrain; read -n1' " --tab --title="output_handler" -e "bash -c './output_handler/output_handler; read -n1' "
+  gnome-terminal --geometry=260x25-0+0 --tab --title="input_handler" -e "bash -c './input_handler/input_handler; read -n1'" \
+                                       --tab --title="drivetrain" -e "bash -c './drivetrain/drivetrain; read -n1' " \
+                                       --tab --title="output_handler" -e "bash -c './output_handler/output_handler; read -n1' "
   
 }
 
