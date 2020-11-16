@@ -6,14 +6,16 @@
 #include "can_buffer.h"
 #include <thread>
 
+const uint32_t transmit_id = 2;
+const uint8_t transmit_length = 1;
+
 class Vehicle {
     private:
         Engine engine;
         Gearbox gearbox();
     public:
         Vehicle() = default;
-        bool Initialize();
-        void Run();
+        bool Run();
 };
 
 #endif

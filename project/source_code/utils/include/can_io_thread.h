@@ -12,9 +12,9 @@ class CanIOThread {
     private:
         std::thread thread;
         scpp::SocketCan *socket;
-        void Run(std::promise<void> *promise, uint8_t message_id, uint8_t transmit_message_id);
+        void Run( std::future<void> *future, uint8_t *receive_message_id, size_t receive_message_id_size);
     public:
-        CanIOThread(scpp::SocketCan *socket, std::promise<void> *promise, uint8_t receive_message_id, uint8_t transmit_message_id);
+        CanIOThread(scpp::SocketCan *socket,  std::future<void> *future, uint8_t *receive_message_id, size_t receive_message_id_size);
         ~CanIOThread();
         scpp::SocketCan * get_socket();
 };

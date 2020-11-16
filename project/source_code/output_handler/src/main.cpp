@@ -17,17 +17,29 @@ int main(){
     {
         std::promise<void> promise;
         std::future<void> future = promise.get_future();
-        //starts new thread reading can messages and writes to can_buffer
-        CanIOThread io_thread(&socket, &promise, 2, 0);
+        uint8_t receive_message_id[2] = {1,2};
+        size_t receive_message_id_size = 2; //TODO: replace with siceof??
+        //starts new thread handling input and output on CAN. Uses can_buffer
+        CanIOThread io_thread(&socket, &future, receive_message_id, receive_message_id_size);
 
         std::future_status status;
         while (status != std::future_status::ready) {
-            status = future.wait_for(std::chrono::milliseconds(100));
-            uint8_t *received_can_data = CanBuffer::GetInstance().PullRx();
-
-            std::cout << "EngSts: " << static_cast<int>(received_can_data[0]) << std::endl;
-            std::cout << "RPM: " << static_cast<int>(received_can_data[1]*(int)37) << std::endl;
+            std::this_thread::sleep_for(std::chrono::microseconds(5));
+            CanData data = CanBuffer::GetInstance().PullRx();
+            if (data.id == 1)
+            {
+                UserInput *input = reinterpret_cast<UserInput*>(data.payload);
+                if (input->end_simulation) {
+                    break;
+                }
+            }
+            if (data.id == 2)
+            {
+                std::cout << "EngSts: " << static_cast<int>(received_can_data[0]) << std::endl;
+                std::cout << "RPM: " << static_cast<int>(received_can_data[1]*(int)37) << std::endl;
+            }
         }
+        promise.set_value();
     } else
     {
         std::cout << "Failed to open socket: " << result <<std::endl;
