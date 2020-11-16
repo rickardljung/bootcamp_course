@@ -2,12 +2,12 @@
 #include "can_io_thread.h"
 #include <iostream>
 
-int main() {
+int main()
+{
     bool return_value = 0;
 
     scpp::SocketCan socket;
     auto result = socket.open("vcan0");
-
     if (result == scpp::STATUS_OK)
     {
         std::promise<void> promise;
@@ -20,9 +20,11 @@ int main() {
         Vehicle vehicle;
         int i = 0;
         bool run_simulation = true;
-        while (run_simulation) {
+        while (run_simulation)
+        {
             std::this_thread::sleep_for(std::chrono::microseconds(5));
-            if (!CanBuffer::GetInstance().ReceiveBufferEmpty()) {
+            if (!CanBuffer::GetInstance().ReceiveBufferEmpty())
+            {
                 i = 0;
                 run_simulation = vehicle.Run();
             } else

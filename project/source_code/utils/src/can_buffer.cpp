@@ -8,7 +8,7 @@
 * Adds received can data to the receive (RX) buffer
 * @param data received can data
 */
-void CanBuffer::AddRx(uint32_t *id, uint8_t payload[], uint8_t *length)
+void CanBuffer::AddRx(const uint32_t *id, uint8_t payload[], const uint8_t *length)
 {
     std::memcpy(this->receive_candata.payload, payload, sizeof(&payload));
     this->receive_candata.id = *id;
@@ -19,7 +19,7 @@ void CanBuffer::AddRx(uint32_t *id, uint8_t payload[], uint8_t *length)
 * Adds data to be sent to the transmit (TX) buffer
 * @param data data to be transmitted
 */
-void CanBuffer::AddTx(uint32_t *id, uint8_t payload[], uint8_t *length)
+void CanBuffer::AddTx(const uint32_t *id, uint8_t payload[],const uint8_t *length)
 {
     std::memcpy(this->transmit_candata.payload, payload, sizeof(&payload));
     this->transmit_candata.id = *id;

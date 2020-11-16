@@ -19,8 +19,8 @@ class CanBuffer
         }
         CanBuffer(CanBuffer const&)       = delete;
         void operator=(CanBuffer const&)  = delete;
-        void AddTx(uint32_t *id, uint8_t payload[], uint8_t *length);
-        void AddRx(uint32_t *id, uint8_t payload[], uint8_t *length);
+        void AddTx(const uint32_t *id, uint8_t payload[], const uint8_t *length);
+        void AddRx(const uint32_t *id, uint8_t payload[], const uint8_t *length);
         CanData PullTx();
         CanData PullRx();
         bool ReceiveBufferEmpty();

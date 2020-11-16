@@ -5,22 +5,24 @@
 /*!
 * Constructor of CanIOThread. Assigns the class members and starts a thread on the function "Run"
 * @param socket used for read and write data to can
-* @param receive_message_id id of the messages to read
-* @param transmit_message_id id of the messages to transmit. 0 if nothing to transmit
+* @param receive_message_id list of IDs that should be read
+* @param receive_message_id_size size of the list receive_message_id.
 */
-CanIOThread::CanIOThread(scpp::SocketCan *socket, std::future<void> *future, uint8_t *receive_message_id, size_t receive_message_id_size) { //TODO break lines
+CanIOThread::CanIOThread(scpp::SocketCan *socket, std::future<void> *future, uint8_t *receive_message_id, size_t receive_message_id_size)
+{
     this->socket = socket;
     this->thread = std::thread(&CanIOThread::Run, this, future, receive_message_id, receive_message_id_size);
 }
 
 /*!
 * Reads data from CAN and writes it to the receive buffer. Pulls data from the transmit buffer and transmits it to can.
-* Loops until a "end simulation" command is reveived from input_handler
-* @param receive_message_id id of the messages to read
-* @param transmit_message_id id of the messages to transmit. 0 if nothing to transmit
+* Loops until a the future is set from outside of this class.
+* @param future future which will notify when the execution (the loop) should end
+* @param receive_message_id list of IDs that should be read
+* @param receive_message_id_size size of the list receive_message_id.
 */
 void CanIOThread::Run(std::future<void> *future, uint8_t *receive_message_id, size_t receive_message_id_size)
-{ //TODO break, list of IDs to listed to. Do not need the promise {
+{
     size_t i = 0;
     std::future_status future_status;
     do
@@ -55,6 +57,7 @@ void CanIOThread::Run(std::future<void> *future, uint8_t *receive_message_id, si
 /*!
 * Destructor of CanIOThread. Informs the thread to stop (the Run function) and wait until it is done.
 */
-CanIOThread::~CanIOThread() {
+CanIOThread::~CanIOThread()
+{
     this->thread.join();
 }
