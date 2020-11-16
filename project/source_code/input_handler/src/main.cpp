@@ -5,10 +5,9 @@
 #include <future>
 #include <iostream>
 #include <cstring>
-#include "user_input.h"
 #include "keyboard_input_reader.h"
-#include "socketcan.h"
-
+#include "can_io_thread.h"
+#include "can_buffer.h"
 
 int main(){
     int returnval = 0;
@@ -21,39 +20,19 @@ int main(){
     }
     else
     {
-        //mutex for locking user_input
-        std::mutex user_input_mtx;
+    
+    std::promise<void> promise;
+    std::future<void> future = promise.get_future();
 
-        //struct containing user input values
-        UserInput user_input;
-        std::memset(&user_input,0,sizeof(UserInput));
+    //initiate keyboard reading
+    InputReader input_reader;
 
-        std::promise<void> promise;
-        std::future<void> future = promise.get_future();
+    //spawn a thread transmitting CAN messages
+    CanIOThread io_thread(&socket, &future, 0, 0);
+    
+    while(input_reader.Run());
 
-        //create a thread for running the InputReader
-        std::thread read_inputs(
-        [&user_input, &user_input_mtx, &promise](){
-            //initiate key board reading
-            InputReader input_reader;
-            //run input_reader
-            while(input_reader.Run(&user_input, &user_input_mtx));
-            //inform main thread that this thread is finished
-            promise.set_value();
-        }
-        );
-        std::future_status status;
-
-        uint8_t payload[msg_len];
-        std::memset(payload,0,msg_len);
-        while(status != std::future_status::ready)
-        {
-            status = future.wait_for(std::chrono::milliseconds(10));
-            //send CAN-message
-            EncodePayload(payload, &user_input_mtx, &user_input);
-            socket.write(payload, msg_id, msg_len);
-        }
-    read_inputs.join();
+    promise.set_value();
     }
     return returnval;
 }

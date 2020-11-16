@@ -1,5 +1,6 @@
 #include "user_input.h"
 #include "keyboard_input_reader.h"
+#include "can_buffer.h"
 #include <iostream>
 #include <cstring>
 
@@ -9,15 +10,14 @@
     * @param mtx is the mutex lock used to not write/read to/from user_input struct at the same time from different threads.
 	* @return Returns True if thread should continue running.
 */
-bool InputReader::Run(UserInput *user_input, std::mutex *mtx)
+bool InputReader::Run()
 {
     bool return_val = true;
     //interpret user input
     if(ReadInputs())
     {
         return_val = InterpretInput();
-        std::lock_guard<std::mutex> lock(*mtx);
-        std::memcpy(user_input, &temp_user_input, msg_len);
+        CanBuffer::GetInstance().AddTx(&msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), &msg_len);
     }
     return return_val;
 }
@@ -52,6 +52,8 @@ InputReader::~InputReader()
 */
 InputReader::InputReader()
 {
+    /* initialize temp_user_input with 0*/
+    std::memset(&temp_user_input,0,sizeof(UserInput));
     /* open connection with the server */
     display = XOpenDisplay(NULL);
     if (display == NULL)

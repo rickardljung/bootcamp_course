@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <mutex>
 
-const uint8_t msg_id = 1;
+const uint32_t msg_id = 1;
 const uint8_t msg_len = 3;
 const unsigned int P = 0;
 const unsigned int N = 1;

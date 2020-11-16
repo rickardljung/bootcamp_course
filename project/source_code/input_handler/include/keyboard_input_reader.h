@@ -29,7 +29,7 @@ class InputReader{
     public:
         InputReader();
         ~InputReader();
-        bool Run(UserInput *user_input, std::mutex *mtx);
+        bool Run();
         bool ReadInputs();
         bool InterpretInput();
         void Acceleration();
