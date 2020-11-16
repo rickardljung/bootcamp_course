@@ -2,6 +2,7 @@
 #define KEYBOARD_INPUT_READER_H
 #include <X11/Xlib.h>
 #include <mutex>
+#include "user_input.h"
 
 const unsigned int key_escape = 9;
 const unsigned int key_r = 27;
@@ -13,22 +14,31 @@ const unsigned int key_down = 116;
 const unsigned int key_left = 113;
 const unsigned int key_right = 114;
 const unsigned int key_space = 65;
+const unsigned int acc_inc = 10;
+const unsigned int acc_dec = 10;
+const unsigned int acc_max = 100;
+const unsigned int acc_min = 0;
+const unsigned int brk_inc = 20;
+const unsigned int brk_dec = 20;
+const unsigned int brk_max = 100;
+const unsigned int brk_min = 0;
 
-struct mykey 
-{
-    uint8_t key;
-    bool read;
-};
+
 
 class InputReader{
     public:
         InputReader();
         ~InputReader();
         bool Run(UserInput *user_input, std::mutex *mtx);
-        void ReadInputs();
-        void InterpretInput(UserInput *user_input);
+        bool ReadInputs();
+        bool InterpretInput();
+        void Acceleration();
+        void Braking();
+        void IgnitionReq();
+        void GearPosReq();
+        bool EndSimulation();
     private:
-        mykey the_key;
+        UserInput temp_user_input;
         Display *display;
         Window window;
         XEvent event;

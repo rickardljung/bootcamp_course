@@ -1,45 +1,40 @@
 #include "user_input.h"
 #include "keyboard_input_reader.h"
 #include <iostream>
+#include <cstring>
+
 /*!
-	* Runs the main function of InputReader, calls functions ReadInputs and InterpretInput. Exits while loop when esc key is pressed.
+	* Runs the main function of InputReader, calls functions ReadInputs and InterpretInput.
 	* @param user_input fills in values in the user_input struct.
     * @param mtx is the mutex lock used to not write/read to/from user_input struct at the same time from different threads.
-	* @return Nothing is returned
+	* @return Returns True if thread should continue running.
 */
 bool InputReader::Run(UserInput *user_input, std::mutex *mtx)
 {
-    bool returnval = true;
-    //read user input
-    ReadInputs();
-
+    bool return_val = true;
     //interpret user input
-    if(the_key.read == false)
+    if(ReadInputs())
     {
+        return_val = InterpretInput();
         std::lock_guard<std::mutex> lock(*mtx);
-        //mtx->lock();
-        InterpretInput(user_input);
-        //mtx->unlock();
+        std::memcpy(user_input, &temp_user_input, msg_len);
     }
-    if(the_key.key == key_escape)
-    {
-        returnval = false;
-    }
-    return returnval;
+    return return_val;
 }
 /*!
-	* Reads inputs from keyboard and stores it in the_key (blocking function).
-	* @return Nothing is returned
+	* Reads inputs from the keyboard (blocking function).
+	* @return True if a KeyPress has occurred.
 */
-void InputReader::ReadInputs()
+bool InputReader::ReadInputs()
 {
         XNextEvent(display, &event);
         /* keyboard events */
-        if (event.type == KeyPress)
+        if(event.type == KeyPress)
         {
-            the_key.key = event.xkey.keycode;
-            the_key.read = false;
+            return true;
         }
+        return false;
+        
 }
 /*!
 	* Destructor for class InputReader, closes the display and resets settings for the keyboard.
@@ -80,84 +75,121 @@ InputReader::InputReader()
 }
 
 /*!
-	* Controls what different key presses should be interpreted as. For example pressing "key_up" increases acceleration by 10%.
-	* @param user_input values shall be stored in a UserInput struct.
-	* @return Nothing is returned
+	* Calls functions depending on which key was pressed.
+	* @return Returns true unless Esc key has been pressed.
 */
-void InputReader::InterpretInput(UserInput *user_input)
+bool InputReader::InterpretInput()
 {
-
-    if(the_key.key == key_up) //user pressing acc pedal
+    bool return_val = true;
+    if(event.xkey.keycode == key_up || event.xkey.keycode == key_down)
     {
-        user_input->accelerator_pedal+=10; //TODO const variables
-        if(user_input->accelerator_pedal > 100)
+        Acceleration();
+    }
+    else if(event.xkey.keycode == key_left || event.xkey.keycode == key_right)
+    {
+        Braking();
+    }
+    else if(event.xkey.keycode == key_p || event.xkey.keycode == key_n ||
+             event.xkey.keycode == key_d || event.xkey.keycode == key_r)
+    {
+        GearPosReq();
+    }
+    else if(event.xkey.keycode == key_space)
+    {
+        IgnitionReq();
+    }
+    else if(event.xkey.keycode == key_escape)
+    {
+        return_val = EndSimulation();
+    }
+    return return_val;
+}
+/*!
+	* Increases or decreases acceleration value, stores it in temp_user_input.
+	* @return Nothing is returned.
+*/
+void InputReader::Acceleration()
+{
+    if(event.xkey.keycode == key_up)
+    {
+        if(temp_user_input.accelerator_pedal < acc_max)
         {
-            user_input->accelerator_pedal = 100;
+            temp_user_input.accelerator_pedal+=acc_inc;
         }
-        the_key.read = true;
     }
-    else if(the_key.key == key_down) //user releasing acc pedal
+    else if(event.xkey.keycode == key_down)
     {
-        user_input->accelerator_pedal-=10;
-        if(user_input->accelerator_pedal == 246) // -10 = 246 for uint8
+        if(temp_user_input.accelerator_pedal > acc_min)
         {
-            user_input->accelerator_pedal = 0;
+            temp_user_input.accelerator_pedal-=acc_dec;
         }
-        the_key.read = true;
     }
-    else if(the_key.key == key_left) //user pressing brake pedal
+}
+/*!
+	* Increases or decreases brake value, stores it in temp_user_input.
+	* @return Nothing is returned.
+*/
+void InputReader::Braking()
+{
+    if(event.xkey.keycode == key_left) //user pressing brake pedal
     {
-        user_input->brake_pedal+=20;
-        if(user_input->brake_pedal > 100)
+        if(temp_user_input.brake_pedal < brk_max)
         {
-            user_input->brake_pedal = 100;
+            temp_user_input.brake_pedal+=20;
         }
-        the_key.read = true;
     }
-    else if(the_key.key== key_right) //user releasing brake pedal
+    else if(event.xkey.keycode == key_right) //user releasing brake pedal
     {
-        user_input->brake_pedal-=20;
-        if(user_input->brake_pedal == 236) // -20 = 236 for uint8
+        if(temp_user_input.brake_pedal > brk_min)
         {
-            user_input->brake_pedal = 0;
+            temp_user_input.brake_pedal-=20;
         }
-        the_key.read = true;
     }
-    else if(the_key.key== key_space) //user toggles ignition request
+}
+/*!
+	* Toggles the ignition request, stores it in temp_user_input.
+	* @return Nothing is returned.
+*/
+void InputReader::IgnitionReq()
+{
+    if(temp_user_input.ignition == ignition_on)
     {
-        if(user_input->ignition == 1)
-        {
-            user_input->ignition = 0;
-        }
-        else
-        {
-            user_input->ignition = 1;
-        }
-        the_key.read = true;
+        temp_user_input.ignition = ignition_off;
     }
-    else if(the_key.key == key_p)
+    else
     {
-        user_input->gear_position = P;
-        the_key.read = true;
+        temp_user_input.ignition = ignition_on;
     }
-
-    else if(the_key.key == key_n)
+}
+/*!
+	* Determines which gear should be requested, stores it in temp_user_input.
+	* @return Nothing is returned.
+*/
+void InputReader::GearPosReq()
+{
+    if(event.xkey.keycode == key_p)
     {
-        user_input->gear_position = N;
-        the_key.read = true;
+        temp_user_input.gear_position = P;
     }
-    else if(the_key.key == key_d)
+    else if(event.xkey.keycode == key_n)
     {
-        user_input->gear_position = D;
-        the_key.read = true;
+        temp_user_input.gear_position = N;
     }
-    else if(the_key.key == key_r)
+    else if(event.xkey.keycode == key_d)
     {
-        user_input->gear_position = R;
-        the_key.read = true;
+        temp_user_input.gear_position = D;
     }
-    else if(the_key.key == key_escape){
-        user_input->end_simulation = 1;
-        the_key.read = true;
+    else if(event.xkey.keycode == key_r)
+    {
+        temp_user_input.gear_position = R;
     }
+}
+/*!
+	* Sets end simulation.
+	* @return Returns false.
+*/
+bool InputReader::EndSimulation()
+{
+    temp_user_input.end_simulation = end;
+    return false;
 }
