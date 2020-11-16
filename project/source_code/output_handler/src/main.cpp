@@ -35,8 +35,9 @@ int main(){
             }
             if (data.id == 2)
             {
-                std::cout << "EngSts: " << static_cast<int>(received_can_data[0]) << std::endl;
-                std::cout << "RPM: " << static_cast<int>(received_can_data[1]*(int)37) << std::endl;
+                std::cout << "EngSts: " << static_cast<int>(data.payload[0]) << std::endl;
+                std::cout << "RPM: " << static_cast<int>(data.payload[1] * (int)37) << std::endl;
+                std::cout << "---------------------------------" << std::endl;
             }
         }
         promise.set_value();
@@ -45,5 +46,6 @@ int main(){
         std::cout << "Failed to open socket: " << result <<std::endl;
         return_value = 1;
     }
+    std::cout << "output_handler returned with return value: " << return_value << std::endl;
     return return_value;
 }

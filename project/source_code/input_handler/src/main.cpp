@@ -62,8 +62,6 @@ int main(){
 
     read_inputs.join();
     }
-
-
-
+    std::cout << "input_handler returned with return value: " << returnval << std::endl;
     return returnval;
 }

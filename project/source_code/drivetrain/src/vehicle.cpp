@@ -10,7 +10,7 @@ bool Vehicle::Run()
     //payload to be sent in canframe
     uint8_t payload[8] = {0,0,0,0,0,0,0,0};
     bool return_value = 0;
-  
+
     CanData data =  CanBuffer::GetInstance().PullRx();
     if (data.id == 1) //can data from input_handler
     {
@@ -20,8 +20,9 @@ bool Vehicle::Run()
         } else
         {
             //RUN SIMULATION ENGINE AND GEARBOX
-            payload[0] = engine.get_sts();
-            payload[1] = engine.get_rpm()/(int)37;
+            engine.Run(input);
+            payload[0] = this->engine.get_sts();
+            payload[1] = static_cast<uint8_t>(this->engine.get_rpm() / (int)37);
             CanBuffer::GetInstance().AddTx(&transmit_id, payload, &transmit_length);
             return_value = 1;
         }
