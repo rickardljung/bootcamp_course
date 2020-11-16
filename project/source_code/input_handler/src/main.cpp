@@ -36,5 +36,6 @@ int main(){
     future.wait_for(std::chrono::milliseconds(1));
     promise.set_value();
     }
+    std::cout << "input_handler returned with return value: " << returnval << std::endl;
     return returnval;
 }

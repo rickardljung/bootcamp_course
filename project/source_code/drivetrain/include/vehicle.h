@@ -7,11 +7,11 @@
 #include <thread>
 
 const uint32_t transmit_id = 2;
-const uint8_t transmit_length = 1;
+const uint8_t transmit_length = 2;
 
 class Vehicle {
     private:
-        Engine engine();
+        Engine engine;
         Gearbox gearbox();
     public:
         Vehicle() = default;

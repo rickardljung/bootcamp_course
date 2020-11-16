@@ -41,5 +41,6 @@ int main()
         std::cout << "Failed to open socket: " << result <<std::endl;
         return_value = 1;
     }
+    std::cout << "drivetrain returned with return value: " << return_value << std::endl;
     return return_value;
 }
