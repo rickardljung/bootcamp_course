@@ -1,21 +1,16 @@
-#include "user_input.h"
-#include "keyboard_input_reader.h"
-#include "socketcan.h"
 #include <thread>
 #include <chrono>
 #include <mutex>
 #include <iostream>
-
+#include <future>
+#include <iostream>
+#include <cstring>
+#include "keyboard_input_reader.h"
+#include "can_io_thread.h"
+#include "can_buffer.h"
 
 int main(){
     int returnval = 0;
-
-    //initiate key board reading
-    InputReader input_reader;
-
-    //mutex for locking user_input
-    std::mutex user_input_mtx;
-
     //initiate vcan0
     scpp::SocketCan socket;
     auto result = socket.open("vcan0");
@@ -25,42 +20,21 @@ int main(){
     }
     else
     {
-        //payload to be sent in canframe
-        uint8_t payload[msg_len];
+    
+    std::promise<void> promise;
+    std::future<void> future = promise.get_future();
 
-        //struct containing user input values
-        UserInput user_input;
+    //initiate keyboard reading
+    InputReader input_reader;
 
-        //create a thread for running the InputReader
-        std::thread read_inputs(
-        [&user_input, &input_reader, &user_input_mtx](){
-                //run input_reader
-                while(true)
-                {
-                    if(!input_reader.Run(&user_input, &user_input_mtx))
-                    {
-                        break;
-                    }
-                }
-        }
-        );
-        while(true)
-        {
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-            //send CAN-message
-            {
-                std::lock_guard<std::mutex> lock (user_input_mtx);
-                EncodePayload(payload, &user_input);
-            }
-            socket.write(payload, msg_id, msg_len);
+    //spawn a thread transmitting CAN messages
+    CanIOThread io_thread(&socket, &future, 0, 0);
+    
+    while(input_reader.Run());
 
-            if(payload[4]) //end_simulation == 1 TODO: signalling from thread instead
-            {
-                break;
-            }
-        }
-
-    read_inputs.join();
+    //make sure end simulation is sent in CAN frame before exiting
+    future.wait_for(std::chrono::milliseconds(1));
+    promise.set_value();
     }
     std::cout << "input_handler returned with return value: " << returnval << std::endl;
     return returnval;
