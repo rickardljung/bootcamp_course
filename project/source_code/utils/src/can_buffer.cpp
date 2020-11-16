@@ -1,15 +1,16 @@
 //https://stackoverflow.com/questions/1008019/c-singleton-design-pattern
+#include <thread>
+#include <cstring>
+#include <iostream>
 #include "user_input.h"
 #include "can_buffer.h"
-#include <iostream>
-#include <cstring>
 
-/*!
-* Adds received can data to the receive (RX) buffer
+/*!* Adds received can data to the receive (RX) buffer
 * @param data received can data
 */
 void CanBuffer::AddRx(const uint32_t *id, uint8_t payload[], const uint8_t *length)
 {
+    std::lock_guard<std::mutex> lock(receive_buffer_mutex);
     std::memcpy(this->receive_candata.payload, payload, sizeof(&payload));
     this->receive_candata.id = *id;
     this->receive_candata.length = *length;
@@ -21,17 +22,19 @@ void CanBuffer::AddRx(const uint32_t *id, uint8_t payload[], const uint8_t *leng
 */
 void CanBuffer::AddTx(const uint32_t *id, uint8_t payload[],const uint8_t *length)
 {
+    std::lock_guard<std::mutex> lock(transmit_buffer_mutex);
     std::memcpy(this->transmit_candata.payload, payload, sizeof(&payload));
     this->transmit_candata.id = *id;
     this->transmit_candata.length = *length;
     this->transmit_empty = false;
+}
 /*!
 * Pulls next data package from the receive (RX) buffer
 * @return received data
 */
-}
 CanData CanBuffer::PullRx()
 {
+    std::lock_guard<std::mutex> lock(receive_buffer_mutex);
     this->receive_empty = true;
     return this->receive_candata;
 }
@@ -41,6 +44,7 @@ CanData CanBuffer::PullRx()
 */
 CanData CanBuffer::PullTx()
 {
+    std::lock_guard<std::mutex> lock(transmit_buffer_mutex);
     this->transmit_empty = true;
     return this->transmit_candata;
 }
@@ -52,7 +56,6 @@ bool CanBuffer::ReceiveBufferEmpty()
 {
     return this->receive_empty;
 }
-
 /*!
 * Check if transmit buffer contains any elements
 * @return TRUE if transmit buffer is empty

@@ -32,6 +32,8 @@ class CanBuffer
         CanData transmit_candata;
         bool receive_empty = true;
         bool transmit_empty = true;
+        std::mutex receive_buffer_mutex;
+        std::mutex transmit_buffer_mutex;
 };
 
 #endif
