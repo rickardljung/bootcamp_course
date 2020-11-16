@@ -54,6 +54,8 @@ InputReader::InputReader()
 {
     /* initialize temp_user_input with 0*/
     std::memset(&temp_user_input,0,sizeof(UserInput));
+    /*add empty frame to the CAN buffer*/
+    CanBuffer::GetInstance().AddTx(&msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), &msg_len);
     /* open connection with the server */
     display = XOpenDisplay(NULL);
     if (display == NULL)

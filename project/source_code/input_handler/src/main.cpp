@@ -32,6 +32,8 @@ int main(){
     
     while(input_reader.Run());
 
+    //make sure end simulation is sent in CAN frame before exiting
+    future.wait_for(std::chrono::milliseconds(1));
     promise.set_value();
     }
     return returnval;
