@@ -1,5 +1,6 @@
 #include "vehicle.h"
 #include <iostream>
+#include <math.h>
 
 /*!
 * Pulls a CAN message from the receive buffer, checks the ID of the message and performs actions depending on the message.
@@ -38,5 +39,57 @@ bool Vehicle::Run()
     }
     return return_value;
 }
-uint8_t Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal){return 0;}
 
+uint8_t calculate_resistance(uint8_t speed)
+{
+    return ( 0.00005*(2*pow(speed,2)) + 5 );
+}
+
+uint16_t calculate_engine_tq(uint8_t engine_speed)
+{
+    return ( (-0.00008*(pow(engine_speed,2))+engine_speed)/1000 );
+}
+
+uint16_t calculate_brake_tq(uint8_t brake_pedal)
+{
+    return ( 0.01*brake_pedal );
+}
+
+uint8_t Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
+{
+    uint8_t veh_spd =0;
+    uint8_t const_factor =0;
+    uint16_t veh_accel =0;
+    veh_accel = (calculate_engine_tq(this->engine.get_eng_rpm())*(this->gearbox.get_gear_ratio())-calculate_brake_tq(brk_pedal))*(this->tire_diameter)\
+                /((this->weight)-(calculate_resistance(veh_spd)));
+    veh_spd = (veh_spd+(veh_accel*(0.0000005)));
+
+    // const_factor = (3.6*M_PI*(this->tire_diameter))/(30*(this->diff_ratio));
+    // veh_spd = ((this->gearbox.get_gear_ratio())*(this->engine.get_eng_rpm())*const_factor);
+    // veh_spd = veh_spd * 0.621371; //MPH
+
+
+   // veh_spd = veh_spd - calculate_resistance(veh_spd);
+   // veh_spd = ((this->engine.get_eng_rpm())*3.6*M_PI*(this->tire_diameter))\
+   //         /30*(this->diff_ratio)*(this->gearbox.get_gear_ratio());
+
+    return veh_spd;
+}
+
+// Vehicle::Vehicle(void)
+// {
+//     //std::cout << "Initialization" << std::endl;
+//     //Instantiate engine class
+//     Engine engine;
+//     //Instantiate gearbox class
+//     Gearbox gearbox;
+// }
+
+    Torque from engine is used to calculate the vehicle acceleration, which is integrated into vehicle speed.
+    Acceleration = WheelTorque                           *WheelRadius /VehicleMass - RollingResistance
+                 = (EngineTorque*GearRatio - BrakeTorque)*WheelRadius /VehicleMass - VehicleSpeed^2*MagicNumber
+    VehicleSpeed = VehicleSpeed + DeltaSpeed
+                 = VehicleSpeed + Acceleration*timeStep
+    GearboxRPS   = VehicleSpeed / WheelRadius
+    EngineRPS    = GearboxRPS * GearRatio * FinalGear
+    EngineRPS is used as input to Engine to calculate torque next iteration.
