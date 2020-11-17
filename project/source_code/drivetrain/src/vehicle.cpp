@@ -9,7 +9,7 @@ bool Vehicle::Run()
 {
     //payload to be sent in canframe
     uint8_t payload[8] = {0,0,0,0,0,0,0,0};
-    bool return_value = 0;
+    bool return_value = 1;
 
     CanData data =  CanBuffer::GetInstance().PullRx();
     if (data.id == 1) //can data from input_handler

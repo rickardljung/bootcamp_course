@@ -19,17 +19,16 @@ int main()
 
         Vehicle vehicle;
         int i = 0;
-        bool run_simulation = true;
-        while (run_simulation)
+        while (vehicle.Run())
         {
             std::this_thread::sleep_for(std::chrono::microseconds(5));
             if (!CanBuffer::GetInstance().ReceiveBufferEmpty())
             {
                 i = 0;
-                run_simulation = vehicle.Run();
+
             } else
             {
-                if(++i > 100000) // buffer is empty for over 1 second
+                if(++i > 100000) // buffer is empty for over 1 second, lost com
                 {
                     break;
                 } else {continue;}

@@ -46,8 +46,9 @@ void CanIOThread::Run(std::future<void> *future, uint8_t *receive_message_id, si
         //WRITE TO SOCKET
         //if (!CanBuffer::GetInstance().TransmitBufferEmpty())
         //TODO: might not work with ringbuffer
+        CanData transmit_data = CanBuffer::GetInstance().PullTx();
+        if(transmit_data.id != 0) //do not transmit until data is added to the tranmit buffer. 0 as init
         {
-            CanData transmit_data = CanBuffer::GetInstance().PullTx();
             this->socket->write(transmit_data.payload, transmit_data.id, transmit_data.length);
         }
 

@@ -5,9 +5,9 @@
 #include "user_input.h"
 
 typedef struct CanData_struct{
-    uint32_t id;
-    uint8_t payload[8];
-    uint8_t length;
+    uint32_t id = 0;
+    uint8_t payload[8] = {0,0,0,0,0,0,0,0};
+    uint8_t length = 0;
 } CanData;
 
 class CanBuffer

@@ -11,7 +11,7 @@
 void CanBuffer::AddRx(const uint32_t *id, uint8_t payload[], const uint8_t *length)
 {
     std::lock_guard<std::mutex> lock(receive_buffer_mutex);
-    std::memcpy(this->receive_candata.payload, payload, sizeof(&payload));
+    std::memcpy(this->receive_candata.payload, payload, *length);
     this->receive_candata.id = *id;
     this->receive_candata.length = *length;
     this->receive_empty = false;
@@ -23,7 +23,7 @@ void CanBuffer::AddRx(const uint32_t *id, uint8_t payload[], const uint8_t *leng
 void CanBuffer::AddTx(const uint32_t *id, uint8_t payload[],const uint8_t *length)
 {
     std::lock_guard<std::mutex> lock(transmit_buffer_mutex);
-    std::memcpy(this->transmit_candata.payload, payload, sizeof(&payload));
+    std::memcpy(this->transmit_candata.payload, payload, *length);
     this->transmit_candata.id = *id;
     this->transmit_candata.length = *length;
     this->transmit_empty = false;
