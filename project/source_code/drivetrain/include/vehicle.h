@@ -18,7 +18,7 @@ class Vehicle {
         uint16_t weight;
         uint8_t vehicle_speed;
     public:
-        Vehicle();
+        Vehicle() = default;//TODO: constructor/destructor
         uint8_t CalculateVehicleSpeed(uint8_t brk_pedal);
         bool Run();
 };

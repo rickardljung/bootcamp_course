@@ -11,6 +11,7 @@ class Engine {
         uint16_t eng_max_rpm;
         const uint16_t idle_rpm = 900;
     public:
+        Engine(){};
         Engine(uint16_t hp, uint16_t max_rpm);
         void RPM(uint8_t acc_pedal, uint8_t brk_pedal);
         void ActualRPM(uint8_t speed, double gear_ratio);

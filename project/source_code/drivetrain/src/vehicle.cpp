@@ -5,6 +5,8 @@
 * Pulls a CAN message from the receive buffer, checks the ID of the message and performs actions depending on the message.
 * The output data will be put on the transmit buffer.
 */
+
+
 bool Vehicle::Run()
 {
     //payload to be sent in canframe
@@ -36,3 +38,5 @@ bool Vehicle::Run()
     }
     return return_value;
 }
+uint8_t Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal){return 0;}
+
