@@ -19,12 +19,12 @@ Engine::Engine(uint16_t hp, uint16_t max_rpm)
     * @param speed current vehicle speed.
     * @param calc_const constant calculated by vehicle based on ratios.
 */
-void Engine::ActualRPM(uint8_t speed, double calc_const)
+void Engine::ActualRPM(uint8_t speed, double speed_to_rpm_factor)
 {
     if(this->eng_sts)
     {
-        //calculate acutal RPM
-        this->temp_rpm = speed/calc_const;
+        //calculate actual RPM
+        this->temp_rpm = speed*speed_to_rpm_factor;
 
         //if RPM is below idle set idle
         if(this->temp_rpm < this->eng_idle_rpm)
