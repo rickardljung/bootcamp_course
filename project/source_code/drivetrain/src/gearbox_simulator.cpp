@@ -1,19 +1,83 @@
 #include "gearbox_simulator.h"
 
-Gearbox::Gearbox(double *gear_ratio, uint8_t nbr_gears)
+/*!
+* Constructor of Gearbox. Assigns the class members.
+* @param gear_ratio gear ratio for each gear. Index representing the gear where
+* index 0 specifies gear ratio for reverse
+* @param gear_ratio_size the number of elements in gear_ratio
+*/
+Gearbox::Gearbox(double *gear_ratio, uint8_t gear_ratio_size)
 {
-    this->gear_ratio = new std::pair<uint8_t, double>[nbr_gears];
+    this->gear_ratio = gear_ratio;
+    this->max_gear_number = gear_ratio_size - 1;
+    this->gear_lever_position = P;
+    this->gear_number = 1;
 }
-
-void Gearbox::GearLeverPosition(uint8_t gear_pos_req, uint8_t speed, uint8_t brk_pedal)
+/*!
+* Checks if a gear lever position switch should be performed.
+* Switches if conditions are fulfilled
+* @param gear_position_request gear lever position request by user
+* @param speed speed of the vehicle
+* @param brake_pedal brake pedal position request by user. 0-100%
+*/
+void Gearbox::GearLeverPosition(uint8_t gear_position_request, uint8_t speed, uint8_t brake_pedal)
 {
-    if(brk_pedal > break_position_gear)
+    //only change if brake is pressed and speed = 0. TODO: make it possible to change to N in speed?
+    if(brake_pedal >= break_position_to_change_gear_lever &&
+       this->gear_lever_position != gear_position_request && speed == 0)
     {
-
+        this->gear_lever_position = gear_position_request;
     }
 }
-
-Gearbox::~Gearbox()
+/*!
+* Checks if a gear number switch should be performed.
+* Switches if conditions are fulfilled
+* @param gear_ratio gear ration for each gear. First element (index 0) specifies gear ratio for reverse
+* @param gear_ratio_size the number of elements in gear_ratio
+*/
+void Gearbox::GearNumber(uint16_t engine_rpm)
 {
-    delete this->gear_ratio;
+    if (this->gear_lever_position == D) //TODO: should D be a global parameter?
+    {
+        if(engine_rpm >= this->RPM_to_increase_gear_number && this->gear_number != this->max_gear_number)
+        {
+            this->gear_number += 1;
+        } else if(engine_rpm <= this->RPM_to_decrease_gear_number && this->gear_number != 1)
+        {
+            this->gear_number -= 1;
+        }
+    }
 }
+/*!
+*
+* @param gear_ratio gear ration for each gear. First element (index 0) specifies gear ratio for reverse
+* @param gear_ratio_size the number of elements in gear_ratio
+*/
+uint8_t Gearbox::get_gear_lever_position()
+{
+    return this->gear_lever_position;
+}
+/*! TODO
+* Constructor of Gearbox. Assigns the class members.
+* @param gear_ratio gear ration for each gear. First element (index 0) specifies gear ratio for reverse
+* @param gear_ratio_size the number of elements in gear_ratio
+*/
+uint8_t Gearbox::get_gear_number()
+{
+    return this->gear_number;
+}
+/*! TODO
+* Constructor of Gearbox. Assigns the class members.
+* @param gear_ratio gear ration for each gear. First element (index 0) specifies gear ratio for reverse
+* @param gear_ratio_size the number of elements in gear_ratio
+*/
+double Gearbox::get_gear_ratio()
+{
+    return this->gear_ratio[this->gear_number];
+}
+/*! TODO
+* Constructor of Gearbox. Assigns the class members.
+* @param gear_ratio gear ration for each gear. First element (index 0) specifies gear ratio for reverse
+* @param gear_ratio_size the number of elements in gear_ratio
+*/
+

@@ -5,13 +5,13 @@
 
 const uint32_t msg_id = 1;
 const uint8_t msg_len = 3;
-const unsigned int P = 0;
-const unsigned int N = 1;
-const unsigned int D = 2;
-const unsigned int R = 3;
-const unsigned int ignition_on = 1;
-const unsigned int ignition_off = 0;
-const unsigned int end = 1;
+const uint8_t P = 0;
+const uint8_t N = 1;
+const uint8_t D = 2;
+const uint8_t R = 3;
+const uint8_t ignition_on = 1;
+const uint8_t ignition_off = 0;
+const uint8_t end = 1;
 
 typedef struct user_input_struct {
     uint8_t accelerator_pedal;

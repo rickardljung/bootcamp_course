@@ -2,11 +2,18 @@
 #include <iostream>
 
 /*!
+* Constructor of Vehicle. Assigns the class members.
+* @param gearbox gearbox simulation object
+* @param engine engine simulation object
+*/
+Vehicle::Vehicle(Gearbox *gearbox, Engine *engine) {
+    this->gearbox = gearbox;
+    this->engine = engine;
+}
+/*!
 * Pulls a CAN message from the receive buffer, checks the ID of the message and performs actions depending on the message.
 * The output data will be put on the transmit buffer.
 */
-
-
 bool Vehicle::Run()
 {
     //payload to be sent in canframe
@@ -23,9 +30,9 @@ bool Vehicle::Run()
         } else
         {
             //RUN SIMULATION ENGINE AND GEARBOX
-            //engine.RPM(input->accelerator_pedal, input->brake_pedal);
-            gearbox.GearLeverPosition(input->gear_position, this->vehicle_speed, input->brake_pedal);
-            gearbox.GearNumber(this->engine.get_eng_rpm());
+            engine->RPM(input->accelerator_pedal, input->brake_pedal);
+            //gearbox.GearLeverPosition(input->gear_position, this->vehicle_speed, input->brake_pedal);
+            //gearbox.GearNumber(this->engine.get_eng_rpm());
             //vehicle_speed = this->CalculateVehicleSpeed(input->brake_pedal);
             //engine.ActualRPM(vehicle_speed, this->gearbox.get_gear_ratio());
 
