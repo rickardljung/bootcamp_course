@@ -1,27 +1,28 @@
 #include "engine_simulator.h"
-Engine::Engine(uint16_t hp, uint16_t max_rpm)
-{
-    this->eng_hp = hp;
-    this->eng_max_rpm = max_rpm;
-}
-void Engine::ActualRPM(uint8_t speed, double gear_ratio){}
-void Engine::Ignition(bool ign_req, uint8_t speed, uint8_t brk_pedal, uint8_t gear_position){}
 
-
-void Engine::RPM(uint8_t acc_pedal, uint8_t brk_pedal)
+void Engine::Run(UserInput *input)
 {
     //if ignition request is on, check if engsts is on, if not start vehicle and set idle RPM
-    if(this->eng_sts == true)
+    if(input->ignition)
     {
-        //if acc pedal is pressed and brake is not -> increase rpm based on how much it is pressed
-        if(acc_pedal > 0 && brk_pedal == 0)
+        if(this->eng_sts == Off)
         {
-        this->eng_rpm+= acc_pedal*this->eng_hp*0.03;
+            this->eng_sts = On;
+            this->eng_rpm = 900;
         }
         else
-        //if acc pedal is not pressed reduce rpm
         {
-            this->eng_rpm-= 15;
+            //if acc pedal is pressed and brake is not -> increase rpm based on how much it is pressed
+            if(input->accelerator_pedal > 0 && input->brake_pedal == 0)
+            {
+                this->eng_rpm+= input->accelerator_pedal*0.03;
+            }
+            else
+            //if acc pedal is not pressed reduce rpm
+            {
+                this->eng_rpm-= 15;
+            }
+
         }
         //if gear = max and RPM is max decrease RPM by X
         if(this->eng_rpm > 9000)
@@ -33,18 +34,25 @@ void Engine::RPM(uint8_t acc_pedal, uint8_t brk_pedal)
         {
             this->eng_rpm+= 50;
         }
+
+
     }
-    //if engine is off set 0 rpm
+    //if ignition request is off, set engsts = off and RPM = 0
     else
     {
+        this->eng_sts = Off;
         this->eng_rpm = 0;
     }
+
+
+    //check if rpm is high enough to shift gear in here or gearbox?
+
 }
-uint16_t Engine::get_eng_rpm()
+uint16_t Engine::get_rpm()
 {
     return this->eng_rpm;
 }
-uint8_t Engine::get_eng_sts()
+uint8_t Engine::get_sts()
 {
     return this->eng_sts;
 }

@@ -12,14 +12,9 @@ const uint8_t transmit_length = 2;
 class Vehicle {
     private:
         Engine engine;
-        Gearbox gearbox;
-        uint16_t tire_diameter;
-        double diff_ratio;
-        uint16_t weight;
-        uint8_t vehicle_speed;
+        Gearbox gearbox();
     public:
-        Vehicle() = default;//TODO: constructor/destructor
-        uint8_t CalculateVehicleSpeed(uint8_t brk_pedal);
+        Vehicle() = default;
         bool Run();
 };
 
