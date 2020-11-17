@@ -16,22 +16,22 @@ void Engine::RPM(uint8_t acc_pedal, uint8_t brk_pedal)
         //if acc pedal is pressed and brake is not -> increase rpm based on how much it is pressed
         if(acc_pedal > 0 && brk_pedal == 0)
         {
-        this->eng_rpm+= acc_pedal*this->eng_hp*0.03;
+        this->eng_rpm+= acc_pedal*this->eng_hp*0.01;
         }
         else
         //if acc pedal is not pressed reduce rpm
         {
-            this->eng_rpm-= 15;
+            this->eng_rpm-= 1;
         }
-        //if gear = max and RPM is max decrease RPM by X
-        if(this->eng_rpm > 9000)
+        //if RPM is max decrease RPM by rpm_max_dec
+        if(this->eng_rpm > this->eng_max_rpm)
         {
-            this->eng_rpm-= 300;
+            this->eng_rpm-= this->rpm_max_dec;
         }
-        //if gear = min and RPM is below min set RPM to idle
-        if(this->eng_rpm < 900)
+        //if RPM is below idle increase RPM by rpm_min_inc
+        if(this->eng_rpm < this->eng_idle_rpm)
         {
-            this->eng_rpm+= 50;
+            this->eng_rpm+= this->rpm_min_inc;
         }
     }
     //if engine is off set 0 rpm

@@ -9,7 +9,9 @@ class Engine {
         uint16_t eng_rpm = 0;
         uint16_t eng_hp;
         uint16_t eng_max_rpm;
-        const uint16_t idle_rpm = 900;
+        const uint16_t eng_idle_rpm = 900;
+        const uint16_t rpm_max_dec = 300;
+        const uint16_t rpm_min_inc = 50;
     public:
         Engine(){};
         Engine(uint16_t hp, uint16_t max_rpm);
