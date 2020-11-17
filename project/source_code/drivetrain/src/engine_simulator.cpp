@@ -1,6 +1,6 @@
 #include "engine_simulator.h"
 
-void Engine::Run(UserInput *input)
+void Engine::RPM(UserInput *input)
 {
     //if ignition request is on, check if engsts is on, if not start vehicle and set idle RPM
     if(input->ignition)

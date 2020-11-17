@@ -10,6 +10,7 @@ bool Vehicle::Run()
     //payload to be sent in canframe
     uint8_t payload[8] = {0,0,0,0,0,0,0,0};
     bool return_value = 1;
+    uint8_t vehicle_speed;
 
     CanData data =  CanBuffer::GetInstance().PullRx();
     if (data.id == 1) //can data from input_handler
@@ -20,9 +21,15 @@ bool Vehicle::Run()
         } else
         {
             //RUN SIMULATION ENGINE AND GEARBOX
-            engine.Run(input);
-            payload[0] = this->engine.get_sts();
-            payload[1] = static_cast<uint8_t>(this->engine.get_rpm() / (int)37);
+            engine.RPM(input->accelerator_pedal, input->brake_pedal);
+            gearbox.GearLeverPosition(input->gear_position, this->vehicle_speed, input->brake_pedal);
+            gearbox.GearNumber(this->engine.get_eng_rpm());
+            vehicle_speed = this->CalculateVehicleSpeed(input->brake_pedal);
+            engine.ActualRPM(vehicle_speed, this->gearbox.get_gear_ratio());
+
+            payload[0] = this->gearbox.get_gear_position();
+            payload[1] = static_cast<uint8_t>(this->engine.get_eng_rpm() / (int)37);
+            payload[2] = vehicle_speed;
             CanBuffer::GetInstance().AddTx(&transmit_id, payload, &transmit_length);
             return_value = 1;
         }
