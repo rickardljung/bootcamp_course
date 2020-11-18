@@ -8,7 +8,7 @@
     * @param hp horsepower.
     * @param max_rpm maximum RPM.
 */
-Engine::Engine(uint16_t hp, uint16_t max_rpm)
+Engine::Engine(const uint16_t &hp, const uint16_t &max_rpm)
 {
     this->eng_hp = hp;
     this->eng_max_rpm = max_rpm;
@@ -23,7 +23,7 @@ Engine::Engine(uint16_t hp, uint16_t max_rpm)
     * @param brk_pedal % that the brake pedal is pressed.
     * @param gear_position current gear lever position.
 */
-void Engine::Ignition(bool ign_req, uint8_t speed, uint8_t brk_pedal, uint8_t gear_position)
+void Engine::Ignition(const bool &ign_req, const uint8_t &speed, const uint8_t &brk_pedal, const uint8_t &gear_position)
 {
     if(ign_req && !this->eng_sts && (speed > 0 || brk_pedal > 0) && (gear_position == P || gear_position == N))
     {
@@ -40,7 +40,7 @@ void Engine::Ignition(bool ign_req, uint8_t speed, uint8_t brk_pedal, uint8_t ge
     * @param acc_pedal % that the acceleration pedal is pressed.
     * @param brk_pedal % that the brake pedal is pressed.
 */
-void Engine::RPM(uint8_t acc_pedal, uint8_t brk_pedal, uint16_t sampletime)
+void Engine::RPM(const uint8_t &acc_pedal, const uint8_t &brk_pedal, const uint16_t &sampletime)
 {
     if(this->eng_sts)
     {
@@ -72,7 +72,7 @@ void Engine::RPM(uint8_t acc_pedal, uint8_t brk_pedal, uint16_t sampletime)
     * @param speed current vehicle speed.
     * @param speed_to_rpm_factor factor to multiply with speed to receive actual RPM.
 */
-void Engine::ActualRPM(uint8_t speed, double speed_to_rpm_factor)
+void Engine::ActualRPM(const uint8_t &speed, const double &speed_to_rpm_factor)
 {
     if(this->eng_sts)
     {
