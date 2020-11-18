@@ -15,7 +15,7 @@ Gearbox::Gearbox(double *gear_ratio, uint8_t gear_ratio_size)
 }
 /*!
 * Checks if a gear lever position switch should be performed.
-* Switches if conditions are fulfilled
+* Switches if conditions are fulfilled and sets the gear number.
 * @param gear_position_request gear lever position request by user
 * @param speed speed of the vehicle
 * @param brake_pedal brake pedal position request by user. 0-100%
@@ -27,13 +27,20 @@ void Gearbox::GearLeverPosition(uint8_t gear_position_request, uint8_t speed, ui
        this->gear_lever_position != gear_position_request && speed == 0)
     {
         this->gear_lever_position = gear_position_request;
+
+        if(this->gear_lever_position == R)
+        {
+            this->gear_number = 0;
+        } else
+        {
+            this->gear_number = 1;
+        }
     }
 }
 /*!
-* Checks if a gear number switch should be performed.
+* Checks if a gear number switch should be performed based on egine RPM.
 * Switches if conditions are fulfilled
-* @param gear_ratio gear ration for each gear. First element (index 0) specifies gear ratio for reverse
-* @param gear_ratio_size the number of elements in gear_ratio
+* @param engine_rpm engine RPM
 */
 void Gearbox::GearNumber(uint16_t engine_rpm)
 {
