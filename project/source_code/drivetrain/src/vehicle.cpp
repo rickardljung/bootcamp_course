@@ -7,7 +7,7 @@
 * @param gearbox gearbox simulation object
 * @param engine engine simulation object
 */
-Vehicle::Vehicle(Gearbox &gearbox, Engine &engine, const float &diff_ratio, const uint16_t &weight, const float &tire_diameter) {
+Vehicle::Vehicle(Gearbox *gearbox, Engine *engine, const float &diff_ratio, const uint16_t &weight, const float &tire_diameter) {
     this->gearbox = gearbox;
     this->engine = engine;
     //Define final drive, weight and tire diameter
@@ -40,7 +40,7 @@ bool Vehicle::Run()
             this->gearbox->GearLeverPosition(input->gear_position, this->vehicle_speed, input->brake_pedal);
             this->gearbox->GearNumber(static_cast<uint16_t>(this->engine->get_eng_rpm()));
             vehicle_speed = this->CalculateVehicleSpeed(input->brake_pedal);
-            //engine.ActualRPM(vehicle_speed, speed_to_rpm_factor);
+            //engine->ActualRPM(vehicle_speed, speed_to_rpm_factor);
 
             payload[0] = static_cast<uint8_t>(this->engine->get_eng_sts());
             payload[1] = static_cast<uint8_t>(this->engine->get_eng_rpm()/37);
@@ -52,24 +52,46 @@ bool Vehicle::Run()
     return return_value;
 }
 
-//Function used to calculate vehicle rolling resistance depending on veh speed, needs calibration possibly
+
+/*!
+* Function used to calculate vehicle rolling resistance 
+* depending on veh speed, needs calibration possibly
+* @param weight vehicle weight
+* @param speed speed of the vehicle
+* @return calculated rolling resistance
+*/
 float calculate_resistance(uint16_t weight, uint8_t speed)
 {
     return (weight)-(( 0.00005*(2*pow(speed,2)) + 1 )*10);
 }
 
-//Function used to compute engine torque dependent on engine rpm, should be okey without calibraion
+/*!
+* Function used to compute engine torque dependent 
+* on engine rpm, should be okey without calibraion
+* @param engine_speed RPM of the engine
+* @return calculated engine torqe
+*/
 float calculate_engine_tq(uint16_t engine_speed)
 {
     return ( (-0.00008*(pow(engine_speed,2))+engine_speed)/10 );
 }
 
-//Function that mimics brake pedal action, hard to say if it will work without any changes
+/*!
+* Function that mimics brake pedal action
+* might require calibration
+* @param brake_pedal brake pedal position
+* @return calculated brake force
+*/
 float calculate_brake_tq(uint8_t brake_pedal)
 {
     return ( 0.01*brake_pedal ); //Possibly some factor needed to make it stop, it should make acceleration negative?
 }
 
+/*!
+* Function that calculates vehicle acceleration and speed
+* @param brake_pedal brake pedal position
+* @return calculated constant parapeter that can be used in the engine to 
+*/
 float Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
 {
     float veh_accel =0;
@@ -82,12 +104,12 @@ float Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
     // std::cout << veh_spd << std::endl;
     //     }
       
-    veh_accel = (calculate_engine_tq(this->gearbox.get_gear_ratio())*((this->gearbox.get_gear_ratio())*(this->diff_ratio))
+    veh_accel = (calculate_engine_tq(this->gearbox->get_gear_ratio())*((this->gearbox->get_gear_ratio())*(this->diff_ratio))
                  -calculate_brake_tq(brk_pedal))*(this->tire_diameter)
                 /(calculate_resistance(this->weight, this->vehicle_speed));
     this->vehicle_speed += (veh_accel*(0.0000005)); //needs to be adjusted - 0.0000005 is a constant given from Ludvig 
 
-    constant_to_RPM = (((this->gearbox.get_gear_ratio())*(this->diff_ratio))/(this->tire_diameter))*60;
+    constant_to_RPM = (((this->gearbox->get_gear_ratio())*(this->diff_ratio))/(this->tire_diameter))*60;
 
 //To be removed once the code above works
     // const_factor = (3.6*M_PI*(this->tire_diameter))/(30*(this->diff_ratio));
