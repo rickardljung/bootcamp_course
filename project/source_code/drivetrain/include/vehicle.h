@@ -14,13 +14,13 @@ class Vehicle {
     private:
         Engine *engine;
         Gearbox *gearbox;
-        double tire_diameter;
-        double diff_ratio;
+        float tire_diameter;
+        float diff_ratio;
         uint16_t weight;
-        double vehicle_speed=0;
+        float vehicle_speed=0;
     public:
         Vehicle(Gearbox *gearbox, Engine *engine);
-        double CalculateVehicleSpeed(uint8_t brk_pedal);
+        float CalculateVehicleSpeed(uint8_t brk_pedal);
         bool Run();
 };
 
