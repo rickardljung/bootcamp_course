@@ -39,8 +39,8 @@ bool Vehicle::Run()
             this->engine->RPM(input->accelerator_pedal, input->brake_pedal, sampletime_micro);
             this->gearbox->GearLeverPosition(input->gear_position, this->vehicle_speed, input->brake_pedal);
             this->gearbox->GearNumber(static_cast<uint16_t>(this->engine->get_eng_rpm()));
-            vehicle_speed = this->CalculateVehicleSpeed(input->brake_pedal);
-            //engine->ActualRPM(vehicle_speed, speed_to_rpm_factor);
+            //vehicle_speed = this->CalculateVehicleSpeed(input->brake_pedal);
+            engine->ActualRPM(this->vehicle_speed, this->CalculateVehicleSpeed(input->brake_pedal));
 
             payload[0] = static_cast<uint8_t>(this->engine->get_eng_sts());
             payload[1] = static_cast<uint8_t>(this->engine->get_eng_rpm()/37);
@@ -62,7 +62,7 @@ bool Vehicle::Run()
 */
 float calculate_resistance(uint16_t weight, uint8_t speed)
 {
-    return (weight)-(( 0.00005*(2*pow(speed,2)) + 1 )*10);
+    return (weight)+(( 0.00005*(2*pow(speed,2)) + 1 )*100);
 }
 
 /*!
@@ -72,7 +72,7 @@ float calculate_resistance(uint16_t weight, uint8_t speed)
 * @return calculated engine torqe
 */
 float calculate_engine_tq(uint16_t engine_speed)
-{
+{ //return ( gas_ped * (-0.00008*(pow(engine_speed,2))+engine_speed)/10 );
     return ( (-0.00008*(pow(engine_speed,2))+engine_speed)/10 );
 }
 
@@ -95,34 +95,31 @@ float calculate_brake_tq(uint8_t brake_pedal)
 float Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
 {
     float veh_accel =0;
+    float Engine_torque = 0;
+    float Gear_ratios = 0;
+    float Brake_torque = 0;
     float constant_to_RPM = 0;
+    float const_factor = 0;
 
-// To be removed used only for testing
-    // for(int i=900; i<=9000; i++){
-    // veh_accel = (calculate_engine_tq(i)*(2.97)-calculate_brake_tq(0))*(0.680)/((1000)-(calculate_resistance(veh_spd)));
-    // veh_spd = (veh_spd+(veh_accel*(0.05)));
-    // std::cout << veh_spd << std::endl;
-    //     }
-      
-    veh_accel = (calculate_engine_tq(this->engine->get_eng_rpm())*((this->gearbox->get_gear_ratio())*(this->diff_ratio))
-                 -calculate_brake_tq(brk_pedal))*(this->tire_diameter)
-                /(calculate_resistance(this->weight, this->vehicle_speed));
-    this->vehicle_speed += (veh_accel*(0.0000005)); //needs to be adjusted - 0.0000005 is a constant given from Ludvig 
-
-    constant_to_RPM = (((this->gearbox->get_gear_ratio())*(this->diff_ratio))/(this->tire_diameter))*60;
 
 //To be removed once the code above works
-    // const_factor = (3.6*M_PI*(this->tire_diameter))/(30*(this->diff_ratio));
-    // veh_spd = ((this->gearbox.get_gear_ratio())*(this->engine.get_eng_rpm())*const_factor);
-    // veh_spd = veh_spd * 0.621371; //MPH
+if(this->gearbox->get_gear_lever_position() == D||this->gearbox->get_gear_lever_position() == R)
+{
 
+    const_factor = ((3.6*M_PI*(this->tire_diameter))/(this->gearbox->get_gear_ratio()*60*(this->diff_ratio)))*0.621371;
+    
+    this->vehicle_speed = ((this->engine->get_eng_rpm())*const_factor)-(calculate_brake_tq(brk_pedal)); //sampletime_micro*pow(10,-6)*
+    
+  //  veh_spd = veh_spd * 0.621371; //MPH
+
+    std::cout << this->vehicle_speed << std::endl;
 
    // veh_spd = veh_spd - calculate_resistance(veh_spd);
    // veh_spd = ((this->engine.get_eng_rpm())*3.6*M_PI*(this->tire_diameter))\
    //         /30*(this->diff_ratio)*(this->gearbox.get_gear_ratio());
-
-    return constant_to_RPM;
 }
+    return const_factor;
+    std::cout << vehicle_speed << std::endl;
 
 // To be removed once the code works
     // Torque from engine is used to calculate the vehicle acceleration, which is integrated into vehicle speed.
@@ -133,3 +130,25 @@ float Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
     // GearboxRPS   = VehicleSpeed / WheelRadius
     // EngineRPS    = GearboxRPS * GearRatio * FinalGear
     // EngineRPS is used as input to Engine to calculate torque next iteration.
+
+
+// To be removed used only for testing
+    // for(int i=900; i<=9000; i++){
+    // veh_accel = (calculate_engine_tq(i)*(2.97)-calculate_brake_tq(0))*(0.680)/((1000)-(calculate_resistance(veh_spd)));
+    // veh_spd = (veh_spd+(veh_accel*(0.05)));
+    // std::cout << veh_spd << std::endl;
+    //     }
+    // Engine_torque = (calculate_engine_tq(this->engine->get_eng_rpm()));
+    // Gear_ratios = (this->gearbox->get_gear_ratio())*(this->diff_ratio);
+    // Brake_torque = calculate_brake_tq(brk_pedal);
+
+    // veh_accel = Engine_torque*Gear_ratios*(this->tire_diameter)/this->weight, this->vehicle_speed));
+    // this->vehicle_speed += (veh_accel*sampletime_micro*pow(10,-6)); //needs to be adjusted - 0.0000005 is a constant given from Ludvig 
+
+    // std::cout << vehicle_speed << std::endl;
+
+    // constant_to_RPM = (((this->gearbox->get_gear_ratio())*(this->diff_ratio))/(this->tire_diameter))*60;
+
+
+
+}

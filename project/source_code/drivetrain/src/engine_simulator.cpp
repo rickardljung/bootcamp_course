@@ -57,7 +57,7 @@ void Engine::RPM(const uint8_t &acc_pedal, const uint8_t &brk_pedal, const uint1
         //if RPM is max decrease RPM by rpm_max_dec
         if(this->eng_rpm > this->eng_max_rpm)
         {
-            this->eng_rpm-= this->rpm_max_dec;
+            this->eng_rpm = this->eng_max_rpm;//temp????
         }
     }
     //if engine is off set 0 rpm
@@ -72,12 +72,12 @@ void Engine::RPM(const uint8_t &acc_pedal, const uint8_t &brk_pedal, const uint1
     * @param speed current vehicle speed.
     * @param speed_to_rpm_factor factor to multiply with speed to receive actual RPM.
 */
-void Engine::ActualRPM(const uint8_t &speed, const double &speed_to_rpm_factor)
+void Engine::ActualRPM(const float &speed, const double &speed_to_rpm_factor)
 {
     if(this->eng_sts)
     {
         //calculate actual RPM
-        this->eng_rpm = speed*speed_to_rpm_factor;
+        this->eng_rpm = speed/speed_to_rpm_factor;
 
         //if RPM is below idle set idle
         if(this->eng_rpm < this->eng_idle_rpm)
