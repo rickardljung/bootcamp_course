@@ -104,10 +104,13 @@ float Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
     // std::cout << veh_spd << std::endl;
     //     }
       
-    veh_accel = (calculate_engine_tq(this->gearbox->get_gear_ratio())*((this->gearbox->get_gear_ratio())*(this->diff_ratio))
+    veh_accel = (calculate_engine_tq(this->engine->get_eng_rpm())*((this->gearbox->get_gear_ratio())*(this->diff_ratio))
                  -calculate_brake_tq(brk_pedal))*(this->tire_diameter)
                 /(calculate_resistance(this->weight, this->vehicle_speed));
     this->vehicle_speed += (veh_accel*(0.0000005)); //needs to be adjusted - 0.0000005 is a constant given from Ludvig 
+
+    std::cout << this->gearbox->get_gear_ratio() << std::endl;
+    std::cout << calculate_engine_tq(this->gearbox->get_gear_ratio()) << std::endl;
 
     constant_to_RPM = (((this->gearbox->get_gear_ratio())*(this->diff_ratio))/(this->tire_diameter))*60;
 
