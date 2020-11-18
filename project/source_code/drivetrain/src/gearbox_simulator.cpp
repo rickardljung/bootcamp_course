@@ -6,7 +6,7 @@
 * index 0 specifies gear ratio for reverse
 * @param gear_ratio_size the number of elements in gear_ratio
 */
-Gearbox::Gearbox(double *gear_ratio, uint8_t gear_ratio_size)
+Gearbox::Gearbox(double *gear_ratio, const uint8_t &gear_ratio_size)
 {
     this->gear_ratio = gear_ratio;
     this->max_gear_number = gear_ratio_size - 1; //-1 since reverse is included
@@ -20,7 +20,7 @@ Gearbox::Gearbox(double *gear_ratio, uint8_t gear_ratio_size)
 * @param speed speed of the vehicle
 * @param brake_pedal brake pedal position request by user. 0-100%
 */
-void Gearbox::GearLeverPosition(uint8_t gear_position_request, uint8_t speed, uint8_t brake_pedal)
+void Gearbox::GearLeverPosition(const uint8_t &gear_position_request, const uint8_t &speed, const uint8_t &brake_pedal)
 {
     //only change if brake is pressed and speed = 0. TODO: make it possible to change to N in speed?
     if(brake_pedal >= break_position_to_change_gear_lever &&
@@ -42,7 +42,7 @@ void Gearbox::GearLeverPosition(uint8_t gear_position_request, uint8_t speed, ui
 * Switches if conditions are fulfilled
 * @param engine_rpm engine RPM
 */
-void Gearbox::GearNumber(uint16_t engine_rpm)
+void Gearbox::GearNumber(const uint16_t &engine_rpm)
 {
     if (this->gear_lever_position == D) //TODO: should D be a global parameter?
     {
