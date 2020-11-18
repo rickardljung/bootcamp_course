@@ -7,9 +7,13 @@
 * @param gearbox gearbox simulation object
 * @param engine engine simulation object
 */
-Vehicle::Vehicle(Gearbox *gearbox, Engine *engine) {
+Vehicle::Vehicle(Gearbox &gearbox, Engine &engine, const float &diff_ratio, const uint16_t &weight, const float &tire_diameter) {
     this->gearbox = gearbox;
     this->engine = engine;
+    //Define final drive, weight and tire diameter
+    this->diff_ratio = diff_ratio;
+    this->weight = weight;
+    this->tire_diameter = tire_diameter;
 }
 /*!
 * Pulls a CAN message from the receive buffer, checks the ID of the message and performs actions depending on the message.
@@ -96,18 +100,6 @@ float Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
    //         /30*(this->diff_ratio)*(this->gearbox.get_gear_ratio());
 
     return constant_to_RPM;
-}
-
-Vehicle::Vehicle(void)
-{
-    //Instantiate engine class
-    Engine engine;
-    //Instantiate gearbox class
-    Gearbox gearbox;
-    //Define final drive, weight and tire diameter
-    this->diff_ratio = 3.42;
-    this->weight = 1000;
-    this->tire_diameter = 0.680;
 }
 
 // To be removed once the code works
