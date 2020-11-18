@@ -49,28 +49,28 @@ bool Vehicle::Run()
 }
 
 //Function used to calculate vehicle rolling resistance depending on veh speed, needs calibration possibly
-double calculate_resistance(uint8_t speed)
+float calculate_resistance(uint8_t speed)
 {
     return (( 0.00005*(2*pow(speed,2)) + 1 )*10); // To calibrate change the last )*10
 }
 
 //Function used to compute engine torque dependent on engine rpm, should be okey without calibraion
-double calculate_engine_tq(uint16_t engine_speed)
+float calculate_engine_tq(uint16_t engine_speed)
 {
     return ( (-0.00008*(pow(engine_speed,2))+engine_speed)/10 );
 }
 
 //Function that mimics brake pedal action, hard to say if it will work without any changes
-uint16_t calculate_brake_tq(uint8_t brake_pedal)
+float calculate_brake_tq(uint8_t brake_pedal)
 {
     return ( 0.01*brake_pedal ); //Possibly some factor needed to make it stop, it should make acceleration negative?
 }
 
-double Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
+float Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
 {
-    double veh_spd =0;
-    double veh_accel =0;
-    double constant_to_RPM = 0;
+    float veh_spd =0;
+    float veh_accel =0;
+    float constant_to_RPM = 0;
 
 // To be removed used only for testing
     // for(int i=900; i<=9000; i++){
