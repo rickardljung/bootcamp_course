@@ -2,6 +2,11 @@
 #include "can_io_thread.h"
 #include <iostream>
 
+
+const float final_gear = 3.42;
+const float weight = 1000;
+const float tire_diameter = 0.680;
+
 int main()
 {
     bool return_value = 0;
@@ -17,10 +22,10 @@ int main()
         //starts new thread handling input and output on CAN. Uses can_buffer
         CanIOThread io_thread(&socket, &future, receive_message_id, receive_message_id_size);
 
-        Engine engine;
-        double gear_ratios[7] = {3.00, 3.18, 2.26, 1.68, 1.29, 1.06, 0.88};
+        Engine engine(1000, 9000);
+        double gear_ratios[] = {3.00, 3.18, 2.26, 1.68, 1.29, 1.06, 0.88};
         Gearbox gearbox(gear_ratios, 7);
-        Vehicle vehicle(&gearbox, &engine);
+        Vehicle vehicle(&gearbox, &engine, final_gear, weight, tire_diameter);
         int i = 0;
         while (vehicle.Run())
         {

@@ -1,14 +1,19 @@
 #include "vehicle.h"
 #include <iostream>
+#include <math.h>
 
 /*!
 * Constructor of Vehicle. Assigns the class members.
 * @param gearbox gearbox simulation object
 * @param engine engine simulation object
 */
-Vehicle::Vehicle(Gearbox *gearbox, Engine *engine) {
+Vehicle::Vehicle(Gearbox *gearbox, Engine *engine, const float &diff_ratio, const uint16_t &weight, const float &tire_diameter) {
     this->gearbox = gearbox;
     this->engine = engine;
+    //Define final drive, weight and tire diameter
+    this->diff_ratio = diff_ratio;
+    this->weight = weight;
+    this->tire_diameter = tire_diameter;
 }
 /*!
 * Pulls a CAN message from the receive buffer, checks the ID of the message and performs actions depending on the message.
@@ -30,21 +35,101 @@ bool Vehicle::Run()
         } else
         {
             //RUN SIMULATION ENGINE AND GEARBOX
-            this->engine.Ignition(input->ignition, this->vehicle_speed, input->brake_pedal, this->gearbox.get_gear_position());
-            this->engine.RPM(input->accelerator_pedal, input->brake_pedal, sampletime_micro);
-            gearbox.GearLeverPosition(input->gear_position, this->vehicle_speed, input->brake_pedal);
-            gearbox.GearNumber(this->engine.get_eng_rpm());
+            this->engine->Ignition(input->ignition, this->vehicle_speed, input->brake_pedal, this->gearbox->get_gear_lever_position());
+            this->engine->RPM(input->accelerator_pedal, input->brake_pedal, sampletime_micro);
+            this->gearbox->GearLeverPosition(input->gear_position, this->vehicle_speed, input->brake_pedal);
+            this->gearbox->GearNumber(static_cast<uint16_t>(this->engine->get_eng_rpm()));
             vehicle_speed = this->CalculateVehicleSpeed(input->brake_pedal);
-            //engine.ActualRPM(vehicle_speed, speed_to_rpm_factor);
+            //engine->ActualRPM(vehicle_speed, speed_to_rpm_factor);
 
-            payload[0] = this->engine.get_eng_sts();
-            payload[1] = static_cast<uint8_t>(this->engine.get_eng_rpm() / (int)37);
+            payload[0] = static_cast<uint8_t>(this->engine->get_eng_sts());
+            payload[1] = static_cast<uint8_t>(this->engine->get_eng_rpm()/37);
             payload[2] = vehicle_speed;
-            CanBuffer::GetInstance().AddTx(&transmit_id, payload, &transmit_length); */
+            CanBuffer::GetInstance().AddTx(&transmit_id, payload, &transmit_length);
             return_value = 1;
         }
     }
     return return_value;
 }
-uint8_t Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal){return 0;}
 
+
+/*!
+* Function used to calculate vehicle rolling resistance 
+* depending on veh speed, needs calibration possibly
+* @param weight vehicle weight
+* @param speed speed of the vehicle
+* @return calculated rolling resistance
+*/
+float calculate_resistance(uint16_t weight, uint8_t speed)
+{
+    return (weight)-(( 0.00005*(2*pow(speed,2)) + 1 )*10);
+}
+
+/*!
+* Function used to compute engine torque dependent 
+* on engine rpm, should be okey without calibraion
+* @param engine_speed RPM of the engine
+* @return calculated engine torqe
+*/
+float calculate_engine_tq(uint16_t engine_speed)
+{
+    return ( (-0.00008*(pow(engine_speed,2))+engine_speed)/10 );
+}
+
+/*!
+* Function that mimics brake pedal action
+* might require calibration
+* @param brake_pedal brake pedal position
+* @return calculated brake force
+*/
+float calculate_brake_tq(uint8_t brake_pedal)
+{
+    return ( 0.01*brake_pedal ); //Possibly some factor needed to make it stop, it should make acceleration negative?
+}
+
+/*!
+* Function that calculates vehicle acceleration and speed
+* @param brake_pedal brake pedal position
+* @return calculated constant parapeter that can be used in the engine to 
+*/
+float Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
+{
+    float veh_accel =0;
+    float constant_to_RPM = 0;
+
+// To be removed used only for testing
+    // for(int i=900; i<=9000; i++){
+    // veh_accel = (calculate_engine_tq(i)*(2.97)-calculate_brake_tq(0))*(0.680)/((1000)-(calculate_resistance(veh_spd)));
+    // veh_spd = (veh_spd+(veh_accel*(0.05)));
+    // std::cout << veh_spd << std::endl;
+    //     }
+      
+    veh_accel = (calculate_engine_tq(this->engine->get_eng_rpm())*((this->gearbox->get_gear_ratio())*(this->diff_ratio))
+                 -calculate_brake_tq(brk_pedal))*(this->tire_diameter)
+                /(calculate_resistance(this->weight, this->vehicle_speed));
+    this->vehicle_speed += (veh_accel*(0.0000005)); //needs to be adjusted - 0.0000005 is a constant given from Ludvig 
+
+    constant_to_RPM = (((this->gearbox->get_gear_ratio())*(this->diff_ratio))/(this->tire_diameter))*60;
+
+//To be removed once the code above works
+    // const_factor = (3.6*M_PI*(this->tire_diameter))/(30*(this->diff_ratio));
+    // veh_spd = ((this->gearbox.get_gear_ratio())*(this->engine.get_eng_rpm())*const_factor);
+    // veh_spd = veh_spd * 0.621371; //MPH
+
+
+   // veh_spd = veh_spd - calculate_resistance(veh_spd);
+   // veh_spd = ((this->engine.get_eng_rpm())*3.6*M_PI*(this->tire_diameter))\
+   //         /30*(this->diff_ratio)*(this->gearbox.get_gear_ratio());
+
+    return constant_to_RPM;
+}
+
+// To be removed once the code works
+    // Torque from engine is used to calculate the vehicle acceleration, which is integrated into vehicle speed.
+    // Acceleration = WheelTorque                           *WheelRadius /VehicleMass - RollingResistance
+    //              = (EngineTorque*GearRatio - BrakeTorque)*WheelRadius /VehicleMass - VehicleSpeed^2*MagicNumber
+    // VehicleSpeed = VehicleSpeed + DeltaSpeed
+    //              = VehicleSpeed + Acceleration*timeStep
+    // GearboxRPS   = VehicleSpeed / WheelRadius
+    // EngineRPS    = GearboxRPS * GearRatio * FinalGear
+    // EngineRPS is used as input to Engine to calculate torque next iteration.
