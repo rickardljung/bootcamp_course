@@ -12,14 +12,14 @@ const uint16_t sampletime_micro = 5;
 
 class Vehicle {
     private:
-        Engine engine;
-        Gearbox gearbox;
+        Engine *engine;
+        Gearbox *gearbox;
         uint16_t tire_diameter;
         double diff_ratio;
         uint16_t weight;
         uint8_t vehicle_speed=0;
     public:
-        Vehicle() = default;//TODO: constructor/destructor
+        Vehicle(Gearbox *gearbox, Engine *engine);
         uint8_t CalculateVehicleSpeed(uint8_t brk_pedal);
         bool Run();
 };

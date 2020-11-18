@@ -2,11 +2,18 @@
 #include <iostream>
 
 /*!
+* Constructor of Vehicle. Assigns the class members.
+* @param gearbox gearbox simulation object
+* @param engine engine simulation object
+*/
+Vehicle::Vehicle(Gearbox *gearbox, Engine *engine) {
+    this->gearbox = gearbox;
+    this->engine = engine;
+}
+/*!
 * Pulls a CAN message from the receive buffer, checks the ID of the message and performs actions depending on the message.
 * The output data will be put on the transmit buffer.
 */
-
-
 bool Vehicle::Run()
 {
     //payload to be sent in canframe
@@ -33,7 +40,7 @@ bool Vehicle::Run()
             payload[0] = this->engine.get_eng_sts();
             payload[1] = static_cast<uint8_t>(this->engine.get_eng_rpm() / (int)37);
             payload[2] = vehicle_speed;
-            CanBuffer::GetInstance().AddTx(&transmit_id, payload, &transmit_length);
+            CanBuffer::GetInstance().AddTx(&transmit_id, payload, &transmit_length); */
             return_value = 1;
         }
     }
