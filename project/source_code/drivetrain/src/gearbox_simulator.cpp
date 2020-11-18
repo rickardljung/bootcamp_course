@@ -9,7 +9,7 @@
 Gearbox::Gearbox(double *gear_ratio, uint8_t gear_ratio_size)
 {
     this->gear_ratio = gear_ratio;
-    this->max_gear_number = gear_ratio_size - 1;
+    this->max_gear_number = gear_ratio_size - 1; //-1 since reverse is included
     this->gear_lever_position = P;
     this->gear_number = 1;
 }
@@ -49,35 +49,26 @@ void Gearbox::GearNumber(uint16_t engine_rpm)
     }
 }
 /*!
-*
-* @param gear_ratio gear ration for each gear. First element (index 0) specifies gear ratio for reverse
-* @param gear_ratio_size the number of elements in gear_ratio
+* Get function for gear lever position (P = 0, N = 1, D = 2, R = 3)
+* @return engaged gear lever position
 */
 uint8_t Gearbox::get_gear_lever_position()
 {
     return this->gear_lever_position;
 }
-/*! TODO
-* Constructor of Gearbox. Assigns the class members.
-* @param gear_ratio gear ration for each gear. First element (index 0) specifies gear ratio for reverse
-* @param gear_ratio_size the number of elements in gear_ratio
+/*!
+* Get function for gear number (1, 2, 3, ...)
+* @return engaged gear number
 */
 uint8_t Gearbox::get_gear_number()
 {
     return this->gear_number;
 }
-/*! TODO
-* Constructor of Gearbox. Assigns the class members.
-* @param gear_ratio gear ration for each gear. First element (index 0) specifies gear ratio for reverse
-* @param gear_ratio_size the number of elements in gear_ratio
+/*!
+* Get function for gear ratio.
+* @return gear ratio for the engaged gear number
 */
 double Gearbox::get_gear_ratio()
 {
     return this->gear_ratio[this->gear_number];
 }
-/*! TODO
-* Constructor of Gearbox. Assigns the class members.
-* @param gear_ratio gear ration for each gear. First element (index 0) specifies gear ratio for reverse
-* @param gear_ratio_size the number of elements in gear_ratio
-*/
-
