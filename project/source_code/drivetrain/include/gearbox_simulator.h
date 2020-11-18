@@ -16,10 +16,10 @@ class Gearbox {
         const uint16_t RPM_to_increase_gear_number = 6000;
         const uint16_t RPM_to_decrease_gear_number = 2000;
     public:
-        Gearbox(double *gear_ratio, uint8_t nbr_of_gears);
+        Gearbox(double *gear_ratio, const uint8_t &gear_ratio_size);
         ~Gearbox() = default;
-        void GearLeverPosition(uint8_t gear_position_request, uint8_t speed, uint8_t brake_pedal);
-        void GearNumber(uint16_t engine_rpm);
+        void GearLeverPosition(const uint8_t &gear_position_request, const uint8_t &speed, const uint8_t &brake_pedal);
+        void GearNumber(const uint16_t &engine_rpm);
         double get_gear_ratio();
         uint8_t get_gear_lever_position();
         uint8_t get_gear_number();
