@@ -68,7 +68,6 @@ float calculate_brake_tq(uint8_t brake_pedal)
 
 float Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
 {
-    float veh_spd =0;
     float veh_accel =0;
     float constant_to_RPM = 0;
 
@@ -79,11 +78,10 @@ float Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
     // std::cout << veh_spd << std::endl;
     //     }
       
-    veh_accel = (calculate_engine_tq(this->gearbox.get_gear_ratio())*((this->gearbox.get_gear_ratio())*(this->diff_ratio))-calculate_brake_tq(brk_pedal))*(this->tire_diameter)\
-                /(calculate_resistance(this->weight, veh_speed));
-    veh_spd = (veh_spd+(veh_accel*(0.0000005))); //needs to be adjusted - 0.0000005 is a constant given from Ludvig 
-
-    this->vehicle_speed = veh_spd;
+    veh_accel = (calculate_engine_tq(this->gearbox.get_gear_ratio())*((this->gearbox.get_gear_ratio())*(this->diff_ratio))
+                 -calculate_brake_tq(brk_pedal))*(this->tire_diameter)
+                /(calculate_resistance(this->weight, this->vehicle_speed));
+    this->vehicle_speed += (veh_accel*(0.0000005)); //needs to be adjusted - 0.0000005 is a constant given from Ludvig 
 
     constant_to_RPM = (((this->gearbox.get_gear_ratio())*(this->diff_ratio))/(this->tire_diameter))*60;
 
