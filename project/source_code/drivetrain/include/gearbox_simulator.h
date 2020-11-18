@@ -8,6 +8,7 @@ class Gearbox {
         uint8_t gear_lever_position;
         uint8_t gear_number;
         uint8_t max_gear_number;
+        
 
         //TODO: in a bigger project with more constants would it be a good idea to make gearbox and
         //engine templates. Input to the templates could then be a struct with the constants.
