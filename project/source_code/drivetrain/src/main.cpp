@@ -17,7 +17,7 @@ int main()
         //starts new thread handling input and output on CAN. Uses can_buffer
         CanIOThread io_thread(&socket, &future, receive_message_id, receive_message_id_size);
 
-        Engine engine;
+        Engine engine(1000, 9000);
         double gear_ratios[] = {3.00, 3.18, 2.26, 1.68, 1.29, 1.06, 0.88};
         Gearbox gearbox(gear_ratios, 7);
         Vehicle vehicle(&gearbox, &engine);

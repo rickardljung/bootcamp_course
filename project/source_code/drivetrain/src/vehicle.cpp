@@ -30,17 +30,17 @@ bool Vehicle::Run()
         } else
         {
             //RUN SIMULATION ENGINE AND GEARBOX
-            this->engine.Ignition(input->ignition, this->vehicle_speed, input->brake_pedal, this->gearbox.get_gear_position());
-            this->engine.RPM(input->accelerator_pedal, input->brake_pedal, sampletime_micro);
-            gearbox.GearLeverPosition(input->gear_position, this->vehicle_speed, input->brake_pedal);
-            gearbox.GearNumber(this->engine.get_eng_rpm());
+            this->engine->Ignition(input->ignition, this->vehicle_speed, input->brake_pedal, this->gearbox->get_gear_lever_position());
+            this->engine->RPM(input->accelerator_pedal, input->brake_pedal, sampletime_micro);
+            this->gearbox->GearLeverPosition(input->gear_position, this->vehicle_speed, input->brake_pedal);
+            this->gearbox->GearNumber(static_cast<uint16_t>(this->engine->get_eng_rpm()));
             vehicle_speed = this->CalculateVehicleSpeed(input->brake_pedal);
             //engine.ActualRPM(vehicle_speed, speed_to_rpm_factor);
 
-            payload[0] = this->engine.get_eng_sts();
-            payload[1] = static_cast<uint8_t>(this->engine.get_eng_rpm() / (int)37);
+            payload[0] = static_cast<uint8_t>(this->engine->get_eng_sts());
+            payload[1] = static_cast<uint8_t>(this->engine->get_eng_rpm()/37);
             payload[2] = vehicle_speed;
-            CanBuffer::GetInstance().AddTx(&transmit_id, payload, &transmit_length); */
+            CanBuffer::GetInstance().AddTx(&transmit_id, payload, &transmit_length);
             return_value = 1;
         }
     }

@@ -42,31 +42,29 @@ void Engine::Ignition(bool ign_req, uint8_t speed, uint8_t brk_pedal, uint8_t ge
 */
 void Engine::RPM(uint8_t acc_pedal, uint8_t brk_pedal, uint16_t sampletime)
 {
-    float temp_float_rpm;
     if(this->eng_sts)
     {
-        //check if engsts is on, if RPM = 0 set idle RPM
+        //if RPM = 0 (engine was just started), set idle RPM
         if(this->eng_rpm == 0)
         {
-            temp_float_rpm = eng_idle_rpm;
+            this->eng_rpm = eng_idle_rpm;
         }
         //if acc pedal is pressed and brake is not, increase rpm based on how much it is pressed
         if(acc_pedal > 0 && brk_pedal == 0)
         {
-            temp_float_rpm+= acc_pedal*this->eng_hp*sampletime*rpm_simulation_constant;
+            this->eng_rpm+= acc_pedal*this->eng_hp*sampletime*rpm_simulation_constant;
         }
         //if RPM is max decrease RPM by rpm_max_dec
-        if(temp_float_rpm > this->eng_max_rpm)
+        if(this->eng_rpm > this->eng_max_rpm)
         {
-            temp_float_rpm-= this->rpm_max_dec;
+            this->eng_rpm-= this->rpm_max_dec;
         }
     }
     //if engine is off set 0 rpm
     else
     {
-        temp_float_rpm = 0;
+        this->eng_rpm = 0;
     }
-    this->eng_rpm = static_cast<uint16_t>(temp_float_rpm);
 }
 
 /*!
@@ -76,32 +74,28 @@ void Engine::RPM(uint8_t acc_pedal, uint8_t brk_pedal, uint16_t sampletime)
 */
 void Engine::ActualRPM(uint8_t speed, double speed_to_rpm_factor)
 {
-    float temp_float_rpm;
     if(this->eng_sts)
     {
         //calculate actual RPM
-        temp_float_rpm = speed*speed_to_rpm_factor;
+        this->eng_rpm = speed*speed_to_rpm_factor;
 
         //if RPM is below idle set idle
-        if(temp_float_rpm < this->eng_idle_rpm)
+        if(this->eng_rpm < this->eng_idle_rpm)
         {
-            temp_float_rpm = this->eng_idle_rpm;
+            this->eng_rpm = this->eng_idle_rpm;
         }
     }
     else
     {
-        temp_float_rpm = 0;
+        this->eng_rpm = 0;
     }
-
-    this->eng_rpm = static_cast<uint16_t>(temp_float_rpm);
-
 }
 
 /*!
 	* Get function for engine RPM.
-    * @return current RPM.
+    * @return current RPM.temp_float_rpm
 */
-uint16_t Engine::get_eng_rpm()
+float Engine::get_eng_rpm()
 {
     return this->eng_rpm;
 }
@@ -110,7 +104,7 @@ uint16_t Engine::get_eng_rpm()
 	* Get function for engine status.
     * @return current engine status.
 */
-uint8_t Engine::get_eng_sts()
+bool Engine::get_eng_sts()
 {
     return this->eng_sts;
 }
