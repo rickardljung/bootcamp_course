@@ -49,9 +49,9 @@ bool Vehicle::Run()
 }
 
 //Function used to calculate vehicle rolling resistance depending on veh speed, needs calibration possibly
-float calculate_resistance(uint8_t speed)
+float calculate_resistance(uint16_t weight, uint8_t speed)
 {
-    return (( 0.00005*(2*pow(speed,2)) + 1 )*10); // To calibrate change the last )*10
+    return (weight)-(( 0.00005*(2*pow(speed,2)) + 1 )*10);
 }
 
 //Function used to compute engine torque dependent on engine rpm, should be okey without calibraion
@@ -80,7 +80,7 @@ float Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
     //     }
       
     veh_accel = (calculate_engine_tq(this->gearbox.get_gear_ratio())*((this->gearbox.get_gear_ratio())*(this->diff_ratio))-calculate_brake_tq(brk_pedal))*(this->tire_diameter)\
-                /((this->weight)-(calculate_resistance(veh_spd)));
+                /(calculate_resistance(this->weight, veh_speed));
     veh_spd = (veh_spd+(veh_accel*(0.0000005))); //needs to be adjusted - 0.0000005 is a constant given from Ludvig 
 
     this->vehicle_speed = veh_spd;
