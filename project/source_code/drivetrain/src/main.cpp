@@ -24,7 +24,7 @@ int main()
         int i = 0;
         while (vehicle.Run())
         {
-            std::this_thread::sleep_for(std::chrono::microseconds(5));
+            std::this_thread::sleep_for(std::chrono::microseconds(sampletime_micro));
             if (!CanBuffer::GetInstance().ReceiveBufferEmpty())
             {
                 i = 0;
