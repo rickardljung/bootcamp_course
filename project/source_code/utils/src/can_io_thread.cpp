@@ -8,7 +8,8 @@
 * @param receive_message_id list of IDs that should be read
 * @param receive_message_id_size size of the list receive_message_id.
 */
-CanIOThread::CanIOThread(scpp::SocketCan *socket, std::future<void> *future, uint8_t *receive_message_id, size_t receive_message_id_size)
+CanIOThread::CanIOThread(scpp::SocketCan *socket, std::future<void> *future, uint8_t *receive_message_id,
+                         const size_t &receive_message_id_size)
 {
     this->socket = socket;
     this->thread = std::thread(&CanIOThread::Run, this, future, receive_message_id, receive_message_id_size);
@@ -21,7 +22,7 @@ CanIOThread::CanIOThread(scpp::SocketCan *socket, std::future<void> *future, uin
 * @param receive_message_id list of IDs that should be read
 * @param receive_message_id_size size of the list receive_message_id.
 */
-void CanIOThread::Run(std::future<void> *future, uint8_t *receive_message_id, size_t receive_message_id_size)
+void CanIOThread::Run(std::future<void> *future, uint8_t *receive_message_id, const size_t &receive_message_id_size)
 {
     size_t i = 0;
     std::future_status future_status;

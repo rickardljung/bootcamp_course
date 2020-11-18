@@ -18,7 +18,7 @@ int main()
         CanIOThread io_thread(&socket, &future, receive_message_id, receive_message_id_size);
 
         Engine engine;
-        double gear_ratios[] = {3.00, 3.18, 2.26, 1.68, 1.29, 1.06, 0.88};
+        double gear_ratios[7] = {3.00, 3.18, 2.26, 1.68, 1.29, 1.06, 0.88};
         Gearbox gearbox(gear_ratios, 7);
         Vehicle vehicle(&gearbox, &engine);
         int i = 0;
