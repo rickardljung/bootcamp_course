@@ -40,30 +40,46 @@ bool Vehicle::Run()
     return return_value;
 }
 
-uint8_t calculate_resistance(uint8_t speed)
+//Function used to calculate vehicle rolling resistance depending on veh speed, needs calibration possibly
+double calculate_resistance(uint8_t speed)
 {
-    return ( 0.00005*(2*pow(speed,2)) + 5 );
+    return (( 0.00005*(2*pow(speed,2)) + 1 )*10); // To calibrate change the last )*10
 }
 
-uint16_t calculate_engine_tq(uint8_t engine_speed)
+//Function used to compute engine torque dependent on engine rpm, should be okey without calibraion
+double calculate_engine_tq(uint16_t engine_speed)
 {
-    return ( (-0.00008*(pow(engine_speed,2))+engine_speed)/1000 );
+    return ( (-0.00008*(pow(engine_speed,2))+engine_speed)/10 );
 }
 
+//Function that mimics brake pedal action, hard to say if it will work without any changes
 uint16_t calculate_brake_tq(uint8_t brake_pedal)
 {
-    return ( 0.01*brake_pedal );
+    return ( 0.01*brake_pedal ); //Possibly some factor needed to make it stop, it should make acceleration negative?
 }
 
-uint8_t Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
+double Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
 {
-    uint8_t veh_spd =0;
-    uint8_t const_factor =0;
-    uint16_t veh_accel =0;
-    veh_accel = (calculate_engine_tq(this->engine.get_eng_rpm())*(this->gearbox.get_gear_ratio())-calculate_brake_tq(brk_pedal))*(this->tire_diameter)\
-                /((this->weight)-(calculate_resistance(veh_spd)));
-    veh_spd = (veh_spd+(veh_accel*(0.0000005)));
+    double veh_spd =0;
+    double veh_accel =0;
+    double constant_to_RPM = 0;
 
+// To be removed used only for testing
+    // for(int i=900; i<=9000; i++){
+    // veh_accel = (calculate_engine_tq(i)*(2.97)-calculate_brake_tq(0))*(0.680)/((1000)-(calculate_resistance(veh_spd)));
+    // veh_spd = (veh_spd+(veh_accel*(0.05)));
+    // std::cout << veh_spd << std::endl;
+    //     }
+      
+    veh_accel = (calculate_engine_tq(this->gearbox.get_gear_ratio())*((this->gearbox.get_gear_ratio())*(this->diff_ratio))-calculate_brake_tq(brk_pedal))*(this->tire_diameter)\
+                /((this->weight)-(calculate_resistance(veh_spd)));
+    veh_spd = (veh_spd+(veh_accel*(0.0000005))); //needs to be adjusted - 0.0000005 is a constant given from Ludvig 
+
+    this->vehicle_speed = veh_spd;
+
+    constant_to_RPM = (((this->gearbox.get_gear_ratio())*(this->diff_ratio))/(this->tire_diameter))*60;
+
+//To be removed once the code above works
     // const_factor = (3.6*M_PI*(this->tire_diameter))/(30*(this->diff_ratio));
     // veh_spd = ((this->gearbox.get_gear_ratio())*(this->engine.get_eng_rpm())*const_factor);
     // veh_spd = veh_spd * 0.621371; //MPH
@@ -73,23 +89,27 @@ uint8_t Vehicle::CalculateVehicleSpeed(uint8_t brk_pedal)
    // veh_spd = ((this->engine.get_eng_rpm())*3.6*M_PI*(this->tire_diameter))\
    //         /30*(this->diff_ratio)*(this->gearbox.get_gear_ratio());
 
-    return veh_spd;
+    return constant_to_RPM;
 }
 
-// Vehicle::Vehicle(void)
-// {
-//     //std::cout << "Initialization" << std::endl;
-//     //Instantiate engine class
-//     Engine engine;
-//     //Instantiate gearbox class
-//     Gearbox gearbox;
-// }
+Vehicle::Vehicle(void)
+{
+    //Instantiate engine class
+    Engine engine;
+    //Instantiate gearbox class
+    Gearbox gearbox;
+    //Define final drive, weight and tire diameter
+    this->diff_ratio = 3.42;
+    this->weight = 1000;
+    this->tire_diameter = 0.680;
+}
 
-    Torque from engine is used to calculate the vehicle acceleration, which is integrated into vehicle speed.
-    Acceleration = WheelTorque                           *WheelRadius /VehicleMass - RollingResistance
-                 = (EngineTorque*GearRatio - BrakeTorque)*WheelRadius /VehicleMass - VehicleSpeed^2*MagicNumber
-    VehicleSpeed = VehicleSpeed + DeltaSpeed
-                 = VehicleSpeed + Acceleration*timeStep
-    GearboxRPS   = VehicleSpeed / WheelRadius
-    EngineRPS    = GearboxRPS * GearRatio * FinalGear
-    EngineRPS is used as input to Engine to calculate torque next iteration.
+// To be removed once the code works
+    // Torque from engine is used to calculate the vehicle acceleration, which is integrated into vehicle speed.
+    // Acceleration = WheelTorque                           *WheelRadius /VehicleMass - RollingResistance
+    //              = (EngineTorque*GearRatio - BrakeTorque)*WheelRadius /VehicleMass - VehicleSpeed^2*MagicNumber
+    // VehicleSpeed = VehicleSpeed + DeltaSpeed
+    //              = VehicleSpeed + Acceleration*timeStep
+    // GearboxRPS   = VehicleSpeed / WheelRadius
+    // EngineRPS    = GearboxRPS * GearRatio * FinalGear
+    // EngineRPS is used as input to Engine to calculate torque next iteration.
