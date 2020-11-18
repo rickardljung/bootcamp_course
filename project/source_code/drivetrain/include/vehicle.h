@@ -8,6 +8,7 @@
 
 const uint32_t transmit_id = 2;
 const uint8_t transmit_length = 2;
+const uint16_t sampletime_micro = 5;
 
 class Vehicle {
     private:
@@ -16,7 +17,7 @@ class Vehicle {
         uint16_t tire_diameter;
         double diff_ratio;
         uint16_t weight;
-        uint8_t vehicle_speed;
+        uint8_t vehicle_speed=0;
     public:
         Vehicle() = default;//TODO: constructor/destructor
         uint8_t CalculateVehicleSpeed(uint8_t brk_pedal);
