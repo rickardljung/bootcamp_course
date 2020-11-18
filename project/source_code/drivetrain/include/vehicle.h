@@ -8,19 +8,21 @@
 
 const uint32_t transmit_id = 2;
 const uint8_t transmit_length = 2;
+const uint16_t sampletime_micro = 5;
 
 class Vehicle {
     private:
-        Engine engine;
-        Gearbox gearbox;
+        Engine *engine;
+        Gearbox *gearbox;
         double tire_diameter;
         double diff_ratio;
         uint16_t weight;
-        double vehicle_speed;
+        double vehicle_speed=0;
     public:
-        Vehicle(); //= default;//TODO: constructor/destructor
+        Vehicle(Gearbox *gearbox, Engine *engine);
         double CalculateVehicleSpeed(uint8_t brk_pedal);
         bool Run();
 };
 
 #endif
+

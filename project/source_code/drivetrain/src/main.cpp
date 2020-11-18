@@ -17,11 +17,14 @@ int main()
         //starts new thread handling input and output on CAN. Uses can_buffer
         CanIOThread io_thread(&socket, &future, receive_message_id, receive_message_id_size);
 
-        Vehicle vehicle;
+        Engine engine(1000, 9000);
+        double gear_ratios[] = {3.00, 3.18, 2.26, 1.68, 1.29, 1.06, 0.88};
+        Gearbox gearbox(gear_ratios, 7);
+        Vehicle vehicle(&gearbox, &engine);
         int i = 0;
         while (vehicle.Run())
         {
-            std::this_thread::sleep_for(std::chrono::microseconds(5));
+            std::this_thread::sleep_for(std::chrono::microseconds(sampletime_micro));
             if (!CanBuffer::GetInstance().ReceiveBufferEmpty())
             {
                 i = 0;

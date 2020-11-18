@@ -1,19 +1,26 @@
 #ifndef GEARBOX_SIMULATOR_H
 #define GEARBOX_SIMULATOR_H
-#include <map>
+#include "user_input.h"
 
 class Gearbox {
     private:
-        std::pair<uint8_t, double> *gear_ratio;
+        double *gear_ratio;
         uint8_t gear_lever_position;
-    public:
-        Gearbox() = default; //remove when real constructor is implemented
-        Gearbox(double *gear_ratio, uint8_t nbr_gears); //this->gear_ratio = new std::pair<uint8_t, double>(nbr_gears+1);
-        ~Gearbox() = default;//TODO: delete pair
-        void GearLeverPosition(uint8_t gear_pos_req, uint8_t speed, uint8_t brk_pedal);
-        void GearNumber(uint16_t eng_rpm);
-        double get_gear_ratio();
-        uint8_t get_gear_position();
-};
+        uint8_t gear_number;
+        uint8_t max_gear_number;
 
+        //TODO: in a bigger project with more constants would it be a good idea to make gearbox and
+        //engine templates. Input to the templates could then be a struct with the constants.
+        const uint8_t break_position_to_change_gear_lever = 10;
+        const uint16_t RPM_to_increase_gear_number = 6000;
+        const uint16_t RPM_to_decrease_gear_number = 2000;
+    public:
+        Gearbox(double *gear_ratio, uint8_t nbr_of_gears);
+        ~Gearbox() = default;
+        void GearLeverPosition(uint8_t gear_position_request, uint8_t speed, uint8_t brake_pedal);
+        void GearNumber(uint16_t engine_rpm);
+        double get_gear_ratio();
+        uint8_t get_gear_lever_position();
+        uint8_t get_gear_number();
+};
 #endif
