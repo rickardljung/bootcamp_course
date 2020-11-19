@@ -80,7 +80,7 @@ bool Vehicle::Run()
 float calculate_resistance(uint16_t weight, float speed)
 {
     //return (weight)+(( 0.00005*(2*pow(speed,2)) + 1 )*100);
-    return weight*speed*sampletime_micro*5*pow(10, -10);
+    return weight*speed*sampletime_micro*3*pow(10, -9);
 }
 
 /*!
