@@ -7,7 +7,7 @@
 #include <thread>
 
 const uint32_t transmit_id = 2;
-const uint8_t transmit_length = 2;
+const uint8_t transmit_length = 3;
 const uint16_t sampletime_micro = 5;
 
 class Vehicle {
