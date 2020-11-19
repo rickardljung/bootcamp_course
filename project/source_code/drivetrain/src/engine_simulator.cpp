@@ -89,6 +89,10 @@ void Engine::ActualRPM(const float &speed, const float &speed_to_rpm_factor)
     {
         this->eng_rpm = 0;
     }
+
+
+    //check if rpm is high enough to shift gear in here or gearbox?
+
 }
 
 /*!

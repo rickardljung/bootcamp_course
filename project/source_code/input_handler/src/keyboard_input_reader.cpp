@@ -6,8 +6,7 @@
 
 /*!
 	* Runs the main function of InputReader, calls functions ReadInputs and InterpretInput.
-	* @param user_input fills in values in the user_input struct.
-    * @param mtx is the mutex lock used to not write/read to/from user_input struct at the same time from different threads.
+    * Adds a message to CanBuffer when input has been read and interpreted.
 	* @return Returns True if thread should continue running.
 */
 bool InputReader::Run()
@@ -23,7 +22,7 @@ bool InputReader::Run()
 }
 /*!
 	* Reads inputs from the keyboard (blocking function).
-	* @return True if a KeyPress has occurred.
+	* @return True if a KeyPress has occurred, false for all other events.
 */
 bool InputReader::ReadInputs()
 {
@@ -34,6 +33,7 @@ bool InputReader::ReadInputs()
             return true;
         }
         return false;
+
 }
 /*!
 	* Destructor for class InputReader, closes the display and resets settings for the keyboard.
@@ -47,6 +47,7 @@ InputReader::~InputReader()
 }
 /*!
 	* Constructor for class InputReader, opens a display and changes settings wanted for the keyboard reading.
+    * Sets temp_user_input struct to 0 and adds it to the CAN buffer.
 	* @return Nothing is returned
 */
 InputReader::InputReader()
@@ -78,7 +79,7 @@ InputReader::InputReader()
 }
 
 /*!
-	* Calls functions depending on which key was pressed.
+	* Decides appropriate action depending on which key was pressed.
 	* @return Returns true unless Esc key has been pressed.
 */
 bool InputReader::InterpretInput()
