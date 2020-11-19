@@ -78,6 +78,8 @@ typedef struct _drivetrain {
     uint8_t engine_status;
     uint8_t engine_rpm;
     uint8_t vehicle_speed;
+    uint8_t gear_lever_position;
+    uint8_t gear_number;
 }Drivetrain_t;
 
 typedef union _gauge{

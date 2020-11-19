@@ -63,7 +63,7 @@ Item {
     property real temperature: 0
     property real oil_temp: 0
     Behavior on kph { NumberAnimation { duration: 500 } }
-    Behavior on rpm { NumberAnimation { duration: 200 } }
+    Behavior on rpm { NumberAnimation { duration: 50 } }
     Behavior on temperature { NumberAnimation { duration: 1/*500*/ } }
     Behavior on fuel { NumberAnimation { duration: 1/*500*/ } }
     Behavior on oil_temp { NumberAnimation { duration: 1/*500*/ } }
@@ -101,9 +101,9 @@ Item {
         } else if (pindle_int == 1) {
             return "N";
         } else if (pindle_int == 2) {
-            return "R";
-        } else if (pindle_int == 3) {
             return "D";
+        } else if (pindle_int == 3) {
+            return "R";
         } else if (pindle_int == 4) {
             return "M";
         }
@@ -129,7 +129,7 @@ Item {
     property string txt: "."
 
     SequentialAnimation {
-        running: startUp
+        running: false
        /* running: startDemo
         PropertyAction {
             target: valueSource

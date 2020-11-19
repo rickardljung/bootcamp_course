@@ -60,6 +60,8 @@ bool Vehicle::Run()
             payload[0] = static_cast<uint8_t>(this->engine->get_eng_sts());
             payload[1] = static_cast<uint8_t>(this->engine->get_eng_rpm()/37);
             payload[2] = static_cast<uint8_t>(vehicle_speed);
+            payload[3] = this->gearbox->get_gear_lever_position();
+            payload[4] = this->gearbox->get_gear_number();
             CanBuffer::GetInstance().AddTx(&transmit_id, payload, &transmit_length);
             return_value = 1;
         }

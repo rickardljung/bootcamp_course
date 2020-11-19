@@ -20,8 +20,11 @@ void yourStuff::YouHaveJustRecievedACANFrame(const canfd_frame * const _frame) {
         break;
         case CAN::MSG::DRIVETRAIN_ID: {
             const struct CAN::MSG::_drivetrain *d = reinterpret_cast<const struct CAN::MSG::_drivetrain * >((_frame->data));
+            this->InstrumentCluster.ignite(d->engine_status);
             this->InstrumentCluster.setRPM(d->engine_rpm * 37);
             this->InstrumentCluster.setSpeed(d->vehicle_speed);
+            this->InstrumentCluster.setGearPindle_int(d->gear_lever_position);
+            this->InstrumentCluster.setGear(d->gear_number);
         }
         break;
 /*     case CAN::MSG::GAUGES_ID: {

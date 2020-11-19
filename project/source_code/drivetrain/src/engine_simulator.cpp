@@ -57,7 +57,7 @@ void Engine::RPM(const uint8_t &acc_pedal, const uint8_t &brk_pedal, const uint1
         //if RPM is max decrease RPM by rpm_max_dec
         if(this->eng_rpm > this->eng_max_rpm)
         {
-            this->eng_rpm = this->eng_max_rpm;//temp????
+            this->eng_rpm -= this->rpm_max_dec;
         }
     }
     //if engine is off set 0 rpm
