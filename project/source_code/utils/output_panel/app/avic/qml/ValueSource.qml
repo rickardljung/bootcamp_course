@@ -64,9 +64,9 @@ Item {
     property real oil_temp: 0
     Behavior on kph { NumberAnimation { duration: 300 } }
     Behavior on rpm { NumberAnimation { duration: 50 } }
-    Behavior on temperature { NumberAnimation { duration: 1/*500*/ } }
-    Behavior on fuel { NumberAnimation { duration: 1/*500*/ } }
-    Behavior on oil_temp { NumberAnimation { duration: 1/*500*/ } }
+    Behavior on temperature { NumberAnimation { duration: 500 } }
+    Behavior on fuel { NumberAnimation { duration: 500 } }
+    Behavior on oil_temp { NumberAnimation { duration: 500 } }
 
 //    Behavior on kph {
 //        animation: du

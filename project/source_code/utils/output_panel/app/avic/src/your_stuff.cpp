@@ -25,6 +25,16 @@ void yourStuff::YouHaveJustRecievedACANFrame(const canfd_frame * const _frame) {
             this->InstrumentCluster.setSpeed(d->vehicle_speed);
             this->InstrumentCluster.setGearPindle_int(d->gear_lever_position);
             this->InstrumentCluster.setGear(d->gear_number);
+            if(d->engine_status == 1){
+                this->InstrumentCluster.setFuelGauges(160);
+                this->InstrumentCluster.setOilTemperatureGauges(120);
+                this->InstrumentCluster.setTemperatureGauges(145);
+            }
+            else{
+                this->InstrumentCluster.setFuelGauges(0);
+                this->InstrumentCluster.setOilTemperatureGauges(0);
+                this->InstrumentCluster.setTemperatureGauges(0);
+            }
         }
         break;
 /*     case CAN::MSG::GAUGES_ID: {
