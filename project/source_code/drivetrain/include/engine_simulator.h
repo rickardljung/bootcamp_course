@@ -11,6 +11,7 @@ class Engine {
         uint16_t eng_hp;
         uint16_t eng_max_rpm;
         const uint16_t eng_idle_rpm = 900;
+        const uint16_t eng_min_rpm = 800;
         const uint16_t rpm_max_dec = 300;
         const float rpm_simulation_constant = 5*pow(10,-7);
     public:

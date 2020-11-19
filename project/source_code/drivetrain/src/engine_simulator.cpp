@@ -80,7 +80,7 @@ void Engine::ActualRPM(const float &speed, const float &speed_to_rpm_factor)
         this->eng_rpm = speed/speed_to_rpm_factor;
 
         //if RPM is below idle set idle
-        if(this->eng_rpm < this->eng_idle_rpm)
+        if(this->eng_rpm < this->eng_min_rpm)
         {
             this->eng_rpm = this->eng_idle_rpm;
         }
