@@ -26,6 +26,7 @@ bool Vehicle::Run()
     bool return_value = 1;
     float rpm_to_speed_factor;
 
+
     CanData data =  CanBuffer::GetInstance().PullRx();
     if (data.id == 1) //can data from input_handler
     {
@@ -174,7 +175,5 @@ void Vehicle::VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_speed)
     // std::cout << vehicle_speed << std::endl;
 
     // constant_to_RPM = (((this->gearbox->get_gear_ratio())*(this->diff_ratio))/(this->tire_diameter))*60;
-
-
 
 }

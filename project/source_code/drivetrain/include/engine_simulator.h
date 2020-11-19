@@ -3,6 +3,7 @@
 #include "user_input.h"
 #include <math.h>
 
+enum EngSts : uint8_t {Off = 0, On = 1};
 
 class Engine {
     private:
