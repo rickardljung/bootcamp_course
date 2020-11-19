@@ -11,12 +11,15 @@ void yourStuff::YouHaveJustRecievedACANFrame(const canfd_frame * const _frame) {
         case CAN::MSG::USERIN_ID: {
             const struct CAN::MSG::_userin *d = reinterpret_cast<const struct CAN::MSG::_userin * >((_frame->data));
             //this->InstrumentCluster.ignite(d->IGNT);
-            printUserIn(d);
+            //printUserIn(d);
+            std::string str = "Acc pos: " + std::to_string(d->accelerator_pedal)+ "\n"+
+                              "Brk pos: " + std::to_string(d->brake_pedal);
+            // QString qstr = QString::fromStdString(str);
+            this->InstrumentCluster.setTXT(str.c_str());
         }
         break;
         case CAN::MSG::DRIVETRAIN_ID: {
             const struct CAN::MSG::_drivetrain *d = reinterpret_cast<const struct CAN::MSG::_drivetrain * >((_frame->data));
-            std::cout << "speed: " << (int)d->vehicle_speed << std::endl;
             this->InstrumentCluster.setRPM(d->engine_rpm * 37);
             this->InstrumentCluster.setSpeed(d->vehicle_speed);
         }
