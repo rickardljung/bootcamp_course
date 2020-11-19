@@ -384,7 +384,7 @@ ApplicationWindow {
                 maxWarningColor: "#f42d2d"
                 minWarningColor: "#2487e4"
                tickmarkLabel: Text {
-                    color: "transparent"                 
+                    color: "transparent"
                 }
             }
         }
@@ -413,7 +413,7 @@ ApplicationWindow {
             text: valueSource.txt
             width: 441
             height: 130
-            font.pixelSize: 15
+            font.pixelSize: 50
 
         }
     }

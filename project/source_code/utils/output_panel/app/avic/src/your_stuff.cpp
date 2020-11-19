@@ -12,8 +12,8 @@ void yourStuff::YouHaveJustRecievedACANFrame(const canfd_frame * const _frame) {
             const struct CAN::MSG::_userin *d = reinterpret_cast<const struct CAN::MSG::_userin * >((_frame->data));
             //this->InstrumentCluster.ignite(d->IGNT);
             //printUserIn(d);
-            std::string str = "Acc pos: " + std::to_string(d->accelerator_pedal)+ "\n"+
-                              "Brk pos: " + std::to_string(d->brake_pedal);
+            std::string str = "Acc pos: " + std::to_string(d->accelerator_pedal)+ "%\n"+
+                              "Brk pos: " + std::to_string(d->brake_pedal) + "%";
             // QString qstr = QString::fromStdString(str);
             this->InstrumentCluster.setTXT(str.c_str());
         }
