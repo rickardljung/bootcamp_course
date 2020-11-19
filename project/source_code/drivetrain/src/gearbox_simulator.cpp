@@ -42,18 +42,22 @@ void Gearbox::GearLeverPosition(const uint8_t &gear_position_request, const uint
 * Switches if conditions are fulfilled
 * @param engine_rpm engine RPM
 */
-void Gearbox::GearNumber(const uint16_t &engine_rpm)
+bool Gearbox::GearNumberChange(const float &engine_rpm)
 {
+    bool gear_number_change = false;
     if (this->gear_lever_position == D) //TODO: should D be a global parameter?
     {
         if(engine_rpm >= this->RPM_to_increase_gear_number && this->gear_number != this->max_gear_number)
         {
             this->gear_number += 1;
+            gear_number_change = true;
         } else if(engine_rpm <= this->RPM_to_decrease_gear_number && this->gear_number != 1)
         {
             this->gear_number -= 1;
+            gear_number_change = true;
         }
     }
+    return gear_number_change;
 }
 /*!
 * Get function for gear lever position (P = 0, N = 1, D = 2, R = 3)

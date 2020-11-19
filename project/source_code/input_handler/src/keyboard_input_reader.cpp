@@ -34,7 +34,6 @@ bool InputReader::ReadInputs()
             return true;
         }
         return false;
-        
 }
 /*!
 	* Destructor for class InputReader, closes the display and resets settings for the keyboard.

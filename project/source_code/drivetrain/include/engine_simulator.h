@@ -17,7 +17,7 @@ class Engine {
         Engine(const uint16_t &hp, const uint16_t &max_rpm);
         void Ignition(const bool &ign_req, const uint8_t &speed, const uint8_t &brk_pedal, const uint8_t &gear_position);
         void RPM(const uint8_t &acc_pedal, const uint8_t &brk_pedal, const uint16_t &sampletime);
-        void ActualRPM(const float &speed, const double &speed_to_rpm_factor);
+        void ActualRPM(const float &speed, const float &speed_to_rpm_factor);
         float get_eng_rpm();
         bool get_eng_sts();
 };

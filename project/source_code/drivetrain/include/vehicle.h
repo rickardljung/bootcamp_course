@@ -20,7 +20,8 @@ class Vehicle {
         float vehicle_speed=0;
     public:
         Vehicle(Gearbox *gearbox, Engine *engine, const float &diff_ratio, const uint16_t &weight, const float &tire_diameter);
-        float CalculateVehicleSpeed(uint8_t brk_pedal);
+        float RPMToSpeedFactor();
+        void VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_speed);
         bool Run();
 };
 
