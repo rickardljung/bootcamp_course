@@ -50,6 +50,12 @@ bool Vehicle::Run()
             }
             this->VehicleSpeed(input->brake_pedal, rpm_to_speed_factor);
             engine->ActualRPM(this->vehicle_speed, rpm_to_speed_factor);
+/*
+            std::cout << "RPM: " << this->engine->get_eng_rpm() << std::endl;
+            std::cout << "Gear lever position: " << (int)this->gearbox->get_gear_lever_position() << std::endl;
+            std::cout << "Gear number: " << (int)this->gearbox->get_gear_number() << std::endl;
+            std::cout << "Speed: " << this->vehicle_speed << std::endl << std::endl;
+*/
 
             payload[0] = static_cast<uint8_t>(this->engine->get_eng_sts());
             payload[1] = static_cast<uint8_t>(this->engine->get_eng_rpm()/37);
@@ -69,9 +75,10 @@ bool Vehicle::Run()
 * @param speed speed of the vehicle
 * @return calculated rolling resistance
 */
-float calculate_resistance(uint16_t weight, uint8_t speed)
+float calculate_resistance(uint16_t weight, float speed)
 {
-    return (weight)+(( 0.00005*(2*pow(speed,2)) + 1 )*100);
+    //return (weight)+(( 0.00005*(2*pow(speed,2)) + 1 )*100);
+    return weight*speed*sampletime_micro*5*pow(10, -10);
 }
 
 /*!
@@ -93,7 +100,7 @@ float calculate_engine_tq(uint16_t engine_speed)
 */
 float calculate_brake_tq(uint8_t brake_pedal)
 {
-    return ( 0.01*brake_pedal ); //Possibly some factor needed to make it stop, it should make acceleration negative?
+    return sampletime_micro*pow(10, -6)*((5*brake_pedal)); //Possibly some factor needed to make it stop, it should make acceleration negative?
 }
 
 /*!
@@ -121,10 +128,13 @@ void Vehicle::VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_speed)
     if(this->gearbox->get_gear_lever_position() == D||this->gearbox->get_gear_lever_position() == R)
     {
 
-
-
-        this->vehicle_speed = ((this->engine->get_eng_rpm())*rpm_to_speed)-(calculate_brake_tq(brk_pedal)); //sampletime_micro*pow(10,-6)*
-
+        this->vehicle_speed = ((this->engine->get_eng_rpm())*rpm_to_speed)-
+                                (calculate_brake_tq(brk_pedal))-
+                                calculate_resistance(this->weight, this->vehicle_speed);
+        if(this->vehicle_speed < 7 && brk_pedal > 0)
+        {
+            this->vehicle_speed = 0;
+        }
     //  veh_spd = veh_spd * 0.621371; //MPH
 
 
