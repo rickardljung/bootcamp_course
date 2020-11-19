@@ -12,3 +12,4 @@ add_executable(drivetrain
                     ../utils/src/can_io_thread.cpp
                     ../utils/src/socketcan.cpp)
 target_link_libraries(drivetrain PUBLIC pthread)
+#set(CMAKE_BUILD_TYPE Debug)
