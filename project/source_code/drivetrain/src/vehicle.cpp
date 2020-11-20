@@ -70,9 +70,6 @@ bool Vehicle::Run()
     return return_value;
 }
 
-
-
-
 void Vehicle::VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_speed)
 {
     /*float veh_accel =0;

@@ -24,6 +24,7 @@ class Vehicle {
         void VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_speed);
         bool Run();
 };
+
 /*!
 * Function used to calculate vehicle rolling resistance
 * depending on veh speed, needs calibration possibly
