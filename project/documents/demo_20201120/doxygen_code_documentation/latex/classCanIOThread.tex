@@ -1,0 +1,130 @@
+\hypertarget{classCanIOThread}{}\section{Can\+I\+O\+Thread Class Reference}
+\label{classCanIOThread}\index{Can\+I\+O\+Thread@{Can\+I\+O\+Thread}}
+
+
+{\ttfamily \#include $<$can\+\_\+io\+\_\+thread.\+h$>$}
+
+
+
+Collaboration diagram for Can\+I\+O\+Thread\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=191pt]{classCanIOThread__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classCanIOThread_a5ab76331e5bd6ce26fcad85e8bd5d9f4}{Can\+I\+O\+Thread} (\hyperlink{classscpp_1_1SocketCan}{scpp\+::\+Socket\+Can} $\ast$\hyperlink{classCanIOThread_a4c0f06e7c73ea3afcb567ff7dbb41f30}{socket}, std\+::future$<$ void $>$ $\ast$future, uint8\+\_\+t $\ast$receive\+\_\+message\+\_\+id, const size\+\_\+t \&receive\+\_\+message\+\_\+id\+\_\+size)
+\item 
+\hyperlink{classCanIOThread_acbe9fb01fc351b5d0babe204ff086e5b}{$\sim$\+Can\+I\+O\+Thread} ()
+\item 
+\hyperlink{classscpp_1_1SocketCan}{scpp\+::\+Socket\+Can} $\ast$ \hyperlink{classCanIOThread_abd81d2bfe629d2abf8a3ee4e0d71c7e5}{get\+\_\+socket} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classCanIOThread_a1dfe981584e3e558df59211571ac9860}{Run} (std\+::future$<$ void $>$ $\ast$future, uint8\+\_\+t $\ast$receive\+\_\+message\+\_\+id, const size\+\_\+t \&receive\+\_\+message\+\_\+id\+\_\+size)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::thread \hyperlink{classCanIOThread_a7a0b5ee8f944e3e94d529311f064c1ac}{thread}
+\item 
+\hyperlink{classscpp_1_1SocketCan}{scpp\+::\+Socket\+Can} $\ast$ \hyperlink{classCanIOThread_a4c0f06e7c73ea3afcb567ff7dbb41f30}{socket}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classCanIOThread_a5ab76331e5bd6ce26fcad85e8bd5d9f4}\label{classCanIOThread_a5ab76331e5bd6ce26fcad85e8bd5d9f4}} 
+\index{Can\+I\+O\+Thread@{Can\+I\+O\+Thread}!Can\+I\+O\+Thread@{Can\+I\+O\+Thread}}
+\index{Can\+I\+O\+Thread@{Can\+I\+O\+Thread}!Can\+I\+O\+Thread@{Can\+I\+O\+Thread}}
+\subsubsection{\texorpdfstring{Can\+I\+O\+Thread()}{CanIOThread()}}
+{\footnotesize\ttfamily Can\+I\+O\+Thread\+::\+Can\+I\+O\+Thread (\begin{DoxyParamCaption}\item[{\hyperlink{classscpp_1_1SocketCan}{scpp\+::\+Socket\+Can} $\ast$}]{socket,  }\item[{std\+::future$<$ void $>$ $\ast$}]{future,  }\item[{uint8\+\_\+t $\ast$}]{receive\+\_\+message\+\_\+id,  }\item[{const size\+\_\+t \&}]{receive\+\_\+message\+\_\+id\+\_\+size }\end{DoxyParamCaption})}
+
+Constructor of \hyperlink{classCanIOThread}{Can\+I\+O\+Thread}. Assigns the class members and starts a thread on the function \char`\"{}\+Run\char`\"{} 
+\begin{DoxyParams}{Parameters}
+{\em socket} & used for read and write data to can \\
+\hline
+{\em receive\+\_\+message\+\_\+id} & list of I\+Ds that should be read \\
+\hline
+{\em receive\+\_\+message\+\_\+id\+\_\+size} & size of the list receive\+\_\+message\+\_\+id. \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classCanIOThread_a5ab76331e5bd6ce26fcad85e8bd5d9f4_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classCanIOThread_acbe9fb01fc351b5d0babe204ff086e5b}\label{classCanIOThread_acbe9fb01fc351b5d0babe204ff086e5b}} 
+\index{Can\+I\+O\+Thread@{Can\+I\+O\+Thread}!````~Can\+I\+O\+Thread@{$\sim$\+Can\+I\+O\+Thread}}
+\index{````~Can\+I\+O\+Thread@{$\sim$\+Can\+I\+O\+Thread}!Can\+I\+O\+Thread@{Can\+I\+O\+Thread}}
+\subsubsection{\texorpdfstring{$\sim$\+Can\+I\+O\+Thread()}{~CanIOThread()}}
+{\footnotesize\ttfamily Can\+I\+O\+Thread\+::$\sim$\+Can\+I\+O\+Thread (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Destructor of \hyperlink{classCanIOThread}{Can\+I\+O\+Thread}. Informs the thread to stop (the Run function) and wait until it is done. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classCanIOThread_abd81d2bfe629d2abf8a3ee4e0d71c7e5}\label{classCanIOThread_abd81d2bfe629d2abf8a3ee4e0d71c7e5}} 
+\index{Can\+I\+O\+Thread@{Can\+I\+O\+Thread}!get\+\_\+socket@{get\+\_\+socket}}
+\index{get\+\_\+socket@{get\+\_\+socket}!Can\+I\+O\+Thread@{Can\+I\+O\+Thread}}
+\subsubsection{\texorpdfstring{get\+\_\+socket()}{get\_socket()}}
+{\footnotesize\ttfamily \hyperlink{classscpp_1_1SocketCan}{scpp\+::\+Socket\+Can}$\ast$ Can\+I\+O\+Thread\+::get\+\_\+socket (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classCanIOThread_a1dfe981584e3e558df59211571ac9860}\label{classCanIOThread_a1dfe981584e3e558df59211571ac9860}} 
+\index{Can\+I\+O\+Thread@{Can\+I\+O\+Thread}!Run@{Run}}
+\index{Run@{Run}!Can\+I\+O\+Thread@{Can\+I\+O\+Thread}}
+\subsubsection{\texorpdfstring{Run()}{Run()}}
+{\footnotesize\ttfamily void Can\+I\+O\+Thread\+::\+Run (\begin{DoxyParamCaption}\item[{std\+::future$<$ void $>$ $\ast$}]{future,  }\item[{uint8\+\_\+t $\ast$}]{receive\+\_\+message\+\_\+id,  }\item[{const size\+\_\+t \&}]{receive\+\_\+message\+\_\+id\+\_\+size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Reads data from C\+AN and writes it to the receive buffer. Pulls data from the transmit buffer and transmits it to can. Loops until a the future is set from outside of this class. 
+\begin{DoxyParams}{Parameters}
+{\em future} & future which will notify when the execution (the loop) should end \\
+\hline
+{\em receive\+\_\+message\+\_\+id} & list of I\+Ds that should be read \\
+\hline
+{\em receive\+\_\+message\+\_\+id\+\_\+size} & size of the list receive\+\_\+message\+\_\+id. \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=335pt]{classCanIOThread_a1dfe981584e3e558df59211571ac9860_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classCanIOThread_a1dfe981584e3e558df59211571ac9860_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classCanIOThread_a4c0f06e7c73ea3afcb567ff7dbb41f30}\label{classCanIOThread_a4c0f06e7c73ea3afcb567ff7dbb41f30}} 
+\index{Can\+I\+O\+Thread@{Can\+I\+O\+Thread}!socket@{socket}}
+\index{socket@{socket}!Can\+I\+O\+Thread@{Can\+I\+O\+Thread}}
+\subsubsection{\texorpdfstring{socket}{socket}}
+{\footnotesize\ttfamily \hyperlink{classscpp_1_1SocketCan}{scpp\+::\+Socket\+Can}$\ast$ Can\+I\+O\+Thread\+::socket\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classCanIOThread_a7a0b5ee8f944e3e94d529311f064c1ac}\label{classCanIOThread_a7a0b5ee8f944e3e94d529311f064c1ac}} 
+\index{Can\+I\+O\+Thread@{Can\+I\+O\+Thread}!thread@{thread}}
+\index{thread@{thread}!Can\+I\+O\+Thread@{Can\+I\+O\+Thread}}
+\subsubsection{\texorpdfstring{thread}{thread}}
+{\footnotesize\ttfamily std\+::thread Can\+I\+O\+Thread\+::thread\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/utils/include/\hyperlink{can__io__thread_8h}{can\+\_\+io\+\_\+thread.\+h}\item 
+/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/utils/src/\hyperlink{can__io__thread_8cpp}{can\+\_\+io\+\_\+thread.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,227 @@
+\hypertarget{classEngine}{}\section{Engine Class Reference}
+\label{classEngine}\index{Engine@{Engine}}
+
+
+{\ttfamily \#include $<$engine\+\_\+simulator.\+h$>$}
+
+
+
+Collaboration diagram for Engine\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=211pt]{classEngine__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classEngine_a756d6abb1d53627a0763f53490a774ef}{Engine} (const uint16\+\_\+t \&hp, const uint16\+\_\+t \&max\+\_\+rpm)
+\item 
+void \hyperlink{classEngine_a7e4b7cfcb9184beb80fed0ea60a3aad1}{Ignition} (const bool \&ign\+\_\+req, const uint8\+\_\+t \&speed, const uint8\+\_\+t \&brk\+\_\+pedal, const uint8\+\_\+t \&gear\+\_\+position)
+\item 
+void \hyperlink{classEngine_aaeaf10a957802225b43d088b5c2ce54b}{R\+PM} (const uint8\+\_\+t \&acc\+\_\+pedal, const uint8\+\_\+t \&brk\+\_\+pedal, const uint16\+\_\+t \&sampletime)
+\item 
+void \hyperlink{classEngine_a72bbd11160a8d916332b26e294133684}{Actual\+R\+PM} (const float \&speed, const float \&speed\+\_\+to\+\_\+rpm\+\_\+factor)
+\item 
+float \hyperlink{classEngine_a31646756334221f7967a114c64f188f4}{get\+\_\+eng\+\_\+rpm} ()
+\item 
+bool \hyperlink{classEngine_abf40022906338faef233d44a93ea01af}{get\+\_\+eng\+\_\+sts} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classEngine_a2c5cddbb86ed53703f2ed8182d505c82}{eng\+\_\+sts}
+\item 
+float \hyperlink{classEngine_aa502de3162f10d4e7f086cb08c817372}{eng\+\_\+rpm}
+\item 
+uint16\+\_\+t \hyperlink{classEngine_a450f51a16e7aa1af382193e8acf6e36a}{eng\+\_\+hp}
+\item 
+uint16\+\_\+t \hyperlink{classEngine_a2d840eecfbd0cc30d0063daee122b66f}{eng\+\_\+max\+\_\+rpm}
+\item 
+const uint16\+\_\+t \hyperlink{classEngine_a4a099af57c5bb8df6006aeab0e1f30ae}{eng\+\_\+idle\+\_\+rpm} = 900
+\item 
+const uint16\+\_\+t \hyperlink{classEngine_a83b157d748ed627fbeb06ae4a7b4514a}{eng\+\_\+min\+\_\+rpm} = 850
+\item 
+const uint16\+\_\+t \hyperlink{classEngine_ac03e3994b854b6ecbb3bf05dba2942a5}{rpm\+\_\+max\+\_\+dec} = 150
+\item 
+const float \hyperlink{classEngine_aac9426589cebccaa8cadf7cc7a0ba9be}{rpm\+\_\+simulation\+\_\+constant} = 5$\ast$pow(10,-\/7)
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classEngine_a756d6abb1d53627a0763f53490a774ef}\label{classEngine_a756d6abb1d53627a0763f53490a774ef}} 
+\index{Engine@{Engine}!Engine@{Engine}}
+\index{Engine@{Engine}!Engine@{Engine}}
+\subsubsection{\texorpdfstring{Engine()}{Engine()}}
+{\footnotesize\ttfamily Engine\+::\+Engine (\begin{DoxyParamCaption}\item[{const uint16\+\_\+t \&}]{hp,  }\item[{const uint16\+\_\+t \&}]{max\+\_\+rpm }\end{DoxyParamCaption})}
+
+Constructor for \hyperlink{classEngine}{Engine}, sets horsepower and max rpm. 
+\begin{DoxyParams}{Parameters}
+{\em hp} & horsepower. \\
+\hline
+{\em max\+\_\+rpm} & maximum R\+PM. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classEngine_a72bbd11160a8d916332b26e294133684}\label{classEngine_a72bbd11160a8d916332b26e294133684}} 
+\index{Engine@{Engine}!Actual\+R\+PM@{Actual\+R\+PM}}
+\index{Actual\+R\+PM@{Actual\+R\+PM}!Engine@{Engine}}
+\subsubsection{\texorpdfstring{Actual\+R\+P\+M()}{ActualRPM()}}
+{\footnotesize\ttfamily void Engine\+::\+Actual\+R\+PM (\begin{DoxyParamCaption}\item[{const float \&}]{speed,  }\item[{const float \&}]{speed\+\_\+to\+\_\+rpm\+\_\+factor }\end{DoxyParamCaption})}
+
+Calculates actual R\+PM based on speed and speed to rpm factor. 
+\begin{DoxyParams}{Parameters}
+{\em speed} & current vehicle speed. \\
+\hline
+{\em speed\+\_\+to\+\_\+rpm\+\_\+factor} & factor to multiply with speed to receive actual R\+PM. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classEngine_a72bbd11160a8d916332b26e294133684_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classEngine_a31646756334221f7967a114c64f188f4}\label{classEngine_a31646756334221f7967a114c64f188f4}} 
+\index{Engine@{Engine}!get\+\_\+eng\+\_\+rpm@{get\+\_\+eng\+\_\+rpm}}
+\index{get\+\_\+eng\+\_\+rpm@{get\+\_\+eng\+\_\+rpm}!Engine@{Engine}}
+\subsubsection{\texorpdfstring{get\+\_\+eng\+\_\+rpm()}{get\_eng\_rpm()}}
+{\footnotesize\ttfamily float Engine\+::get\+\_\+eng\+\_\+rpm (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Get function for engine R\+PM. \begin{DoxyReturn}{Returns}
+current R\+P\+M.\+temp\+\_\+float\+\_\+rpm 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classEngine_a31646756334221f7967a114c64f188f4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classEngine_abf40022906338faef233d44a93ea01af}\label{classEngine_abf40022906338faef233d44a93ea01af}} 
+\index{Engine@{Engine}!get\+\_\+eng\+\_\+sts@{get\+\_\+eng\+\_\+sts}}
+\index{get\+\_\+eng\+\_\+sts@{get\+\_\+eng\+\_\+sts}!Engine@{Engine}}
+\subsubsection{\texorpdfstring{get\+\_\+eng\+\_\+sts()}{get\_eng\_sts()}}
+{\footnotesize\ttfamily bool Engine\+::get\+\_\+eng\+\_\+sts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Get function for engine status. \begin{DoxyReturn}{Returns}
+current engine status. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classEngine_abf40022906338faef233d44a93ea01af_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classEngine_a7e4b7cfcb9184beb80fed0ea60a3aad1}\label{classEngine_a7e4b7cfcb9184beb80fed0ea60a3aad1}} 
+\index{Engine@{Engine}!Ignition@{Ignition}}
+\index{Ignition@{Ignition}!Engine@{Engine}}
+\subsubsection{\texorpdfstring{Ignition()}{Ignition()}}
+{\footnotesize\ttfamily void Engine\+::\+Ignition (\begin{DoxyParamCaption}\item[{const bool \&}]{ign\+\_\+req,  }\item[{const uint8\+\_\+t \&}]{speed,  }\item[{const uint8\+\_\+t \&}]{brk\+\_\+pedal,  }\item[{const uint8\+\_\+t \&}]{gear\+\_\+position }\end{DoxyParamCaption})}
+
+Determines if engine should be on or off. 
+\begin{DoxyParams}{Parameters}
+{\em ign\+\_\+req} & ignition request from user. \\
+\hline
+{\em speed} & current vehicle speed. \\
+\hline
+{\em brk\+\_\+pedal} & \% that the brake pedal is pressed. \\
+\hline
+{\em gear\+\_\+position} & current gear lever position. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=347pt]{classEngine_a7e4b7cfcb9184beb80fed0ea60a3aad1_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classEngine_aaeaf10a957802225b43d088b5c2ce54b}\label{classEngine_aaeaf10a957802225b43d088b5c2ce54b}} 
+\index{Engine@{Engine}!R\+PM@{R\+PM}}
+\index{R\+PM@{R\+PM}!Engine@{Engine}}
+\subsubsection{\texorpdfstring{R\+P\+M()}{RPM()}}
+{\footnotesize\ttfamily void Engine\+::\+R\+PM (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \&}]{acc\+\_\+pedal,  }\item[{const uint8\+\_\+t \&}]{brk\+\_\+pedal,  }\item[{const uint16\+\_\+t \&}]{sampletime }\end{DoxyParamCaption})}
+
+Increases R\+PM based on user input. Checks that we dont exceed max R\+PM. 
+\begin{DoxyParams}{Parameters}
+{\em acc\+\_\+pedal} & \% that the acceleration pedal is pressed. \\
+\hline
+{\em brk\+\_\+pedal} & \% that the brake pedal is pressed. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=338pt]{classEngine_aaeaf10a957802225b43d088b5c2ce54b_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classEngine_a450f51a16e7aa1af382193e8acf6e36a}\label{classEngine_a450f51a16e7aa1af382193e8acf6e36a}} 
+\index{Engine@{Engine}!eng\+\_\+hp@{eng\+\_\+hp}}
+\index{eng\+\_\+hp@{eng\+\_\+hp}!Engine@{Engine}}
+\subsubsection{\texorpdfstring{eng\+\_\+hp}{eng\_hp}}
+{\footnotesize\ttfamily uint16\+\_\+t Engine\+::eng\+\_\+hp\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classEngine_a4a099af57c5bb8df6006aeab0e1f30ae}\label{classEngine_a4a099af57c5bb8df6006aeab0e1f30ae}} 
+\index{Engine@{Engine}!eng\+\_\+idle\+\_\+rpm@{eng\+\_\+idle\+\_\+rpm}}
+\index{eng\+\_\+idle\+\_\+rpm@{eng\+\_\+idle\+\_\+rpm}!Engine@{Engine}}
+\subsubsection{\texorpdfstring{eng\+\_\+idle\+\_\+rpm}{eng\_idle\_rpm}}
+{\footnotesize\ttfamily const uint16\+\_\+t Engine\+::eng\+\_\+idle\+\_\+rpm = 900\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classEngine_a2d840eecfbd0cc30d0063daee122b66f}\label{classEngine_a2d840eecfbd0cc30d0063daee122b66f}} 
+\index{Engine@{Engine}!eng\+\_\+max\+\_\+rpm@{eng\+\_\+max\+\_\+rpm}}
+\index{eng\+\_\+max\+\_\+rpm@{eng\+\_\+max\+\_\+rpm}!Engine@{Engine}}
+\subsubsection{\texorpdfstring{eng\+\_\+max\+\_\+rpm}{eng\_max\_rpm}}
+{\footnotesize\ttfamily uint16\+\_\+t Engine\+::eng\+\_\+max\+\_\+rpm\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classEngine_a83b157d748ed627fbeb06ae4a7b4514a}\label{classEngine_a83b157d748ed627fbeb06ae4a7b4514a}} 
+\index{Engine@{Engine}!eng\+\_\+min\+\_\+rpm@{eng\+\_\+min\+\_\+rpm}}
+\index{eng\+\_\+min\+\_\+rpm@{eng\+\_\+min\+\_\+rpm}!Engine@{Engine}}
+\subsubsection{\texorpdfstring{eng\+\_\+min\+\_\+rpm}{eng\_min\_rpm}}
+{\footnotesize\ttfamily const uint16\+\_\+t Engine\+::eng\+\_\+min\+\_\+rpm = 850\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classEngine_aa502de3162f10d4e7f086cb08c817372}\label{classEngine_aa502de3162f10d4e7f086cb08c817372}} 
+\index{Engine@{Engine}!eng\+\_\+rpm@{eng\+\_\+rpm}}
+\index{eng\+\_\+rpm@{eng\+\_\+rpm}!Engine@{Engine}}
+\subsubsection{\texorpdfstring{eng\+\_\+rpm}{eng\_rpm}}
+{\footnotesize\ttfamily float Engine\+::eng\+\_\+rpm\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classEngine_a2c5cddbb86ed53703f2ed8182d505c82}\label{classEngine_a2c5cddbb86ed53703f2ed8182d505c82}} 
+\index{Engine@{Engine}!eng\+\_\+sts@{eng\+\_\+sts}}
+\index{eng\+\_\+sts@{eng\+\_\+sts}!Engine@{Engine}}
+\subsubsection{\texorpdfstring{eng\+\_\+sts}{eng\_sts}}
+{\footnotesize\ttfamily bool Engine\+::eng\+\_\+sts\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classEngine_ac03e3994b854b6ecbb3bf05dba2942a5}\label{classEngine_ac03e3994b854b6ecbb3bf05dba2942a5}} 
+\index{Engine@{Engine}!rpm\+\_\+max\+\_\+dec@{rpm\+\_\+max\+\_\+dec}}
+\index{rpm\+\_\+max\+\_\+dec@{rpm\+\_\+max\+\_\+dec}!Engine@{Engine}}
+\subsubsection{\texorpdfstring{rpm\+\_\+max\+\_\+dec}{rpm\_max\_dec}}
+{\footnotesize\ttfamily const uint16\+\_\+t Engine\+::rpm\+\_\+max\+\_\+dec = 150\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classEngine_aac9426589cebccaa8cadf7cc7a0ba9be}\label{classEngine_aac9426589cebccaa8cadf7cc7a0ba9be}} 
+\index{Engine@{Engine}!rpm\+\_\+simulation\+\_\+constant@{rpm\+\_\+simulation\+\_\+constant}}
+\index{rpm\+\_\+simulation\+\_\+constant@{rpm\+\_\+simulation\+\_\+constant}!Engine@{Engine}}
+\subsubsection{\texorpdfstring{rpm\+\_\+simulation\+\_\+constant}{rpm\_simulation\_constant}}
+{\footnotesize\ttfamily const float Engine\+::rpm\+\_\+simulation\+\_\+constant = 5$\ast$pow(10,-\/7)\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/drivetrain/include/\hyperlink{engine__simulator_8h}{engine\+\_\+simulator.\+h}\item 
+/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/drivetrain/src/\hyperlink{engine__simulator_8cpp}{engine\+\_\+simulator.\+cpp}\end{DoxyCompactItemize}
