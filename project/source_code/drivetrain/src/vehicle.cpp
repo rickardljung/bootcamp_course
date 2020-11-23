@@ -7,14 +7,18 @@
 * @param gearbox gearbox simulation object
 * @param engine engine simulation object
 */
-Vehicle::Vehicle(Gearbox *gearbox, Engine *engine, const float &diff_ratio, const uint16_t &weight, const float &tire_diameter) {
-    this->gearbox = gearbox;
+Vehicle::Vehicle(Gearbox *_gearbox, Engine *_engine, const float &_diff_ratio, const uint16_t &_weight, const float &_tire_diameter)
+                 : gearbox(_gearbox), engine(_engine), diff_ratio(_diff_ratio), weight(_weight), tire_diameter(_tire_diameter) {}
+
+//Number of instructions? In .h file? Only on constructors?
+
+/*     this->gearbox = gearbox;
     this->engine = engine;
     //Define final drive, weight and tire diameter
     this->diff_ratio = diff_ratio;
     this->weight = weight;
     this->tire_diameter = tire_diameter;
-}
+}*/
 /*!
 * Pulls a CAN message from the receive buffer, checks the ID of the message and performs actions depending on the message.
 * The output data will be put on the transmit buffer.

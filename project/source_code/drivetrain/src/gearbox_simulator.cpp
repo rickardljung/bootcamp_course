@@ -6,13 +6,9 @@
 * index 0 specifies gear ratio for reverse
 * @param gear_ratio_size the number of elements in gear_ratio
 */
-Gearbox::Gearbox(double *gear_ratio, const uint8_t &gear_ratio_size)
-{
-    this->gear_ratio = gear_ratio;
-    this->max_gear_number = gear_ratio_size - 1; //-1 since reverse is included
-    this->gear_lever_position = P;
-    this->gear_number = 1;
-}
+Gearbox::Gearbox(double *_gear_ratio, const uint8_t &_gear_ratio_size)
+                : gear_ratio(_gear_ratio), max_gear_number(_gear_ratio_size - 1){}
+
 /*!
 * Checks if a gear lever position switch should be performed.
 * Switches if conditions are fulfilled and sets the gear number.

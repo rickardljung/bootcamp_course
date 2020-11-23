@@ -7,8 +7,8 @@ enum EngSts : uint8_t {Off = 0, On = 1};
 
 class Engine {
     private:
-        bool eng_sts;
-        float eng_rpm;
+        bool eng_sts = false;
+        float eng_rpm = 0;
         uint16_t eng_hp;
         uint16_t eng_max_rpm;
         const uint16_t eng_idle_rpm = 900;
