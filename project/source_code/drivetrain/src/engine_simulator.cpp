@@ -4,12 +4,15 @@
 
 
 /*!
-	* Constructor for Engine, sets horsepower and max rpm.
+	* Initializes Engine, sets horsepower and max rpm.
     * @param hp horsepower.
     * @param max_rpm maximum RPM.
 */
-Engine::Engine(const uint16_t &_hp, const uint16_t &_max_rpm)
-              : eng_rpm(_hp), eng_max_rpm(_max_rpm){}
+void Engine::initialize(const uint16_t &hp, const uint16_t &max_rpm)
+{
+    this->eng_hp = hp;
+    this->eng_max_rpm = max_rpm;
+}
 
 /*!
 	* Determines if engine should be on or off.
