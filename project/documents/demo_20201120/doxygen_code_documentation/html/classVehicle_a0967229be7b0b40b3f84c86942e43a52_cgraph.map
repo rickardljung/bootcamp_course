@@ -1,0 +1,6 @@
+<map id="Vehicle::VehicleSpeed" name="Vehicle::VehicleSpeed">
+<area shape="rect" id="node2" href="$classGearbox.html#a6e3e4eefa42a5811396aee1fad572adc" title="Gearbox::get_gear_lever\l_position" alt="" coords="207,5,371,47"/>
+<area shape="rect" id="node3" href="$classEngine.html#a31646756334221f7967a114c64f188f4" title="Engine::get_eng_rpm" alt="" coords="216,71,361,98"/>
+<area shape="rect" id="node4" href="$vehicle_8cpp.html#aa3ffa21149a5a339a380677de0e5d594" title="calculate_brake_tq" alt="" coords="223,122,354,149"/>
+<area shape="rect" id="node5" href="$vehicle_8cpp.html#a6597511c111033c86174e181164d1fdd" title="calculate_resistance" alt="" coords="218,173,359,199"/>
+</map>

@@ -1,0 +1,275 @@
+\hypertarget{classInputReader}{}\section{Input\+Reader Class Reference}
+\label{classInputReader}\index{Input\+Reader@{Input\+Reader}}
+
+
+{\ttfamily \#include $<$keyboard\+\_\+input\+\_\+reader.\+h$>$}
+
+
+
+Collaboration diagram for Input\+Reader\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=210pt]{classInputReader__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classInputReader_ae7d7eaec9edd0b8a5e6c5870f23070c3}{Input\+Reader} ()
+\item 
+\hyperlink{classInputReader_a38875ce3bae818dd0836da36fb7ea891}{$\sim$\+Input\+Reader} ()
+\item 
+bool \hyperlink{classInputReader_a258e1e58806e172a4339bb2aec9a85f0}{Run} ()
+\item 
+bool \hyperlink{classInputReader_a541f5d60fa0d9ee786d82f1541485a4a}{Read\+Inputs} ()
+\item 
+bool \hyperlink{classInputReader_a83a83d74ccb7cd6a29da3b558babaf1c}{Interpret\+Input} ()
+\item 
+void \hyperlink{classInputReader_a0740495343639fcf0759a1b8fe0fe2e0}{Acceleration} ()
+\item 
+void \hyperlink{classInputReader_ad35d36c2bac3f4b6bae2d2ad501873cb}{Braking} ()
+\item 
+void \hyperlink{classInputReader_a0a4c53621f5b7c8e3373341c1f383001}{Ignition\+Req} ()
+\item 
+void \hyperlink{classInputReader_aec41f6307eb1f4ca8308d4f002ce1cf0}{Gear\+Pos\+Req} ()
+\item 
+bool \hyperlink{classInputReader_af314d9877257c41a41d937e3ca00c679}{End\+Simulation} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{user__input_8h_a4be483183ef50f2de9cefcb22df23699}{User\+Input} \hyperlink{classInputReader_ad19bb2b46ab677724d4fe3352cab13d6}{temp\+\_\+user\+\_\+input}
+\item 
+Display $\ast$ \hyperlink{classInputReader_ac8b258254da835100455ef83dd3921df}{display}
+\item 
+Window \hyperlink{classInputReader_aa27cb19e6c3d1fa1d968b798b5aaa6c5}{window}
+\item 
+X\+Event \hyperlink{classInputReader_a737042e6b612b74a6444d611297af66f}{event}
+\item 
+int \hyperlink{classInputReader_af8a0467bf9ab4a7e054eb46b77adf96a}{s}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classInputReader_ae7d7eaec9edd0b8a5e6c5870f23070c3}\label{classInputReader_ae7d7eaec9edd0b8a5e6c5870f23070c3}} 
+\index{Input\+Reader@{Input\+Reader}!Input\+Reader@{Input\+Reader}}
+\index{Input\+Reader@{Input\+Reader}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{Input\+Reader()}{InputReader()}}
+{\footnotesize\ttfamily Input\+Reader\+::\+Input\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Constructor for class \hyperlink{classInputReader}{Input\+Reader}, opens a display and changes settings wanted for the keyboard reading. Sets temp\+\_\+user\+\_\+input struct to 0 and adds it to the C\+AN buffer. \begin{DoxyReturn}{Returns}
+Nothing is returned 
+\end{DoxyReturn}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classInputReader_ae7d7eaec9edd0b8a5e6c5870f23070c3_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classInputReader_a38875ce3bae818dd0836da36fb7ea891}\label{classInputReader_a38875ce3bae818dd0836da36fb7ea891}} 
+\index{Input\+Reader@{Input\+Reader}!````~Input\+Reader@{$\sim$\+Input\+Reader}}
+\index{````~Input\+Reader@{$\sim$\+Input\+Reader}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{$\sim$\+Input\+Reader()}{~InputReader()}}
+{\footnotesize\ttfamily Input\+Reader\+::$\sim$\+Input\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Destructor for class \hyperlink{classInputReader}{Input\+Reader}, closes the display and resets settings for the keyboard. \begin{DoxyReturn}{Returns}
+Nothing is returned 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classInputReader_a0740495343639fcf0759a1b8fe0fe2e0}\label{classInputReader_a0740495343639fcf0759a1b8fe0fe2e0}} 
+\index{Input\+Reader@{Input\+Reader}!Acceleration@{Acceleration}}
+\index{Acceleration@{Acceleration}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{Acceleration()}{Acceleration()}}
+{\footnotesize\ttfamily void Input\+Reader\+::\+Acceleration (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Increases or decreases acceleration value, stores it in temp\+\_\+user\+\_\+input. \begin{DoxyReturn}{Returns}
+Nothing is returned. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classInputReader_a0740495343639fcf0759a1b8fe0fe2e0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classInputReader_ad35d36c2bac3f4b6bae2d2ad501873cb}\label{classInputReader_ad35d36c2bac3f4b6bae2d2ad501873cb}} 
+\index{Input\+Reader@{Input\+Reader}!Braking@{Braking}}
+\index{Braking@{Braking}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{Braking()}{Braking()}}
+{\footnotesize\ttfamily void Input\+Reader\+::\+Braking (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Increases or decreases brake value, stores it in temp\+\_\+user\+\_\+input. \begin{DoxyReturn}{Returns}
+Nothing is returned. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classInputReader_ad35d36c2bac3f4b6bae2d2ad501873cb_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classInputReader_af314d9877257c41a41d937e3ca00c679}\label{classInputReader_af314d9877257c41a41d937e3ca00c679}} 
+\index{Input\+Reader@{Input\+Reader}!End\+Simulation@{End\+Simulation}}
+\index{End\+Simulation@{End\+Simulation}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{End\+Simulation()}{EndSimulation()}}
+{\footnotesize\ttfamily bool Input\+Reader\+::\+End\+Simulation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Sets end simulation. \begin{DoxyReturn}{Returns}
+Returns false. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classInputReader_af314d9877257c41a41d937e3ca00c679_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classInputReader_aec41f6307eb1f4ca8308d4f002ce1cf0}\label{classInputReader_aec41f6307eb1f4ca8308d4f002ce1cf0}} 
+\index{Input\+Reader@{Input\+Reader}!Gear\+Pos\+Req@{Gear\+Pos\+Req}}
+\index{Gear\+Pos\+Req@{Gear\+Pos\+Req}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{Gear\+Pos\+Req()}{GearPosReq()}}
+{\footnotesize\ttfamily void Input\+Reader\+::\+Gear\+Pos\+Req (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Determines which gear should be requested, stores it in temp\+\_\+user\+\_\+input. \begin{DoxyReturn}{Returns}
+Nothing is returned. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classInputReader_aec41f6307eb1f4ca8308d4f002ce1cf0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classInputReader_a0a4c53621f5b7c8e3373341c1f383001}\label{classInputReader_a0a4c53621f5b7c8e3373341c1f383001}} 
+\index{Input\+Reader@{Input\+Reader}!Ignition\+Req@{Ignition\+Req}}
+\index{Ignition\+Req@{Ignition\+Req}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{Ignition\+Req()}{IgnitionReq()}}
+{\footnotesize\ttfamily void Input\+Reader\+::\+Ignition\+Req (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Toggles the ignition request, stores it in temp\+\_\+user\+\_\+input. \begin{DoxyReturn}{Returns}
+Nothing is returned. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classInputReader_a0a4c53621f5b7c8e3373341c1f383001_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classInputReader_a83a83d74ccb7cd6a29da3b558babaf1c}\label{classInputReader_a83a83d74ccb7cd6a29da3b558babaf1c}} 
+\index{Input\+Reader@{Input\+Reader}!Interpret\+Input@{Interpret\+Input}}
+\index{Interpret\+Input@{Interpret\+Input}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{Interpret\+Input()}{InterpretInput()}}
+{\footnotesize\ttfamily bool Input\+Reader\+::\+Interpret\+Input (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Decides appropriate action depending on which key was pressed. \begin{DoxyReturn}{Returns}
+Returns true unless Esc key has been pressed. 
+\end{DoxyReturn}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classInputReader_a83a83d74ccb7cd6a29da3b558babaf1c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classInputReader_a83a83d74ccb7cd6a29da3b558babaf1c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classInputReader_a541f5d60fa0d9ee786d82f1541485a4a}\label{classInputReader_a541f5d60fa0d9ee786d82f1541485a4a}} 
+\index{Input\+Reader@{Input\+Reader}!Read\+Inputs@{Read\+Inputs}}
+\index{Read\+Inputs@{Read\+Inputs}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{Read\+Inputs()}{ReadInputs()}}
+{\footnotesize\ttfamily bool Input\+Reader\+::\+Read\+Inputs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Reads inputs from the keyboard (blocking function). \begin{DoxyReturn}{Returns}
+True if a Key\+Press has occurred, false for all other events. 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classInputReader_a541f5d60fa0d9ee786d82f1541485a4a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classInputReader_a258e1e58806e172a4339bb2aec9a85f0}\label{classInputReader_a258e1e58806e172a4339bb2aec9a85f0}} 
+\index{Input\+Reader@{Input\+Reader}!Run@{Run}}
+\index{Run@{Run}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{Run()}{Run()}}
+{\footnotesize\ttfamily bool Input\+Reader\+::\+Run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Runs the main function of \hyperlink{classInputReader}{Input\+Reader}, calls functions Read\+Inputs and Interpret\+Input. Adds a message to \hyperlink{classCanBuffer}{Can\+Buffer} when input has been read and interpreted. \begin{DoxyReturn}{Returns}
+Returns True if thread should continue running. 
+\end{DoxyReturn}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classInputReader_a258e1e58806e172a4339bb2aec9a85f0_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=248pt]{classInputReader_a258e1e58806e172a4339bb2aec9a85f0_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classInputReader_ac8b258254da835100455ef83dd3921df}\label{classInputReader_ac8b258254da835100455ef83dd3921df}} 
+\index{Input\+Reader@{Input\+Reader}!display@{display}}
+\index{display@{display}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{display}{display}}
+{\footnotesize\ttfamily Display$\ast$ Input\+Reader\+::display\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classInputReader_a737042e6b612b74a6444d611297af66f}\label{classInputReader_a737042e6b612b74a6444d611297af66f}} 
+\index{Input\+Reader@{Input\+Reader}!event@{event}}
+\index{event@{event}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{event}{event}}
+{\footnotesize\ttfamily X\+Event Input\+Reader\+::event\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classInputReader_af8a0467bf9ab4a7e054eb46b77adf96a}\label{classInputReader_af8a0467bf9ab4a7e054eb46b77adf96a}} 
+\index{Input\+Reader@{Input\+Reader}!s@{s}}
+\index{s@{s}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{s}{s}}
+{\footnotesize\ttfamily int Input\+Reader\+::s\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classInputReader_ad19bb2b46ab677724d4fe3352cab13d6}\label{classInputReader_ad19bb2b46ab677724d4fe3352cab13d6}} 
+\index{Input\+Reader@{Input\+Reader}!temp\+\_\+user\+\_\+input@{temp\+\_\+user\+\_\+input}}
+\index{temp\+\_\+user\+\_\+input@{temp\+\_\+user\+\_\+input}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{temp\+\_\+user\+\_\+input}{temp\_user\_input}}
+{\footnotesize\ttfamily \hyperlink{user__input_8h_a4be483183ef50f2de9cefcb22df23699}{User\+Input} Input\+Reader\+::temp\+\_\+user\+\_\+input\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classInputReader_aa27cb19e6c3d1fa1d968b798b5aaa6c5}\label{classInputReader_aa27cb19e6c3d1fa1d968b798b5aaa6c5}} 
+\index{Input\+Reader@{Input\+Reader}!window@{window}}
+\index{window@{window}!Input\+Reader@{Input\+Reader}}
+\subsubsection{\texorpdfstring{window}{window}}
+{\footnotesize\ttfamily Window Input\+Reader\+::window\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/input\+\_\+handler/include/\hyperlink{keyboard__input__reader_8h}{keyboard\+\_\+input\+\_\+reader.\+h}\item 
+/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/input\+\_\+handler/src/\hyperlink{keyboard__input__reader_8cpp}{keyboard\+\_\+input\+\_\+reader.\+cpp}\end{DoxyCompactItemize}
