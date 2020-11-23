@@ -126,9 +126,8 @@ bool Vehicle<T>::Run()
 * @param speed speed of the vehicle
 * @return calculated rolling resistance
 */
-float calculate_resistance(uint16_t weight, float speed)
+inline float calculate_resistance(uint16_t weight, float speed)
 {
-    //return (weight)+(( 0.00005*(2*pow(speed,2)) + 1 )*100);
     return weight*speed*sampletime_micro*3*pow(10, -9);
 }
 
@@ -138,8 +137,8 @@ float calculate_resistance(uint16_t weight, float speed)
 * @param engine_speed RPM of the engine
 * @return calculated engine torqe
 */
-float calculate_engine_tq(uint16_t engine_speed)
-{ //return ( gas_ped * (-0.00008*(pow(engine_speed,2))+engine_speed)/10 );
+inline float calculate_engine_tq(uint16_t engine_speed)
+{
     return ( (-0.00008*(pow(engine_speed,2))+engine_speed)/10 );
 }
 
@@ -149,9 +148,9 @@ float calculate_engine_tq(uint16_t engine_speed)
 * @param brake_pedal brake pedal position
 * @return calculated brake force
 */
-float calculate_brake_tq(uint8_t brake_pedal)
+inline float calculate_brake_tq(uint8_t brake_pedal)
 {
-    return sampletime_micro*pow(10, -6)*((5*brake_pedal)); //Possibly some factor needed to make it stop, it should make acceleration negative?
+    return sampletime_micro*pow(10, -6)*((5*brake_pedal));
 }
 
 /*!
@@ -160,7 +159,7 @@ float calculate_brake_tq(uint8_t brake_pedal)
 * @return calculated constant parapeter that can be used in the engine to
 */
 template <typename T>
-float Vehicle<T>::RPMToSpeedFactor()
+inline float Vehicle<T>::RPMToSpeedFactor()
 {
     return (((3.6*M_PI*(this->tire_diameter))/(this->gearbox.get_gear_ratio()*60*(this->diff_ratio)))*0.621371);
 }
