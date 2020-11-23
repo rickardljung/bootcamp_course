@@ -128,7 +128,8 @@ void Vehicle::VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_speed)
     */
 
     //To be removed once the code above works
-    if(this->gearbox->get_gear_lever_position() == D||this->gearbox->get_gear_lever_position() == R)
+    if(this->gearbox->get_gear_lever_position() == user_input::gear_position_request::D ||
+         this->gearbox->get_gear_lever_position() == user_input::gear_position_request::R)
     {
 
         this->vehicle_speed = ((this->engine->get_eng_rpm())*rpm_to_speed)-

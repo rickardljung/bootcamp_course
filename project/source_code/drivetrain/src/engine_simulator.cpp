@@ -25,11 +25,15 @@ Engine::Engine(const uint16_t &hp, const uint16_t &max_rpm)
 */
 void Engine::Ignition(const bool &ign_req, const uint8_t &speed, const uint8_t &brk_pedal, const uint8_t &gear_position)
 {
-    if(ign_req && !this->eng_sts && (speed > 0 || brk_pedal > 0) && (gear_position == P || gear_position == N))
+    if(ign_req && !this->eng_sts && (speed > 0 || brk_pedal > 0) &&
+        (gear_position == user_input::gear_position_request::P ||
+            gear_position == user_input::gear_position_request::N))
     {
         this->eng_sts = true;
     }
-    else if(!ign_req && this->eng_sts && speed == 0 && (gear_position == P || gear_position == N))
+    else if(!ign_req && this->eng_sts && speed == 0 &&
+            (gear_position == user_input::gear_position_request::P ||
+                gear_position == user_input::gear_position_request::N))
     {
         this->eng_sts = false;
     }

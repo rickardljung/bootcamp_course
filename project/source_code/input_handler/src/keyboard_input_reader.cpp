@@ -16,7 +16,7 @@ bool InputReader::Run()
     if(ReadInputs())
     {
         return_val = InterpretInput();
-        CanBuffer::GetInstance().AddTx(&msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), &msg_len);
+        CanBuffer::GetInstance().AddTx(&user_input::msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), &user_input::msg_len);
     }
     return return_val;
 }
@@ -55,7 +55,7 @@ InputReader::InputReader()
     /* initialize temp_user_input with 0*/
     std::memset(&temp_user_input,0,sizeof(UserInput));
     /*add empty frame to the CAN buffer*/
-    CanBuffer::GetInstance().AddTx(&msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), &msg_len);
+    CanBuffer::GetInstance().AddTx(&user_input::msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), &user_input::msg_len);
     /* open connection with the server */
     display = XOpenDisplay(NULL);
     if (display == NULL)
@@ -85,24 +85,24 @@ InputReader::InputReader()
 bool InputReader::InterpretInput()
 {
     bool return_val = true;
-    if(event.xkey.keycode == key_up || event.xkey.keycode == key_down)
+    if(event.xkey.keycode == key::up || event.xkey.keycode == key::down)
     {
         Acceleration();
     }
-    else if(event.xkey.keycode == key_left || event.xkey.keycode == key_right)
+    else if(event.xkey.keycode == key::left || event.xkey.keycode == key::right)
     {
         Braking();
     }
-    else if(event.xkey.keycode == key_p || event.xkey.keycode == key_n ||
-             event.xkey.keycode == key_d || event.xkey.keycode == key_r)
+    else if(event.xkey.keycode == key::p || event.xkey.keycode == key::n ||
+             event.xkey.keycode == key::d || event.xkey.keycode == key::r)
     {
         GearPosReq();
     }
-    else if(event.xkey.keycode == key_space)
+    else if(event.xkey.keycode == key::space)
     {
         IgnitionReq();
     }
-    else if(event.xkey.keycode == key_escape)
+    else if(event.xkey.keycode == key::escape)
     {
         return_val = EndSimulation();
     }
@@ -114,18 +114,18 @@ bool InputReader::InterpretInput()
 */
 void InputReader::Acceleration()
 {
-    if(event.xkey.keycode == key_up)
+    if(event.xkey.keycode == key::up)
     {
-        if(temp_user_input.accelerator_pedal < acc_max)
+        if(temp_user_input.accelerator_pedal < user_input::acceleration::max)
         {
-            temp_user_input.accelerator_pedal+=acc_inc;
+            temp_user_input.accelerator_pedal+= user_input::acceleration::increase;
         }
     }
-    else if(event.xkey.keycode == key_down)
+    else if(event.xkey.keycode == key::down)
     {
-        if(temp_user_input.accelerator_pedal > acc_min)
+        if(temp_user_input.accelerator_pedal > user_input::acceleration::min)
         {
-            temp_user_input.accelerator_pedal-=acc_dec;
+            temp_user_input.accelerator_pedal-= user_input::acceleration::decrease;
         }
     }
 }
@@ -135,18 +135,18 @@ void InputReader::Acceleration()
 */
 void InputReader::Braking()
 {
-    if(event.xkey.keycode == key_left) //user pressing brake pedal
+    if(event.xkey.keycode == key::left) //user pressing brake pedal
     {
-        if(temp_user_input.brake_pedal < brk_max)
+        if(temp_user_input.brake_pedal < user_input::braking::max)
         {
-            temp_user_input.brake_pedal+=20;
+            temp_user_input.brake_pedal+= user_input::braking::increase;
         }
     }
-    else if(event.xkey.keycode == key_right) //user releasing brake pedal
+    else if(event.xkey.keycode == key::right) //user releasing brake pedal
     {
-        if(temp_user_input.brake_pedal > brk_min)
+        if(temp_user_input.brake_pedal > user_input::braking::min)
         {
-            temp_user_input.brake_pedal-=20;
+            temp_user_input.brake_pedal-= user_input::braking::decrease;
         }
     }
 }
@@ -156,13 +156,13 @@ void InputReader::Braking()
 */
 void InputReader::IgnitionReq()
 {
-    if(temp_user_input.ignition == ignition_on)
+    if(temp_user_input.ignition == user_input::ignition_on)
     {
-        temp_user_input.ignition = ignition_off;
+        temp_user_input.ignition = user_input::ignition_off;
     }
     else
     {
-        temp_user_input.ignition = ignition_on;
+        temp_user_input.ignition = user_input::ignition_on;
     }
 }
 /*!
@@ -171,21 +171,21 @@ void InputReader::IgnitionReq()
 */
 void InputReader::GearPosReq()
 {
-    if(event.xkey.keycode == key_p)
+    if(event.xkey.keycode == key::p)
     {
-        temp_user_input.gear_position = P;
+        temp_user_input.gear_position = user_input::gear_position_request::P;
     }
-    else if(event.xkey.keycode == key_n)
+    else if(event.xkey.keycode == key::n)
     {
-        temp_user_input.gear_position = N;
+        temp_user_input.gear_position = user_input::gear_position_request::N;
     }
-    else if(event.xkey.keycode == key_d)
+    else if(event.xkey.keycode == key::d)
     {
-        temp_user_input.gear_position = D;
+        temp_user_input.gear_position = user_input::gear_position_request::D;
     }
-    else if(event.xkey.keycode == key_r)
+    else if(event.xkey.keycode == key::r)
     {
-        temp_user_input.gear_position = R;
+        temp_user_input.gear_position = user_input::gear_position_request::R;
     }
 }
 /*!
@@ -194,6 +194,6 @@ void InputReader::GearPosReq()
 */
 bool InputReader::EndSimulation()
 {
-    temp_user_input.end_simulation = end;
+    temp_user_input.end_simulation = user_input::end;
     return false;
 }

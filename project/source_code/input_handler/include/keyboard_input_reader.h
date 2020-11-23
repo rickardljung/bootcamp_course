@@ -4,26 +4,19 @@
 #include <mutex>
 #include "user_input.h"
 
-const unsigned int key_escape = 9;
-const unsigned int key_r = 27;
-const unsigned int key_p = 33;
-const unsigned int key_d = 40;
-const unsigned int key_n = 57;
-const unsigned int key_up = 111;
-const unsigned int key_down = 116;
-const unsigned int key_left = 113;
-const unsigned int key_right = 114;
-const unsigned int key_space = 65;
-const unsigned int acc_inc = 10;
-const unsigned int acc_dec = 10;
-const unsigned int acc_max = 100;
-const unsigned int acc_min = 0;
-const unsigned int brk_inc = 20;
-const unsigned int brk_dec = 20;
-const unsigned int brk_max = 100;
-const unsigned int brk_min = 0;
-
-
+namespace key
+{
+    const uint8_t escape = 9;
+    const uint8_t r = 27;
+    const uint8_t p = 33;
+    const uint8_t d = 40;
+    const uint8_t n = 57;
+    const uint8_t up = 111;
+    const uint8_t down = 116;
+    const uint8_t left = 113;
+    const uint8_t right = 114;
+    const uint8_t space = 65;
+}
 
 class InputReader{
     public:

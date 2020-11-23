@@ -10,7 +10,7 @@ Gearbox::Gearbox(double *gear_ratio, const uint8_t &gear_ratio_size)
 {
     this->gear_ratio = gear_ratio;
     this->max_gear_number = gear_ratio_size - 1; //-1 since reverse is included
-    this->gear_lever_position = P;
+    this->gear_lever_position = user_input::gear_position_request::P;
     this->gear_number = 1;
 }
 /*!
@@ -28,7 +28,7 @@ void Gearbox::GearLeverPosition(const uint8_t &gear_position_request, const uint
     {
         this->gear_lever_position = gear_position_request;
 
-        if(this->gear_lever_position == R)
+        if(this->gear_lever_position == user_input::gear_position_request::R)
         {
             this->gear_number = 0;
         } else
@@ -45,7 +45,7 @@ void Gearbox::GearLeverPosition(const uint8_t &gear_position_request, const uint
 bool Gearbox::GearNumberChange(const float &engine_rpm)
 {
     bool gear_number_change = false;
-    if (this->gear_lever_position == D) //TODO: should D be a global parameter?
+    if (this->gear_lever_position == user_input::gear_position_request::D) //TODO: should D be a global parameter?
     {
         if(engine_rpm >= this->RPM_to_increase_gear_number && this->gear_number != this->max_gear_number)
         {
