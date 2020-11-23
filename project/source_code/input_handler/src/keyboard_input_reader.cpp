@@ -173,19 +173,19 @@ void InputReader::GearPosReq()
 {
     if(event.xkey.keycode == key::p)
     {
-        temp_user_input.gear_position = user_input::gear_position_request::P;
+        temp_user_input.gear_position = gear_lever_position::P;
     }
     else if(event.xkey.keycode == key::n)
     {
-        temp_user_input.gear_position = user_input::gear_position_request::N;
+        temp_user_input.gear_position = gear_lever_position::N;
     }
     else if(event.xkey.keycode == key::d)
     {
-        temp_user_input.gear_position = user_input::gear_position_request::D;
+        temp_user_input.gear_position = gear_lever_position::D;
     }
     else if(event.xkey.keycode == key::r)
     {
-        temp_user_input.gear_position = user_input::gear_position_request::R;
+        temp_user_input.gear_position = gear_lever_position::R;
     }
 }
 /*!
@@ -194,6 +194,6 @@ void InputReader::GearPosReq()
 */
 bool InputReader::EndSimulation()
 {
-    temp_user_input.end_simulation = user_input::end;
+    temp_user_input.end_simulation = user_input::end_simulation;
     return false;
 }

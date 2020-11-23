@@ -3,21 +3,20 @@
 #include <cstdint>
 #include <mutex>
 
+namespace gear_lever_position
+{
+    const uint8_t P = 0;
+    const uint8_t N = 1;
+    const uint8_t D = 2;
+    const uint8_t R = 3;
+}
 namespace user_input
 {
     const uint32_t msg_id = 1;
     const uint8_t msg_len = 3;
     const uint8_t ignition_on = 1;
     const uint8_t ignition_off = 0;
-    const uint8_t end = 1;
-
-    namespace gear_position_request
-    {
-        const uint8_t P = 0;
-        const uint8_t N = 1;
-        const uint8_t D = 2;
-        const uint8_t R = 3;
-    }
+    const uint8_t end_simulation = 1;
 
     namespace acceleration
     {

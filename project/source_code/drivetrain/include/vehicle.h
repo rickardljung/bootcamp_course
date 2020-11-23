@@ -172,7 +172,8 @@ inline float Vehicle<T>::RPMToSpeedFactor()
 template <typename T>
 void Vehicle<T>::VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_speed)
 {
-    if(this->gearbox.get_gear_lever_position() == D||this->gearbox.get_gear_lever_position() == R)
+    if(this->gearbox.get_gear_lever_position() == gear_lever_position::D ||
+        this->gearbox.get_gear_lever_position() == gear_lever_position::R)
     {
 
         this->vehicle_speed = ((this->engine.get_eng_rpm())*rpm_to_speed)-
