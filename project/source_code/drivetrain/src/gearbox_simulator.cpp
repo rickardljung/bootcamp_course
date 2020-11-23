@@ -1,12 +1,12 @@
 #include "gearbox_simulator.h"
 
 /*!
-* Constructor of Gearbox. Assigns the class members.
+* Initializes gearbox. Assigns the class members.
 * @param gear_ratio gear ratio for each gear. Index representing the gear where
 * index 0 specifies gear ratio for reverse
 * @param gear_ratio_size the number of elements in gear_ratio
 */
-Gearbox::Gearbox(double *gear_ratio, const uint8_t &gear_ratio_size)
+void Gearbox::initialize(const float gear_ratio[], const uint8_t &gear_ratio_size)
 {
     this->gear_ratio = gear_ratio;
     this->max_gear_number = gear_ratio_size - 1; //-1 since reverse is included
@@ -79,7 +79,7 @@ uint8_t Gearbox::get_gear_number()
 * Get function for gear ratio.
 * @return gear ratio for the engaged gear number
 */
-double Gearbox::get_gear_ratio()
+float Gearbox::get_gear_ratio()
 {
     return this->gear_ratio[this->gear_number];
 }

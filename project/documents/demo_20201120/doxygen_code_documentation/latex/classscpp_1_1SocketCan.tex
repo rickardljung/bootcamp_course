@@ -1,0 +1,173 @@
+\hypertarget{classscpp_1_1SocketCan}{}\section{scpp\+:\+:Socket\+Can Class Reference}
+\label{classscpp_1_1SocketCan}\index{scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}}
+
+
+{\ttfamily \#include $<$socketcan.\+h$>$}
+
+
+
+Collaboration diagram for scpp\+:\+:Socket\+Can\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=191pt]{classscpp_1_1SocketCan__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classscpp_1_1SocketCan_ac8947ab71c8ebf46f0bd0e7a3bd0e97a}{Socket\+Can} ()=default
+\item 
+\hyperlink{classscpp_1_1SocketCan_a837269bf5bc7edefb6ad17840ae3d867}{Socket\+Can} (const \hyperlink{classscpp_1_1SocketCan}{Socket\+Can} \&)=delete
+\item 
+\hyperlink{classscpp_1_1SocketCan}{Socket\+Can} \& \hyperlink{classscpp_1_1SocketCan_a474c925b2fb96b40a5cc549ba8134a44}{operator=} (const \hyperlink{classscpp_1_1SocketCan}{Socket\+Can} \&)=delete
+\item 
+\hyperlink{namespacescpp_abc60b9ed5f90c311397500d39ff15ef2}{Socket\+Can\+Status} \hyperlink{classscpp_1_1SocketCan_aa1ff7b90193c5beee33947a59c2e63bc}{open} (const char $\ast$can\+\_\+interface)
+\item 
+\hyperlink{namespacescpp_abc60b9ed5f90c311397500d39ff15ef2}{Socket\+Can\+Status} \hyperlink{classscpp_1_1SocketCan_af0e968a352380922dcde307e73b76f12}{write} (const uint8\+\_\+t $\ast$\+\_\+data, const uint32\+\_\+t \&\+\_\+id, const uint8\+\_\+t \&\+\_\+len)
+\item 
+\hyperlink{namespacescpp_abc60b9ed5f90c311397500d39ff15ef2}{Socket\+Can\+Status} \hyperlink{classscpp_1_1SocketCan_a323054409494c177ac8a5522d760c012}{write} (const \hyperlink{structscpp_1_1CanFrame}{Can\+Frame} \&msg)
+\item 
+\hyperlink{namespacescpp_abc60b9ed5f90c311397500d39ff15ef2}{Socket\+Can\+Status} \hyperlink{classscpp_1_1SocketCan_a3e4e4ca4931587c466801e01183942f4}{write} (struct canfd\+\_\+frame $\ast$frame)
+\item 
+\hyperlink{namespacescpp_abc60b9ed5f90c311397500d39ff15ef2}{Socket\+Can\+Status} \hyperlink{classscpp_1_1SocketCan_aa104c900d3e10722e3c1326c1322ee91}{read} (\hyperlink{structscpp_1_1CanFrame}{Can\+Frame} \&msg)
+\item 
+\hyperlink{classscpp_1_1SocketCan_abefe3a6fcbf0de1bf505d123eed9008e}{$\sim$\+Socket\+Can} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classscpp_1_1SocketCan_a5a69eb3524f4dcc15bff5080934d60c8}{m\+\_\+socket} = -\/1
+\item 
+int32\+\_\+t \hyperlink{classscpp_1_1SocketCan_aa4d51fc60ada0d6ce29c112adedad63b}{m\+\_\+read\+\_\+timeout\+\_\+ms} = 3
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classscpp_1_1SocketCan_ac8947ab71c8ebf46f0bd0e7a3bd0e97a}\label{classscpp_1_1SocketCan_ac8947ab71c8ebf46f0bd0e7a3bd0e97a}} 
+\index{scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}!Socket\+Can@{Socket\+Can}}
+\index{Socket\+Can@{Socket\+Can}!scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}}
+\subsubsection{\texorpdfstring{Socket\+Can()}{SocketCan()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily scpp\+::\+Socket\+Can\+::\+Socket\+Can (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classscpp_1_1SocketCan_a837269bf5bc7edefb6ad17840ae3d867}\label{classscpp_1_1SocketCan_a837269bf5bc7edefb6ad17840ae3d867}} 
+\index{scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}!Socket\+Can@{Socket\+Can}}
+\index{Socket\+Can@{Socket\+Can}!scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}}
+\subsubsection{\texorpdfstring{Socket\+Can()}{SocketCan()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily scpp\+::\+Socket\+Can\+::\+Socket\+Can (\begin{DoxyParamCaption}\item[{const \hyperlink{classscpp_1_1SocketCan}{Socket\+Can} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classscpp_1_1SocketCan_abefe3a6fcbf0de1bf505d123eed9008e}\label{classscpp_1_1SocketCan_abefe3a6fcbf0de1bf505d123eed9008e}} 
+\index{scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}!````~Socket\+Can@{$\sim$\+Socket\+Can}}
+\index{````~Socket\+Can@{$\sim$\+Socket\+Can}!scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}}
+\subsubsection{\texorpdfstring{$\sim$\+Socket\+Can()}{~SocketCan()}}
+{\footnotesize\ttfamily scpp\+::\+Socket\+Can\+::$\sim$\+Socket\+Can (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classscpp_1_1SocketCan_aa1ff7b90193c5beee33947a59c2e63bc}\label{classscpp_1_1SocketCan_aa1ff7b90193c5beee33947a59c2e63bc}} 
+\index{scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}!open@{open}}
+\index{open@{open}!scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}}
+\subsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily \hyperlink{namespacescpp_abc60b9ed5f90c311397500d39ff15ef2}{Socket\+Can\+Status} scpp\+::\+Socket\+Can\+::open (\begin{DoxyParamCaption}\item[{const char $\ast$}]{can\+\_\+interface }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classscpp_1_1SocketCan_aa1ff7b90193c5beee33947a59c2e63bc_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=273pt]{classscpp_1_1SocketCan_aa1ff7b90193c5beee33947a59c2e63bc_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classscpp_1_1SocketCan_a474c925b2fb96b40a5cc549ba8134a44}\label{classscpp_1_1SocketCan_a474c925b2fb96b40a5cc549ba8134a44}} 
+\index{scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}!operator=@{operator=}}
+\index{operator=@{operator=}!scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \hyperlink{classscpp_1_1SocketCan}{Socket\+Can}\& scpp\+::\+Socket\+Can\+::operator= (\begin{DoxyParamCaption}\item[{const \hyperlink{classscpp_1_1SocketCan}{Socket\+Can} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classscpp_1_1SocketCan_aa104c900d3e10722e3c1326c1322ee91}\label{classscpp_1_1SocketCan_aa104c900d3e10722e3c1326c1322ee91}} 
+\index{scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}!read@{read}}
+\index{read@{read}!scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}}
+\subsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily \hyperlink{namespacescpp_abc60b9ed5f90c311397500d39ff15ef2}{Socket\+Can\+Status} scpp\+::\+Socket\+Can\+::read (\begin{DoxyParamCaption}\item[{\hyperlink{structscpp_1_1CanFrame}{Can\+Frame} \&}]{msg }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classscpp_1_1SocketCan_aa104c900d3e10722e3c1326c1322ee91_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classscpp_1_1SocketCan_af0e968a352380922dcde307e73b76f12}\label{classscpp_1_1SocketCan_af0e968a352380922dcde307e73b76f12}} 
+\index{scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}!write@{write}}
+\index{write@{write}!scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}}
+\subsubsection{\texorpdfstring{write()}{write()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \hyperlink{namespacescpp_abc60b9ed5f90c311397500d39ff15ef2}{Socket\+Can\+Status} scpp\+::\+Socket\+Can\+::write (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t $\ast$}]{\+\_\+data,  }\item[{const uint32\+\_\+t \&}]{\+\_\+id,  }\item[{const uint8\+\_\+t \&}]{\+\_\+len }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classscpp_1_1SocketCan_af0e968a352380922dcde307e73b76f12_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classscpp_1_1SocketCan_a323054409494c177ac8a5522d760c012}\label{classscpp_1_1SocketCan_a323054409494c177ac8a5522d760c012}} 
+\index{scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}!write@{write}}
+\index{write@{write}!scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}}
+\subsubsection{\texorpdfstring{write()}{write()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \hyperlink{namespacescpp_abc60b9ed5f90c311397500d39ff15ef2}{Socket\+Can\+Status} scpp\+::\+Socket\+Can\+::write (\begin{DoxyParamCaption}\item[{const \hyperlink{structscpp_1_1CanFrame}{Can\+Frame} \&}]{msg }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classscpp_1_1SocketCan_a323054409494c177ac8a5522d760c012_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classscpp_1_1SocketCan_a3e4e4ca4931587c466801e01183942f4}\label{classscpp_1_1SocketCan_a3e4e4ca4931587c466801e01183942f4}} 
+\index{scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}!write@{write}}
+\index{write@{write}!scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}}
+\subsubsection{\texorpdfstring{write()}{write()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \hyperlink{namespacescpp_abc60b9ed5f90c311397500d39ff15ef2}{Socket\+Can\+Status} scpp\+::\+Socket\+Can\+::write (\begin{DoxyParamCaption}\item[{struct canfd\+\_\+frame $\ast$}]{frame }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classscpp_1_1SocketCan_a3e4e4ca4931587c466801e01183942f4_cgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classscpp_1_1SocketCan_aa4d51fc60ada0d6ce29c112adedad63b}\label{classscpp_1_1SocketCan_aa4d51fc60ada0d6ce29c112adedad63b}} 
+\index{scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}!m\+\_\+read\+\_\+timeout\+\_\+ms@{m\+\_\+read\+\_\+timeout\+\_\+ms}}
+\index{m\+\_\+read\+\_\+timeout\+\_\+ms@{m\+\_\+read\+\_\+timeout\+\_\+ms}!scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}}
+\subsubsection{\texorpdfstring{m\+\_\+read\+\_\+timeout\+\_\+ms}{m\_read\_timeout\_ms}}
+{\footnotesize\ttfamily int32\+\_\+t scpp\+::\+Socket\+Can\+::m\+\_\+read\+\_\+timeout\+\_\+ms = 3\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classscpp_1_1SocketCan_a5a69eb3524f4dcc15bff5080934d60c8}\label{classscpp_1_1SocketCan_a5a69eb3524f4dcc15bff5080934d60c8}} 
+\index{scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}!m\+\_\+socket@{m\+\_\+socket}}
+\index{m\+\_\+socket@{m\+\_\+socket}!scpp\+::\+Socket\+Can@{scpp\+::\+Socket\+Can}}
+\subsubsection{\texorpdfstring{m\+\_\+socket}{m\_socket}}
+{\footnotesize\ttfamily int scpp\+::\+Socket\+Can\+::m\+\_\+socket = -\/1\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/utils/include/\hyperlink{socketcan_8h}{socketcan.\+h}\item 
+/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/utils/src/\hyperlink{socketcan_8cpp}{socketcan.\+cpp}\end{DoxyCompactItemize}

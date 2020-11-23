@@ -1,0 +1,85 @@
+\hypertarget{vehicle_8cpp}{}\section{/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/drivetrain/src/vehicle.cpp File Reference}
+\label{vehicle_8cpp}\index{/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/drivetrain/src/vehicle.\+cpp@{/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/drivetrain/src/vehicle.\+cpp}}
+{\ttfamily \#include \char`\"{}vehicle.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+Include dependency graph for vehicle.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{vehicle_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{vehicle_8cpp_a6597511c111033c86174e181164d1fdd}{calculate\+\_\+resistance} (uint16\+\_\+t \hyperlink{drivetrain_2src_2main_8cpp_a5cfb00cce30511af424fbaef1e7c453d}{weight}, float speed)
+\item 
+float \hyperlink{vehicle_8cpp_abbcf47b233d59122a5451591b6b6bebf}{calculate\+\_\+engine\+\_\+tq} (uint16\+\_\+t engine\+\_\+speed)
+\item 
+float \hyperlink{vehicle_8cpp_aa3ffa21149a5a339a380677de0e5d594}{calculate\+\_\+brake\+\_\+tq} (uint8\+\_\+t brake\+\_\+pedal)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{vehicle_8cpp_aa3ffa21149a5a339a380677de0e5d594}\label{vehicle_8cpp_aa3ffa21149a5a339a380677de0e5d594}} 
+\index{vehicle.\+cpp@{vehicle.\+cpp}!calculate\+\_\+brake\+\_\+tq@{calculate\+\_\+brake\+\_\+tq}}
+\index{calculate\+\_\+brake\+\_\+tq@{calculate\+\_\+brake\+\_\+tq}!vehicle.\+cpp@{vehicle.\+cpp}}
+\subsubsection{\texorpdfstring{calculate\+\_\+brake\+\_\+tq()}{calculate\_brake\_tq()}}
+{\footnotesize\ttfamily float calculate\+\_\+brake\+\_\+tq (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{brake\+\_\+pedal }\end{DoxyParamCaption})}
+
+Function that mimics brake pedal action might require calibration 
+\begin{DoxyParams}{Parameters}
+{\em brake\+\_\+pedal} & brake pedal position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+calculated brake force 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{vehicle_8cpp_aa3ffa21149a5a339a380677de0e5d594_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{vehicle_8cpp_abbcf47b233d59122a5451591b6b6bebf}\label{vehicle_8cpp_abbcf47b233d59122a5451591b6b6bebf}} 
+\index{vehicle.\+cpp@{vehicle.\+cpp}!calculate\+\_\+engine\+\_\+tq@{calculate\+\_\+engine\+\_\+tq}}
+\index{calculate\+\_\+engine\+\_\+tq@{calculate\+\_\+engine\+\_\+tq}!vehicle.\+cpp@{vehicle.\+cpp}}
+\subsubsection{\texorpdfstring{calculate\+\_\+engine\+\_\+tq()}{calculate\_engine\_tq()}}
+{\footnotesize\ttfamily float calculate\+\_\+engine\+\_\+tq (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{engine\+\_\+speed }\end{DoxyParamCaption})}
+
+Function used to compute engine torque dependent on engine rpm, should be okey without calibraion 
+\begin{DoxyParams}{Parameters}
+{\em engine\+\_\+speed} & R\+PM of the engine \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+calculated engine torqe 
+\end{DoxyReturn}
+\mbox{\Hypertarget{vehicle_8cpp_a6597511c111033c86174e181164d1fdd}\label{vehicle_8cpp_a6597511c111033c86174e181164d1fdd}} 
+\index{vehicle.\+cpp@{vehicle.\+cpp}!calculate\+\_\+resistance@{calculate\+\_\+resistance}}
+\index{calculate\+\_\+resistance@{calculate\+\_\+resistance}!vehicle.\+cpp@{vehicle.\+cpp}}
+\subsubsection{\texorpdfstring{calculate\+\_\+resistance()}{calculate\_resistance()}}
+{\footnotesize\ttfamily float calculate\+\_\+resistance (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{weight,  }\item[{float}]{speed }\end{DoxyParamCaption})}
+
+Function used to calculate vehicle rolling resistance depending on veh speed, needs calibration possibly 
+\begin{DoxyParams}{Parameters}
+{\em weight} & vehicle weight \\
+\hline
+{\em speed} & speed of the vehicle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+calculated rolling resistance 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{vehicle_8cpp_a6597511c111033c86174e181164d1fdd_icgraph}
+\end{center}
+\end{figure}

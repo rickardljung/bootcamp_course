@@ -1,0 +1,236 @@
+\hypertarget{classCanBuffer}{}\section{Can\+Buffer Class Reference}
+\label{classCanBuffer}\index{Can\+Buffer@{Can\+Buffer}}
+
+
+{\ttfamily \#include $<$can\+\_\+buffer.\+h$>$}
+
+
+
+Collaboration diagram for Can\+Buffer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{classCanBuffer__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classCanBuffer_a02b0f8e006051bf73a8a0a70d0e919ec}{Can\+Buffer} (\hyperlink{classCanBuffer}{Can\+Buffer} const \&)=delete
+\item 
+void \hyperlink{classCanBuffer_aa2a1c35e5a3cf6106d78f986de53911d}{operator=} (\hyperlink{classCanBuffer}{Can\+Buffer} const \&)=delete
+\item 
+void \hyperlink{classCanBuffer_a9f61d33ebf8b9b98fb30998074351b90}{Add\+Tx} (const uint32\+\_\+t $\ast$id, uint8\+\_\+t payload\mbox{[}$\,$\mbox{]}, const uint8\+\_\+t $\ast$length)
+\item 
+void \hyperlink{classCanBuffer_a2038c19fd2b63223a86a48a8faef2996}{Add\+Rx} (const uint32\+\_\+t $\ast$id, uint8\+\_\+t payload\mbox{[}$\,$\mbox{]}, const uint8\+\_\+t $\ast$length)
+\item 
+\hyperlink{can__buffer_8h_a7a5dfa274d7d04c73e0b6b3e4dbbb87c}{Can\+Data} \hyperlink{classCanBuffer_a06cbabdf2a97378a2d4cd9120e909d53}{Pull\+Tx} ()
+\item 
+\hyperlink{can__buffer_8h_a7a5dfa274d7d04c73e0b6b3e4dbbb87c}{Can\+Data} \hyperlink{classCanBuffer_a66691d3306e47774f768fd391fff1802}{Pull\+Rx} ()
+\item 
+bool \hyperlink{classCanBuffer_a4b9e4e25a3312729bc64b0a7e7e80abf}{Receive\+Buffer\+Empty} ()
+\item 
+bool \hyperlink{classCanBuffer_a3826a986a95c4eb24f363a7ace01bec2}{Transmit\+Buffer\+Empty} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classCanBuffer}{Can\+Buffer} \& \hyperlink{classCanBuffer_add61873bc4e32e5b79ca665c1926f3b9}{Get\+Instance} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classCanBuffer_a48282381b606242cfc4163e445c85409}{Can\+Buffer} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{can__buffer_8h_a7a5dfa274d7d04c73e0b6b3e4dbbb87c}{Can\+Data} \hyperlink{classCanBuffer_a2f9526d98638e5c92695ba208a1a6084}{receive\+\_\+candata}
+\item 
+\hyperlink{can__buffer_8h_a7a5dfa274d7d04c73e0b6b3e4dbbb87c}{Can\+Data} \hyperlink{classCanBuffer_a8b7056beaeb5970d637001adb4722302}{transmit\+\_\+candata}
+\item 
+bool \hyperlink{classCanBuffer_a7a06170000a5bb8e66d6feed7ade64ad}{receive\+\_\+empty} = true
+\item 
+bool \hyperlink{classCanBuffer_a60d0c06e2b6ec133bc3d2b99872dc536}{transmit\+\_\+empty} = true
+\item 
+std\+::mutex \hyperlink{classCanBuffer_a99e2db7eb22a8f25ca92d5c5e791e99f}{receive\+\_\+buffer\+\_\+mutex}
+\item 
+std\+::mutex \hyperlink{classCanBuffer_aea5dc877a2bcdec8d3da11649346ca21}{transmit\+\_\+buffer\+\_\+mutex}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classCanBuffer_a02b0f8e006051bf73a8a0a70d0e919ec}\label{classCanBuffer_a02b0f8e006051bf73a8a0a70d0e919ec}} 
+\index{Can\+Buffer@{Can\+Buffer}!Can\+Buffer@{Can\+Buffer}}
+\index{Can\+Buffer@{Can\+Buffer}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{Can\+Buffer()}{CanBuffer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Can\+Buffer\+::\+Can\+Buffer (\begin{DoxyParamCaption}\item[{\hyperlink{classCanBuffer}{Can\+Buffer} const \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classCanBuffer_a48282381b606242cfc4163e445c85409}\label{classCanBuffer_a48282381b606242cfc4163e445c85409}} 
+\index{Can\+Buffer@{Can\+Buffer}!Can\+Buffer@{Can\+Buffer}}
+\index{Can\+Buffer@{Can\+Buffer}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{Can\+Buffer()}{CanBuffer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Can\+Buffer\+::\+Can\+Buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classCanBuffer_a2038c19fd2b63223a86a48a8faef2996}\label{classCanBuffer_a2038c19fd2b63223a86a48a8faef2996}} 
+\index{Can\+Buffer@{Can\+Buffer}!Add\+Rx@{Add\+Rx}}
+\index{Add\+Rx@{Add\+Rx}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{Add\+Rx()}{AddRx()}}
+{\footnotesize\ttfamily void Can\+Buffer\+::\+Add\+Rx (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t $\ast$}]{id,  }\item[{uint8\+\_\+t}]{payload\mbox{[}$\,$\mbox{]},  }\item[{const uint8\+\_\+t $\ast$}]{length }\end{DoxyParamCaption})}
+
+
+\begin{DoxyItemize}
+\item Adds received can data to the receive (RX) buffer 
+\begin{DoxyParams}{Parameters}
+{\em data} & received can data \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classCanBuffer_a2038c19fd2b63223a86a48a8faef2996_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classCanBuffer_a9f61d33ebf8b9b98fb30998074351b90}\label{classCanBuffer_a9f61d33ebf8b9b98fb30998074351b90}} 
+\index{Can\+Buffer@{Can\+Buffer}!Add\+Tx@{Add\+Tx}}
+\index{Add\+Tx@{Add\+Tx}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{Add\+Tx()}{AddTx()}}
+{\footnotesize\ttfamily void Can\+Buffer\+::\+Add\+Tx (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t $\ast$}]{id,  }\item[{uint8\+\_\+t}]{payload\mbox{[}$\,$\mbox{]},  }\item[{const uint8\+\_\+t $\ast$}]{length }\end{DoxyParamCaption})}
+
+Adds data to be sent to the transmit (TX) buffer 
+\begin{DoxyParams}{Parameters}
+{\em data} & data to be transmitted \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classCanBuffer_a9f61d33ebf8b9b98fb30998074351b90_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classCanBuffer_add61873bc4e32e5b79ca665c1926f3b9}\label{classCanBuffer_add61873bc4e32e5b79ca665c1926f3b9}} 
+\index{Can\+Buffer@{Can\+Buffer}!Get\+Instance@{Get\+Instance}}
+\index{Get\+Instance@{Get\+Instance}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{Get\+Instance()}{GetInstance()}}
+{\footnotesize\ttfamily static \hyperlink{classCanBuffer}{Can\+Buffer}\& Can\+Buffer\+::\+Get\+Instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classCanBuffer_add61873bc4e32e5b79ca665c1926f3b9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classCanBuffer_aa2a1c35e5a3cf6106d78f986de53911d}\label{classCanBuffer_aa2a1c35e5a3cf6106d78f986de53911d}} 
+\index{Can\+Buffer@{Can\+Buffer}!operator=@{operator=}}
+\index{operator=@{operator=}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily void Can\+Buffer\+::operator= (\begin{DoxyParamCaption}\item[{\hyperlink{classCanBuffer}{Can\+Buffer} const \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classCanBuffer_a66691d3306e47774f768fd391fff1802}\label{classCanBuffer_a66691d3306e47774f768fd391fff1802}} 
+\index{Can\+Buffer@{Can\+Buffer}!Pull\+Rx@{Pull\+Rx}}
+\index{Pull\+Rx@{Pull\+Rx}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{Pull\+Rx()}{PullRx()}}
+{\footnotesize\ttfamily \hyperlink{can__buffer_8h_a7a5dfa274d7d04c73e0b6b3e4dbbb87c}{Can\+Data} Can\+Buffer\+::\+Pull\+Rx (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Pulls next data package from the receive (RX) buffer \begin{DoxyReturn}{Returns}
+received data 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classCanBuffer_a66691d3306e47774f768fd391fff1802_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classCanBuffer_a06cbabdf2a97378a2d4cd9120e909d53}\label{classCanBuffer_a06cbabdf2a97378a2d4cd9120e909d53}} 
+\index{Can\+Buffer@{Can\+Buffer}!Pull\+Tx@{Pull\+Tx}}
+\index{Pull\+Tx@{Pull\+Tx}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{Pull\+Tx()}{PullTx()}}
+{\footnotesize\ttfamily \hyperlink{can__buffer_8h_a7a5dfa274d7d04c73e0b6b3e4dbbb87c}{Can\+Data} Can\+Buffer\+::\+Pull\+Tx (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Pulls next data package from the transmit (TX) buffer \begin{DoxyReturn}{Returns}
+data to be transmitted 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classCanBuffer_a06cbabdf2a97378a2d4cd9120e909d53_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classCanBuffer_a4b9e4e25a3312729bc64b0a7e7e80abf}\label{classCanBuffer_a4b9e4e25a3312729bc64b0a7e7e80abf}} 
+\index{Can\+Buffer@{Can\+Buffer}!Receive\+Buffer\+Empty@{Receive\+Buffer\+Empty}}
+\index{Receive\+Buffer\+Empty@{Receive\+Buffer\+Empty}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{Receive\+Buffer\+Empty()}{ReceiveBufferEmpty()}}
+{\footnotesize\ttfamily bool Can\+Buffer\+::\+Receive\+Buffer\+Empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Check if receive buffer contains any elements \begin{DoxyReturn}{Returns}
+T\+R\+UE if receive buffer is empty 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCanBuffer_a3826a986a95c4eb24f363a7ace01bec2}\label{classCanBuffer_a3826a986a95c4eb24f363a7ace01bec2}} 
+\index{Can\+Buffer@{Can\+Buffer}!Transmit\+Buffer\+Empty@{Transmit\+Buffer\+Empty}}
+\index{Transmit\+Buffer\+Empty@{Transmit\+Buffer\+Empty}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{Transmit\+Buffer\+Empty()}{TransmitBufferEmpty()}}
+{\footnotesize\ttfamily bool Can\+Buffer\+::\+Transmit\+Buffer\+Empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Check if transmit buffer contains any elements \begin{DoxyReturn}{Returns}
+T\+R\+UE if transmit buffer is empty 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classCanBuffer_a99e2db7eb22a8f25ca92d5c5e791e99f}\label{classCanBuffer_a99e2db7eb22a8f25ca92d5c5e791e99f}} 
+\index{Can\+Buffer@{Can\+Buffer}!receive\+\_\+buffer\+\_\+mutex@{receive\+\_\+buffer\+\_\+mutex}}
+\index{receive\+\_\+buffer\+\_\+mutex@{receive\+\_\+buffer\+\_\+mutex}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{receive\+\_\+buffer\+\_\+mutex}{receive\_buffer\_mutex}}
+{\footnotesize\ttfamily std\+::mutex Can\+Buffer\+::receive\+\_\+buffer\+\_\+mutex\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classCanBuffer_a2f9526d98638e5c92695ba208a1a6084}\label{classCanBuffer_a2f9526d98638e5c92695ba208a1a6084}} 
+\index{Can\+Buffer@{Can\+Buffer}!receive\+\_\+candata@{receive\+\_\+candata}}
+\index{receive\+\_\+candata@{receive\+\_\+candata}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{receive\+\_\+candata}{receive\_candata}}
+{\footnotesize\ttfamily \hyperlink{can__buffer_8h_a7a5dfa274d7d04c73e0b6b3e4dbbb87c}{Can\+Data} Can\+Buffer\+::receive\+\_\+candata\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classCanBuffer_a7a06170000a5bb8e66d6feed7ade64ad}\label{classCanBuffer_a7a06170000a5bb8e66d6feed7ade64ad}} 
+\index{Can\+Buffer@{Can\+Buffer}!receive\+\_\+empty@{receive\+\_\+empty}}
+\index{receive\+\_\+empty@{receive\+\_\+empty}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{receive\+\_\+empty}{receive\_empty}}
+{\footnotesize\ttfamily bool Can\+Buffer\+::receive\+\_\+empty = true\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classCanBuffer_aea5dc877a2bcdec8d3da11649346ca21}\label{classCanBuffer_aea5dc877a2bcdec8d3da11649346ca21}} 
+\index{Can\+Buffer@{Can\+Buffer}!transmit\+\_\+buffer\+\_\+mutex@{transmit\+\_\+buffer\+\_\+mutex}}
+\index{transmit\+\_\+buffer\+\_\+mutex@{transmit\+\_\+buffer\+\_\+mutex}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{transmit\+\_\+buffer\+\_\+mutex}{transmit\_buffer\_mutex}}
+{\footnotesize\ttfamily std\+::mutex Can\+Buffer\+::transmit\+\_\+buffer\+\_\+mutex\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classCanBuffer_a8b7056beaeb5970d637001adb4722302}\label{classCanBuffer_a8b7056beaeb5970d637001adb4722302}} 
+\index{Can\+Buffer@{Can\+Buffer}!transmit\+\_\+candata@{transmit\+\_\+candata}}
+\index{transmit\+\_\+candata@{transmit\+\_\+candata}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{transmit\+\_\+candata}{transmit\_candata}}
+{\footnotesize\ttfamily \hyperlink{can__buffer_8h_a7a5dfa274d7d04c73e0b6b3e4dbbb87c}{Can\+Data} Can\+Buffer\+::transmit\+\_\+candata\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classCanBuffer_a60d0c06e2b6ec133bc3d2b99872dc536}\label{classCanBuffer_a60d0c06e2b6ec133bc3d2b99872dc536}} 
+\index{Can\+Buffer@{Can\+Buffer}!transmit\+\_\+empty@{transmit\+\_\+empty}}
+\index{transmit\+\_\+empty@{transmit\+\_\+empty}!Can\+Buffer@{Can\+Buffer}}
+\subsubsection{\texorpdfstring{transmit\+\_\+empty}{transmit\_empty}}
+{\footnotesize\ttfamily bool Can\+Buffer\+::transmit\+\_\+empty = true\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/utils/include/\hyperlink{can__buffer_8h}{can\+\_\+buffer.\+h}\item 
+/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/utils/src/\hyperlink{can__buffer_8cpp}{can\+\_\+buffer.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,176 @@
+\hypertarget{keyboard__input__reader_8h}{}\section{/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/input\+\_\+handler/include/keyboard\+\_\+input\+\_\+reader.h File Reference}
+\label{keyboard__input__reader_8h}\index{/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/input\+\_\+handler/include/keyboard\+\_\+input\+\_\+reader.\+h@{/home/rjohan59/repos/bootcamp\+\_\+course/project/source\+\_\+code/input\+\_\+handler/include/keyboard\+\_\+input\+\_\+reader.\+h}}
+{\ttfamily \#include $<$X11/\+Xlib.\+h$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include \char`\"{}user\+\_\+input.\+h\char`\"{}}\newline
+Include dependency graph for keyboard\+\_\+input\+\_\+reader.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=268pt]{keyboard__input__reader_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{keyboard__input__reader_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classInputReader}{Input\+Reader}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_a53c0c56eebb7e585f88b64fe50de1791}{key\+\_\+escape} = 9
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_a672691f6d9b3e8ccd4f919ac2690a3b7}{key\+\_\+r} = 27
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_a7150b8066a082810791da4bcb3627263}{key\+\_\+p} = 33
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_af6dfed2a0ac519cf58e0457653f9b462}{key\+\_\+d} = 40
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_a7945d1f3fec383e9c618b960a6ecd2c5}{key\+\_\+n} = 57
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_a9c253b7bd350a94ad717f5ffefb3bc9d}{key\+\_\+up} = 111
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_a64e19103f73168ec6405a167b6d35d67}{key\+\_\+down} = 116
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_a3bc1dc413c10cddc14973f4e8e988549}{key\+\_\+left} = 113
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_a59c01dd1abeb08092cba203033a71fef}{key\+\_\+right} = 114
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_af8030d9bc41e1685c70826854fb40d52}{key\+\_\+space} = 65
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_a6243d4c3c92dadb304e192e0ac6e9602}{acc\+\_\+inc} = 10
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_a19fde39f21a491b6d27e428f85c11c3e}{acc\+\_\+dec} = 10
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_aff82c5c08c350b07aadfdc7746bf9132}{acc\+\_\+max} = 100
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_ac53cd0ece93387f641cce4c375170b2c}{acc\+\_\+min} = 0
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_ac8c74df11fa1cfe70df57d7c2e51fbd9}{brk\+\_\+inc} = 20
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_a50e4133e426cfbd2b117cc288117e900}{brk\+\_\+dec} = 20
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_a67c193ffe8ba245fe64b6cc478a6bfef}{brk\+\_\+max} = 100
+\item 
+const unsigned int \hyperlink{keyboard__input__reader_8h_a770c9918638fbeb6c5024dd3baa6a0eb}{brk\+\_\+min} = 0
+\end{DoxyCompactItemize}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{keyboard__input__reader_8h_a19fde39f21a491b6d27e428f85c11c3e}\label{keyboard__input__reader_8h_a19fde39f21a491b6d27e428f85c11c3e}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!acc\+\_\+dec@{acc\+\_\+dec}}
+\index{acc\+\_\+dec@{acc\+\_\+dec}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{acc\+\_\+dec}{acc\_dec}}
+{\footnotesize\ttfamily const unsigned int acc\+\_\+dec = 10}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_a6243d4c3c92dadb304e192e0ac6e9602}\label{keyboard__input__reader_8h_a6243d4c3c92dadb304e192e0ac6e9602}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!acc\+\_\+inc@{acc\+\_\+inc}}
+\index{acc\+\_\+inc@{acc\+\_\+inc}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{acc\+\_\+inc}{acc\_inc}}
+{\footnotesize\ttfamily const unsigned int acc\+\_\+inc = 10}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_aff82c5c08c350b07aadfdc7746bf9132}\label{keyboard__input__reader_8h_aff82c5c08c350b07aadfdc7746bf9132}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!acc\+\_\+max@{acc\+\_\+max}}
+\index{acc\+\_\+max@{acc\+\_\+max}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{acc\+\_\+max}{acc\_max}}
+{\footnotesize\ttfamily const unsigned int acc\+\_\+max = 100}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_ac53cd0ece93387f641cce4c375170b2c}\label{keyboard__input__reader_8h_ac53cd0ece93387f641cce4c375170b2c}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!acc\+\_\+min@{acc\+\_\+min}}
+\index{acc\+\_\+min@{acc\+\_\+min}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{acc\+\_\+min}{acc\_min}}
+{\footnotesize\ttfamily const unsigned int acc\+\_\+min = 0}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_a50e4133e426cfbd2b117cc288117e900}\label{keyboard__input__reader_8h_a50e4133e426cfbd2b117cc288117e900}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!brk\+\_\+dec@{brk\+\_\+dec}}
+\index{brk\+\_\+dec@{brk\+\_\+dec}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{brk\+\_\+dec}{brk\_dec}}
+{\footnotesize\ttfamily const unsigned int brk\+\_\+dec = 20}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_ac8c74df11fa1cfe70df57d7c2e51fbd9}\label{keyboard__input__reader_8h_ac8c74df11fa1cfe70df57d7c2e51fbd9}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!brk\+\_\+inc@{brk\+\_\+inc}}
+\index{brk\+\_\+inc@{brk\+\_\+inc}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{brk\+\_\+inc}{brk\_inc}}
+{\footnotesize\ttfamily const unsigned int brk\+\_\+inc = 20}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_a67c193ffe8ba245fe64b6cc478a6bfef}\label{keyboard__input__reader_8h_a67c193ffe8ba245fe64b6cc478a6bfef}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!brk\+\_\+max@{brk\+\_\+max}}
+\index{brk\+\_\+max@{brk\+\_\+max}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{brk\+\_\+max}{brk\_max}}
+{\footnotesize\ttfamily const unsigned int brk\+\_\+max = 100}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_a770c9918638fbeb6c5024dd3baa6a0eb}\label{keyboard__input__reader_8h_a770c9918638fbeb6c5024dd3baa6a0eb}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!brk\+\_\+min@{brk\+\_\+min}}
+\index{brk\+\_\+min@{brk\+\_\+min}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{brk\+\_\+min}{brk\_min}}
+{\footnotesize\ttfamily const unsigned int brk\+\_\+min = 0}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_af6dfed2a0ac519cf58e0457653f9b462}\label{keyboard__input__reader_8h_af6dfed2a0ac519cf58e0457653f9b462}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!key\+\_\+d@{key\+\_\+d}}
+\index{key\+\_\+d@{key\+\_\+d}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{key\+\_\+d}{key\_d}}
+{\footnotesize\ttfamily const unsigned int key\+\_\+d = 40}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_a64e19103f73168ec6405a167b6d35d67}\label{keyboard__input__reader_8h_a64e19103f73168ec6405a167b6d35d67}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!key\+\_\+down@{key\+\_\+down}}
+\index{key\+\_\+down@{key\+\_\+down}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{key\+\_\+down}{key\_down}}
+{\footnotesize\ttfamily const unsigned int key\+\_\+down = 116}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_a53c0c56eebb7e585f88b64fe50de1791}\label{keyboard__input__reader_8h_a53c0c56eebb7e585f88b64fe50de1791}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!key\+\_\+escape@{key\+\_\+escape}}
+\index{key\+\_\+escape@{key\+\_\+escape}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{key\+\_\+escape}{key\_escape}}
+{\footnotesize\ttfamily const unsigned int key\+\_\+escape = 9}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_a3bc1dc413c10cddc14973f4e8e988549}\label{keyboard__input__reader_8h_a3bc1dc413c10cddc14973f4e8e988549}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!key\+\_\+left@{key\+\_\+left}}
+\index{key\+\_\+left@{key\+\_\+left}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{key\+\_\+left}{key\_left}}
+{\footnotesize\ttfamily const unsigned int key\+\_\+left = 113}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_a7945d1f3fec383e9c618b960a6ecd2c5}\label{keyboard__input__reader_8h_a7945d1f3fec383e9c618b960a6ecd2c5}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!key\+\_\+n@{key\+\_\+n}}
+\index{key\+\_\+n@{key\+\_\+n}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{key\+\_\+n}{key\_n}}
+{\footnotesize\ttfamily const unsigned int key\+\_\+n = 57}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_a7150b8066a082810791da4bcb3627263}\label{keyboard__input__reader_8h_a7150b8066a082810791da4bcb3627263}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!key\+\_\+p@{key\+\_\+p}}
+\index{key\+\_\+p@{key\+\_\+p}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{key\+\_\+p}{key\_p}}
+{\footnotesize\ttfamily const unsigned int key\+\_\+p = 33}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_a672691f6d9b3e8ccd4f919ac2690a3b7}\label{keyboard__input__reader_8h_a672691f6d9b3e8ccd4f919ac2690a3b7}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!key\+\_\+r@{key\+\_\+r}}
+\index{key\+\_\+r@{key\+\_\+r}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{key\+\_\+r}{key\_r}}
+{\footnotesize\ttfamily const unsigned int key\+\_\+r = 27}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_a59c01dd1abeb08092cba203033a71fef}\label{keyboard__input__reader_8h_a59c01dd1abeb08092cba203033a71fef}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!key\+\_\+right@{key\+\_\+right}}
+\index{key\+\_\+right@{key\+\_\+right}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{key\+\_\+right}{key\_right}}
+{\footnotesize\ttfamily const unsigned int key\+\_\+right = 114}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_af8030d9bc41e1685c70826854fb40d52}\label{keyboard__input__reader_8h_af8030d9bc41e1685c70826854fb40d52}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!key\+\_\+space@{key\+\_\+space}}
+\index{key\+\_\+space@{key\+\_\+space}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{key\+\_\+space}{key\_space}}
+{\footnotesize\ttfamily const unsigned int key\+\_\+space = 65}
+
+\mbox{\Hypertarget{keyboard__input__reader_8h_a9c253b7bd350a94ad717f5ffefb3bc9d}\label{keyboard__input__reader_8h_a9c253b7bd350a94ad717f5ffefb3bc9d}} 
+\index{keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}!key\+\_\+up@{key\+\_\+up}}
+\index{key\+\_\+up@{key\+\_\+up}!keyboard\+\_\+input\+\_\+reader.\+h@{keyboard\+\_\+input\+\_\+reader.\+h}}
+\subsubsection{\texorpdfstring{key\+\_\+up}{key\_up}}
+{\footnotesize\ttfamily const unsigned int key\+\_\+up = 111}
+

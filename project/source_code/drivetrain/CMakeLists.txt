@@ -4,7 +4,6 @@ include_directories(include ../utils/include)
 
 add_executable(drivetrain
                     src/main.cpp
-                    src/vehicle.cpp
                     src/gearbox_simulator.cpp
                     src/engine_simulator.cpp
 
