@@ -36,11 +36,8 @@ class Vehicle {
     private:
         Engine engine;
         Gearbox gearbox;
-        float tire_diameter;
-        float diff_ratio;
-        uint16_t weight;
         float vehicle_speed = 0;
-        const T vehicle_characteristics;
+        const T veh_spec;
     public:
         Vehicle();
         float RPMToSpeedFactor();
@@ -54,13 +51,9 @@ class Vehicle {
 * @param engine engine simulation object
 */
 template <typename T>
-Vehicle<T>::Vehicle()
-{
-    engine.initialize(this->vehicle_characteristics.engine_horsepower, this->vehicle_characteristics.engine_max_rpm);
-    gearbox.initialize(this->vehicle_characteristics.gear_ratios, this->vehicle_characteristics.gear_ratios_size);
-    this->diff_ratio = this->vehicle_characteristics.diff_ratio;
-    this->weight = this->vehicle_characteristics.weight;
-    this->tire_diameter = this->vehicle_characteristics.tire_diameter;
+Vehicle<T>::Vehicle() {
+    engine.initialize(this->veh_spec.engine_horsepower, this->veh_spec.engine_max_rpm);
+    gearbox.initialize(this->veh_spec.gear_ratios, this->veh_spec.gear_ratios_size);
 }
 
 /*!
@@ -161,7 +154,7 @@ inline float calculate_brake_tq(uint8_t brake_pedal)
 template <typename T>
 inline float Vehicle<T>::RPMToSpeedFactor()
 {
-    return (((3.6*M_PI*(this->tire_diameter))/(this->gearbox.get_gear_ratio()*60*(this->diff_ratio)))*0.621371);
+    return (((3.6*M_PI*(veh_spec.tire_diameter))/(this->gearbox.get_gear_ratio()*60*(veh_spec.diff_ratio)))*0.621371);
 }
 
 /*!
@@ -177,7 +170,7 @@ void Vehicle<T>::VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_spee
 
         this->vehicle_speed = ((this->engine.get_eng_rpm())*rpm_to_speed)-
                                 (calculate_brake_tq(brk_pedal))-
-                                calculate_resistance(this->weight, this->vehicle_speed);
+                                calculate_resistance(veh_spec.weight, this->vehicle_speed);
         if(this->vehicle_speed < 7 && brk_pedal > 0)
         {
             this->vehicle_speed = 0;
