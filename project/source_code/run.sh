@@ -22,6 +22,7 @@ function usage
     "  --run,     -r  Run without rebuild"
     "  --doxygen, -d  Run doxygen script execution, checks if installed, if no then it does it for you"
     "  --check,   -c  Run cppcheck --enable=all"
+    "  --test,    -t  Run unit tests"
   )
   printf "%s\n" "${txt[@]}"
 }
@@ -139,6 +140,16 @@ function doxygen
 
 }
 
+function test
+{
+  local txt=(
+    "Executing unit tests"
+  )
+  printf "%s\n" "${txt[@]}"
+
+  ./build/drivetrain/test/engine_test
+}
+
 while (( $# ))
 do
     case "$1" in
@@ -164,6 +175,10 @@ do
       ;;
       --check | -c)
           cppcheck
+          exit 0
+      ;;
+      --test | -t)
+          test
           exit 0
       ;;
       *)

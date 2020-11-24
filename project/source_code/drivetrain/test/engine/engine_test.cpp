@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "engine_simulator.h"
+#include <iostream>
 
 /* TEST(engine_test, RPM)
 {
@@ -10,5 +11,6 @@ int main(int argc, char* argv[])
 {
 /*     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS(); */
+    std::cout << "testing" << std::endl;
     return 0;
 }
