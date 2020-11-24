@@ -63,6 +63,11 @@ function build
   if [ -d "build" ]; then
     rm -rf build
   fi
+
+  #fetch submodules like the google test repo
+  git submodule init
+  git submodule update
+
   mkdir build
   cd build
   cmake ..
