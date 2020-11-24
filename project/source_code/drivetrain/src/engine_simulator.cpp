@@ -21,14 +21,12 @@ void Engine::initialize(const uint16_t &hp, const uint16_t &max_rpm)
 void Engine::Ignition(const bool &ign_req, const uint8_t &speed, const uint8_t &brk_pedal, const uint8_t &gear_position)
 {
     if(ign_req && !this->eng_sts && (speed > 0 || brk_pedal > 0) &&
-        (gear_position == gear_lever_position::P ||
-            gear_position == gear_lever_position::N))
+        (gear_position == gear_lever_position::P || gear_position == gear_lever_position::N))
     {
         this->eng_sts = true;
     }
     else if(!ign_req && this->eng_sts && speed == 0 &&
-            (gear_position == gear_lever_position::P ||
-                gear_position == gear_lever_position::N))
+            (gear_position == gear_lever_position::P || gear_position == gear_lever_position::N))
     {
         this->eng_sts = false;
     }
@@ -88,10 +86,6 @@ void Engine::ActualRPM(const float &speed, const float &speed_to_rpm_factor)
     {
         this->eng_rpm = 0;
     }
-
-
-    //check if rpm is high enough to shift gear in here or gearbox?
-
 }
 
 /*!
