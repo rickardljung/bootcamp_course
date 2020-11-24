@@ -21,6 +21,7 @@ function usage
     "  --build,   -b  Rebuild old version"
     "  --run,     -r  Run without rebuild"
     "  --doxygen, -d  Run doxygen script execution, checks if installed, if no then it does it for you"
+    "  --check,   -c  Run cppcheck --enable=all"
   )
   printf "%s\n" "${txt[@]}"
 }
@@ -91,6 +92,16 @@ function run
   ./utils/output_panel/app/avic/avic -c "vcan0"
 }
 
+function cppcheck
+{
+  local txt=(
+    "Running cppcheck"
+  )
+  printf "%s\n" "${txt[@]}"
+  bash -c 'cppcheck --enable=all -I drivetrain/include/ -I utils/include -I input_handler/include drivetrain/src/ utils/src input_handler/src/'
+}
+
+
 function doxygen
 {
   local txt=(
@@ -146,7 +157,10 @@ do
           doxygen
           exit 0
       ;;
-
+      --check | -c)
+          cppcheck
+          exit 0
+      ;;
       *)
         badUsage #"Option/command not recognized"
         exit 1
