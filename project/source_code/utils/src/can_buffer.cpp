@@ -8,7 +8,8 @@
 /*!* Adds received can data to the receive (RX) buffer
 * @param data received can data
 */
-void CanBuffer::AddRx(const uint32_t *id, uint8_t payload[], const uint8_t *length)
+template <int frames_to_send>
+void CanBuffer<frames_to_send>::AddRx(const uint32_t *id, uint8_t payload[], const uint8_t *length)
 {
     std::lock_guard<std::mutex> lock(receive_buffer_mutex);
     std::memcpy(this->receive_candata.payload, payload, *length);
@@ -20,7 +21,8 @@ void CanBuffer::AddRx(const uint32_t *id, uint8_t payload[], const uint8_t *leng
 * Adds data to be sent to the transmit (TX) buffer
 * @param data data to be transmitted
 */
-void CanBuffer::AddTx(const uint32_t *id, uint8_t payload[],const uint8_t *length)
+template <int frames_to_send>
+void CanBuffer<frames_to_send>::AddTx(const uint32_t *id, uint8_t payload[],const uint8_t *length)
 {
     std::lock_guard<std::mutex> lock(transmit_buffer_mutex);
     std::memcpy(this->transmit_candata.payload, payload, *length);
@@ -32,7 +34,8 @@ void CanBuffer::AddTx(const uint32_t *id, uint8_t payload[],const uint8_t *lengt
 * Pulls next data package from the receive (RX) buffer
 * @return received data
 */
-CanData CanBuffer::PullRx()
+template <int frames_to_send>
+CanData CanBuffer<frames_to_send>::PullRx()
 {
     std::lock_guard<std::mutex> lock(receive_buffer_mutex);
     this->receive_empty = true;
@@ -42,25 +45,10 @@ CanData CanBuffer::PullRx()
 * Pulls next data package from the transmit (TX) buffer
 * @return data to be transmitted
 */
-CanData CanBuffer::PullTx()
+template <int frames_to_send>
+CanData CanBuffer<frames_to_send>::PullTx()
 {
     std::lock_guard<std::mutex> lock(transmit_buffer_mutex);
     this->transmit_empty = true;
     return this->transmit_candata;
-}
-/*!
-* Check if receive buffer contains any elements
-* @return TRUE if receive buffer is empty
-*/
-bool CanBuffer::ReceiveBufferEmpty()
-{
-    return this->receive_empty;
-}
-/*!
-* Check if transmit buffer contains any elements
-* @return TRUE if transmit buffer is empty
-*/
-bool CanBuffer::TransmitBufferEmpty()
-{
-    return this->transmit_empty;
 }

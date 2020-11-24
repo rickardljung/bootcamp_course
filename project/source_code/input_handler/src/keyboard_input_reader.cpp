@@ -1,22 +1,29 @@
+#include "can_buffer.h"
 #include "user_input.h"
 #include "keyboard_input_reader.h"
-#include "can_buffer.h"
-#include <iostream>
+
+#include <thread>
 #include <cstring>
+#include <iostream>
 
 /*!
 	* Runs the main function of InputReader, calls functions ReadInputs and InterpretInput.
     * Adds a message to CanBuffer when input has been read and interpreted.
 	* @return Returns True if thread should continue running.
 */
-bool InputReader::Run()
+template <typename P>
+bool InputReader<P>::Run()
 {
     bool return_val = true;
     //interpret user input
     if(ReadInputs())
     {
         return_val = InterpretInput();
-        CanBuffer::GetInstance().AddTx(&msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), &msg_len);
+        canbuffer.AddTx(&msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), &msg_len);
+        
+      //  std::this_thread::sleep_for(std::chrono::microseconds(200));
+        // uint8_t *misc = reinterpret_cast<uint8_t*>(&user_misc_input);
+      //  CanBuffer::GetInstance().AddTx(&misc_msg_id, reinterpret_cast<uint8_t*>(&user_misc_input), &misc_msg_len);
     }
     return return_val;
 }
@@ -24,7 +31,8 @@ bool InputReader::Run()
 	* Reads inputs from the keyboard (blocking function).
 	* @return True if a KeyPress has occurred, false for all other events.
 */
-bool InputReader::ReadInputs()
+template <typename P>
+bool InputReader<P>::ReadInputs()
 {
         XNextEvent(display, &event);
         /* keyboard events */
@@ -39,7 +47,8 @@ bool InputReader::ReadInputs()
 	* Destructor for class InputReader, closes the display and resets settings for the keyboard.
 	* @return Nothing is returned
 */
-InputReader::~InputReader()
+template <typename P>
+InputReader<P>::~InputReader()
 {
     /* close connection to server */
     XAutoRepeatOn(display);
@@ -50,12 +59,15 @@ InputReader::~InputReader()
     * Sets temp_user_input struct to 0 and adds it to the CAN buffer.
 	* @return Nothing is returned
 */
-InputReader::InputReader()
+template <typename P>
+InputReader<P>::InputReader(const P& _canbuffer) : canbuffer(_canbuffer)
 {
     /* initialize temp_user_input with 0*/
     std::memset(&temp_user_input,0,sizeof(UserInput));
+    /* initialize user_misc_input with 0*/
+    std::memset(&user_misc_input,0,sizeof(UserInput));
     /*add empty frame to the CAN buffer*/
-    CanBuffer::GetInstance().AddTx(&msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), &msg_len);
+    canbuffer.AddTx(&msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), &msg_len);
     /* open connection with the server */
     display = XOpenDisplay(NULL);
     if (display == NULL)
@@ -82,7 +94,8 @@ InputReader::InputReader()
 	* Decides appropriate action depending on which key was pressed.
 	* @return Returns true unless Esc key has been pressed.
 */
-bool InputReader::InterpretInput()
+template <typename P>
+bool InputReader<P>::InterpretInput()
 {
     bool return_val = true;
     if(event.xkey.keycode == key_up || event.xkey.keycode == key_down)
@@ -106,13 +119,30 @@ bool InputReader::InterpretInput()
     {
         return_val = EndSimulation();
     }
+    else if(event.xkey.keycode == key_h)
+    {
+        Handbrake();
+    }
+    else if(event.xkey.keycode == key_a)
+    {
+        HazardLight();
+    }
+    else if(event.xkey.keycode == key_blinker_left)
+    {
+        LeftBlinkerLight();
+    }
+    else if(event.xkey.keycode == key_blinker_right)
+    {
+        RightBlinkerLight();
+    }
     return return_val;
 }
 /*!
 	* Increases or decreases acceleration value, stores it in temp_user_input.
 	* @return Nothing is returned.
 */
-void InputReader::Acceleration()
+template <typename P>
+void InputReader<P>::Acceleration()
 {
     if(event.xkey.keycode == key_up)
     {
@@ -133,7 +163,8 @@ void InputReader::Acceleration()
 	* Increases or decreases brake value, stores it in temp_user_input.
 	* @return Nothing is returned.
 */
-void InputReader::Braking()
+template <typename P>
+void InputReader<P>::Braking()
 {
     if(event.xkey.keycode == key_left) //user pressing brake pedal
     {
@@ -151,10 +182,47 @@ void InputReader::Braking()
     }
 }
 /*!
+	* Toggles right blinker light indicator on instrument cluster, stores it in user_misc_input.
+	* @return Nothing is returned.
+*/
+template <typename P>
+void InputReader<P>::RightBlinkerLight()
+{
+    user_misc_input.right_blinker = ~user_misc_input.right_blinker;
+}
+/*!
+	* Toggles left blinker light indicator on instrument cluster, stores it in user_misc_input.
+	* @return Nothing is returned.
+*/
+template <typename P>
+void InputReader<P>::LeftBlinkerLight()
+{
+    user_misc_input.left_blinker = ~user_misc_input.left_blinker;
+}
+/*!
+	* Toggles hazard light indicator on instrument cluster, stores it in user_misc_input.
+	* @return Nothing is returned.
+*/
+template <typename P>
+void InputReader<P>::HazardLight()
+{
+    user_misc_input.hazard_light = ~user_misc_input.hazard_light;
+}
+/*!
+	* Toggles handbrake indicator on instrument cluster, stores it in user_misc_input.
+	* @return Nothing is returned.
+*/
+template <typename P>
+void InputReader<P>::Handbrake()
+{
+    user_misc_input.hand_brake = ~user_misc_input.hand_brake;
+}
+/*!
 	* Toggles the ignition request, stores it in temp_user_input.
 	* @return Nothing is returned.
 */
-void InputReader::IgnitionReq()
+template <typename P>
+void InputReader<P>::IgnitionReq()
 {
     if(temp_user_input.ignition == ignition_on)
     {
@@ -169,7 +237,8 @@ void InputReader::IgnitionReq()
 	* Determines which gear should be requested, stores it in temp_user_input.
 	* @return Nothing is returned.
 */
-void InputReader::GearPosReq()
+template <typename Y>
+void InputReader<Y>::GearPosReq()
 {
     if(event.xkey.keycode == key_p)
     {
@@ -192,7 +261,8 @@ void InputReader::GearPosReq()
 	* Sets end simulation.
 	* @return Returns false.
 */
-bool InputReader::EndSimulation()
+template <typename P>
+bool InputReader<P>::EndSimulation()
 {
     temp_user_input.end_simulation = end;
     return false;

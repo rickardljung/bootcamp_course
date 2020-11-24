@@ -1,8 +1,9 @@
-#include <thread>
+#include "socketcan.h"
 #include "can_io_thread.h"
+
+#include <thread>
 #include <chrono>
 #include <iostream>
-#include "socketcan.h"
 
 using namespace scpp;
 
@@ -15,17 +16,18 @@ int main(){
 
     if (result == scpp::STATUS_OK)
     {
+        CanBuffer canbuffer;
         std::promise<void> promise;
         std::future<void> future = promise.get_future();
         uint8_t receive_message_id[2] = {1,2};
         size_t receive_message_id_size = 2; //TODO: replace with siceof??
         //starts new thread handling input and output on CAN. Uses can_buffer
-        CanIOThread io_thread(&socket, &future, receive_message_id, receive_message_id_size);
+        CanIOThread io_thread(&socket, &future, receive_message_id, receive_message_id_size, canbuffer);
 
         std::future_status status;
         while (status != std::future_status::ready) {
             std::this_thread::sleep_for(std::chrono::microseconds(5));
-            CanData data = CanBuffer::GetInstance().PullRx();
+            CanData data = canbuffer.PullRx();
             if (data.id == 1)
             {
                 UserInput *input = reinterpret_cast<UserInput*>(data.payload);

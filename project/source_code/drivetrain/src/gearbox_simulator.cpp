@@ -63,7 +63,7 @@ bool Gearbox::GearNumberChange(const float &engine_rpm)
 * Get function for gear lever position (P = 0, N = 1, D = 2, R = 3)
 * @return engaged gear lever position
 */
-uint8_t Gearbox::get_gear_lever_position()
+inline uint8_t Gearbox::get_gear_lever_position()
 {
     return this->gear_lever_position;
 }

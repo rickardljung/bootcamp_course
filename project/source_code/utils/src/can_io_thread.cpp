@@ -1,6 +1,8 @@
-#include "can_io_thread.h"
-#include <iostream>
 #include "user_input.h"
+#include "can_buffer.h"
+#include "can_io_thread.h"
+
+#include <iostream>
 
 /*!
 * Constructor of CanIOThread. Assigns the class members and starts a thread on the function "Run"
@@ -8,9 +10,12 @@
 * @param receive_message_id list of IDs that should be read
 * @param receive_message_id_size size of the list receive_message_id.
 */
-CanIOThread::CanIOThread(scpp::SocketCan *_socket, std::future<void> *future, uint8_t *receive_message_id,
-                         const size_t &receive_message_id_size)
-                         : socket(_socket), thread(std::thread(&CanIOThread::Run, this, future, receive_message_id, receive_message_id_size)) {}
+template <typename P>
+CanIOThread<P>::CanIOThread(scpp::SocketCan *_socket, std::future<void> *future, uint8_t *receive_message_id,
+                         const size_t &receive_message_id_size, P& _canbuffer)
+                         : socket(_socket),
+                           canbuffer(_canbuffer),
+                         thread(std::thread(&CanIOThread::Run, this, future, receive_message_id, receive_message_id_size)) {}
 
 /*!
 * Reads data from CAN and writes it to the receive buffer. Pulls data from the transmit buffer and transmits it to can.
@@ -19,7 +24,8 @@ CanIOThread::CanIOThread(scpp::SocketCan *_socket, std::future<void> *future, ui
 * @param receive_message_id list of IDs that should be read
 * @param receive_message_id_size size of the list receive_message_id.
 */
-void CanIOThread::Run(std::future<void> *future, uint8_t *receive_message_id, const size_t &receive_message_id_size)
+template <typename P>
+void CanIOThread<P>::Run(std::future<void> *future, uint8_t *receive_message_id, const size_t &receive_message_id_size)
 {
     size_t i = 0;
     std::future_status future_status;
@@ -32,7 +38,7 @@ void CanIOThread::Run(std::future<void> *future, uint8_t *receive_message_id, co
         {
             for (size_t i = 0; i < receive_message_id_size; i++) {
                 if (receive_message_id[i] == fr.id) {
-                    CanBuffer::GetInstance().AddRx(&fr.id, fr.data, &fr.len);
+                    canbuffer.AddRx(&fr.id, fr.data, &fr.len);
                     break;
                 }
             }
@@ -44,7 +50,7 @@ void CanIOThread::Run(std::future<void> *future, uint8_t *receive_message_id, co
         //WRITE TO SOCKET
         //if (!CanBuffer::GetInstance().TransmitBufferEmpty())
         //TODO: might not work with ringbuffer
-        CanData transmit_data = CanBuffer::GetInstance().PullTx();
+        CanData transmit_data = canbuffer.PullTx();
         if(transmit_data.id != 0) //do not transmit until data is added to the tranmit buffer. 0 as init
         {
             this->socket->write(transmit_data.payload, transmit_data.id, transmit_data.length);
@@ -57,7 +63,8 @@ void CanIOThread::Run(std::future<void> *future, uint8_t *receive_message_id, co
 /*!
 * Destructor of CanIOThread. Informs the thread to stop (the Run function) and wait until it is done.
 */
-CanIOThread::~CanIOThread()
+template <typename P>
+CanIOThread<P>::~CanIOThread()
 {
     this->thread.join();
 }
