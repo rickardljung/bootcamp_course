@@ -22,15 +22,15 @@ int main(){ //int argc,char** argv
     }
     else 
     {
-        CanBuffer<NBR_TX_FRAMES> canbuffer;
+        CanBuffer canbuffer;
         std::promise<void> promise;
         std::future<void> future = promise.get_future();
 
         //initiateCanBuffer keyboard reading
-        InputReader<CanBuffer<NBR_TX_FRAMES>> input_reader(canbuffer);
+        InputReader<CanBuffer> input_reader(canbuffer);
 
         //spawn a thread transmitting CAN messages
-        CanIOThread<CanBuffer<NBR_TX_FRAMES>> io_thread(&socket, &future, nullptr, 0, canbuffer);
+        CanIOThread<CanBuffer> io_thread(&socket, &future, nullptr, 0, canbuffer);
         
         while(input_reader.Run());
 

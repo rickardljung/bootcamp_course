@@ -16,14 +16,14 @@ int main()
         return 1;
     }
     
-    CanBuffer<1> canbuffer;
+    CanBuffer canbuffer;
     std::promise<void> promise;
     std::future<void> future = promise.get_future();
     uint8_t receive_message_id[1] = {1};
     size_t receive_message_id_size = 1;
     //starts new thread handling input and output on CAN. Uses can_buffer
-    CanIOThread<CanBuffer<1>> io_thread(&socket, &future, receive_message_id, receive_message_id_size, canbuffer);
-    Vehicle<VolvoXC60, CanBuffer<1>> vehicle(canbuffer);
+    CanIOThread<CanBuffer> io_thread(&socket, &future, receive_message_id, receive_message_id_size, canbuffer);
+    Vehicle<VolvoXC60, CanBuffer> vehicle(canbuffer);
 
     int i = 0;
     while (vehicle.Run())

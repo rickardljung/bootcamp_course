@@ -19,8 +19,8 @@ class CanBuffer
 {
     public:
         CanBuffer()=default;
-        void CanBuffer::Add(const uint32_t& id, uint8_t payload[],const uint8_t& length);
-        CanData CanBuffer::Pull(const uint32_t& id);
+        void Add(const uint32_t& id, uint8_t payload[],const uint8_t& length);
+        std::unordered_map<int, CanData> CanBuffer::Pull();
     private:    
         std::unordered_map<int, CanData> candata;
         std::mutex buffer_mutex;

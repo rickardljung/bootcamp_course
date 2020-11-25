@@ -17,12 +17,14 @@ class CanIOThread {
         std::thread thread;
         scpp::SocketCan *socket;
         void Run(std::future<void> *future, uint8_t *receive_message_id, const size_t &receive_message_id_size);
+        std::unordered_map<int, CanData> candata_tx;
     public:
         CanIOThread(scpp::SocketCan *socket,  std::future<void> *future, uint8_t *receive_message_id,
                     const size_t &receive_message_id_size, P& canbuffer);
         ~CanIOThread();
         scpp::SocketCan * get_socket();
-        P& canbuffer;
+        P& canbuffer_tx;
+        P& canbuffer_rx;
 };
 
 
@@ -34,9 +36,10 @@ class CanIOThread {
 */
 template <typename P>
 CanIOThread<P>::CanIOThread(scpp::SocketCan *_socket, std::future<void> *future, uint8_t *receive_message_id,
-                         const size_t &receive_message_id_size, P& _canbuffer)
+                         const size_t &receive_message_id_size, P& canbuffer_tx, P& canbuffer_tx)
                          : socket(_socket),
-                           canbuffer(_canbuffer),
+                           canbuffer_tx(_canbuffer),
+                           canbuffer_rx(_canbuffer),
                          thread(std::thread(&CanIOThread::Run, this, future, receive_message_id, receive_message_id_size)) {}
 
 /*!
@@ -60,7 +63,7 @@ void CanIOThread<P>::Run(std::future<void> *future, uint8_t *receive_message_id,
         {
             for (size_t i = 0; i < receive_message_id_size; i++) {
                 if (receive_message_id[i] == fr.id) {
-                    canbuffer.AddRx(&fr.id, fr.data, &fr.len);
+                    canbuffer_rx.Add(fr.id, fr.data, fr.len);
                     break;
                 }
             }
@@ -72,10 +75,13 @@ void CanIOThread<P>::Run(std::future<void> *future, uint8_t *receive_message_id,
         //WRITE TO SOCKET
         //if (!CanBuffer::GetInstance().TransmitBufferEmpty())
         //TODO: might not work with ringbuffer
-        CanData transmit_data = canbuffer.PullTx();
+        candata_tx = canbuffer_tx.Pull();
         if(transmit_data.id != 0) //do not transmit until data is added to the tranmit buffer. 0 as init
         {
-            this->socket->write(transmit_data.payload, transmit_data.id, transmit_data.length);
+            for(int i = 0, i<candata_tx.size(), i++)
+            {
+                this->socket->write(candata_tx[i].payload, candata_tx[i].id, candata_tx[i].length);
+            }
         }
 
         future_status = future->wait_for(std::chrono::microseconds(10));

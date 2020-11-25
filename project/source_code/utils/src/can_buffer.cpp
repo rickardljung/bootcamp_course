@@ -23,8 +23,8 @@ void CanBuffer::Add(const uint32_t& id, uint8_t payload[],const uint8_t& length)
 * Pulls next data package from the transmit (TX) buffer
 * @return data to be transmitted
 */
-CanData CanBuffer::Pull(const uint32_t& id)
+std::unordered_map<int, CanData> CanBuffer::Pull()
 {
     std::lock_guard<std::mutex> lock(buffer_mutex);
-    return candata[id];
+    return candata;
 }
