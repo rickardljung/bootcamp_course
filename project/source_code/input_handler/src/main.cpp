@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
     InputReader input_reader;
 
     //spawn a thread transmitting CAN messages
-    CanIOThread io_thread(&socket, &future, 0, 0);
+    CanIOThread io_thread(&socket, &future, nullptr, 0);
 
     while(input_reader.Run());
 
