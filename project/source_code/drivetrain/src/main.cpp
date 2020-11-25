@@ -16,7 +16,7 @@ int main()
         size_t receive_message_id_size = 1;
         //starts new thread handling input and output on CAN. Uses can_buffer
         CanIOThread io_thread(&socket, &future, receive_message_id, receive_message_id_size);
-        Vehicle<VolvoXC60> vehicle;
+        myVolvoXC60 vehicle;
 
         int i = 0;
         while (vehicle.Run())

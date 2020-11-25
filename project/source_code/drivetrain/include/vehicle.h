@@ -178,4 +178,7 @@ void Vehicle<T>::VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_spee
     }
 }
 
+typedef Vehicle<VolvoXC60> myVolvoXC60;
+typedef Vehicle<VolvoV90> myVolvoV90;
+
 #endif
