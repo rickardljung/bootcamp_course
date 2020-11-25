@@ -7,7 +7,6 @@
 
 #include <unordered_map>
 
-
 const int NBR_TX_FRAMES = 2;
 
 typedef struct CanData_struct{
@@ -16,17 +15,15 @@ typedef struct CanData_struct{
     uint8_t length = 0;
 } CanData;
 
-
 class CanBuffer
 {
     public:
         CanBuffer()=default;
         void CanBuffer::Add(const uint32_t& id, uint8_t payload[],const uint8_t& length);
-        CanData CanBuffer::Pull(uint32_t& frames_to_send);
+        CanData CanBuffer::Pull(const uint32_t& id);
     private:    
         std::unordered_map<int, CanData> candata;
-        std::mutex transmit_buffer_mutex;
+        std::mutex buffer_mutex;
 };
-
 
 #endif
