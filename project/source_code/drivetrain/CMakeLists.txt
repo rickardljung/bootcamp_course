@@ -9,7 +9,6 @@ add_executable(drivetrain
 
 target_link_libraries(drivetrain PUBLIC pthread can_lib)
 
-
 add_subdirectory(test)
 
 #set(CMAKE_BUILD_TYPE Debug)
