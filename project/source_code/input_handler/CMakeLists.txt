@@ -3,7 +3,7 @@ project(InputHandler)
 include_directories(include ../utils/include)
 
 add_executable(input_handler    src/main.cpp
-                                src/keyboard_input_reader.cpp 
+                                src/keyboard_input_reader.cpp
                                 ../utils/src/socketcan.cpp
                                 ../utils/src/can_buffer.cpp
                                 ../utils/src/can_io_thread.cpp)

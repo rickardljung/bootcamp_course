@@ -2,12 +2,12 @@
 #include "vehicle.h"
 #include "can_io_thread.h"
 
-int main()
+int main(int argc, char *argv[])
 {
     bool return_value = 0;
 
     scpp::SocketCan socket;
-    auto result = socket.open("vcan0");
+    auto result = socket.open(argv[1]);
     if (result == scpp::STATUS_OK)
     {
         std::promise<void> promise;
