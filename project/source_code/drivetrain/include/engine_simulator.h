@@ -3,16 +3,20 @@
 #include "user_input.h"
 #include <math.h>
 
+namespace eng_rpm
+{
+    const uint16_t idle = 900;
+    const uint16_t minimum = 850;
+    const uint16_t maximum_decrease = 150;
+    const float simulation_constant = 5*pow(10,-7);
+}
+
 class Engine {
     private:
         bool eng_sts;
         float eng_rpm;
         uint16_t eng_hp;
         uint16_t eng_max_rpm;
-        const uint16_t eng_idle_rpm = 900;
-        const uint16_t eng_min_rpm = 850;
-        const uint16_t rpm_max_dec = 150;
-        const float rpm_simulation_constant = 5*pow(10,-7);
     public:
         Engine() = default;
         void initialize(const uint16_t &hp, const uint16_t &max_rpm);

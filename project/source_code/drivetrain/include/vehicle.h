@@ -2,13 +2,18 @@
 #define VEHICLE_H
 #include <thread>
 #include <math.h>
+#include <cstring>
 #include "engine_simulator.h"
 #include "gearbox_simulator.h"
 #include "user_input.h"
 #include "can_buffer.h"
 
-const uint32_t transmit_id = 2;
-const uint8_t transmit_length = 5;
+namespace vehicle_msg
+{
+    const uint32_t id = 2;
+    const uint8_t length = 5;
+}
+
 const uint16_t sampletime_micro = 5;
 
 typedef struct xc60_struct {
@@ -71,7 +76,8 @@ template <typename T>
 bool Vehicle<T>::Run()
 {
     //payload to be sent in canframe
-    uint8_t payload[8] = {0,0,0,0,0,0,0,0};
+    uint8_t payload[vehicle_msg::length];
+    std::memset(&payload, 0, vehicle_msg::length);
     bool return_value = 1;
     float rpm_to_speed_factor;
 
@@ -100,10 +106,10 @@ bool Vehicle<T>::Run()
             this->VehicleSpeed(input->brake_pedal, rpm_to_speed_factor);
             engine.ActualRPM(this->vehicle_speed, rpm_to_speed_factor);
 
-            std::cout << "RPM: " << this->engine.get_eng_rpm() << std::endl;
+            /*std::cout << "RPM: " << this->engine.get_eng_rpm() << std::endl;
             std::cout << "Gear lever position: " << (int)this->gearbox.get_gear_lever_position() << std::endl;
             std::cout << "Gear number: " << (int)this->gearbox.get_gear_number() << std::endl;
-            std::cout << "Speed: " << this->vehicle_speed << std::endl << std::endl;
+            std::cout << "Speed: " << this->vehicle_speed << std::endl << std::endl;*/
 
 
             payload[0] = static_cast<uint8_t>(this->engine.get_eng_sts());
@@ -111,7 +117,7 @@ bool Vehicle<T>::Run()
             payload[2] = static_cast<uint8_t>(vehicle_speed);
             payload[3] = this->gearbox.get_gear_lever_position();
             payload[4] = this->gearbox.get_gear_number();
-            CanBuffer::GetInstance().AddTx(&transmit_id, payload, &transmit_length);
+            CanBuffer::GetInstance().AddTx(&vehicle_msg::id, payload, &vehicle_msg::length);
             return_value = 1;
         }
     }
