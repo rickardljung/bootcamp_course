@@ -38,7 +38,6 @@ int main()
         {
             break;
         } 
-        
     }
     promise.set_value();
 

@@ -30,9 +30,9 @@ int main(){ //int argc,char** argv
         InputReader<CanBuffer<NBR_TX_FRAMES>> input_reader(canbuffer);
 
         //spawn a thread transmitting CAN messages
-        //CanIOThread<CanBuffer<NBR_TX_FRAMES>> io_thread(&socket, &future, nullptr, 0, canbuffer);
+        CanIOThread<CanBuffer<NBR_TX_FRAMES>> io_thread(&socket, &future, nullptr, 0, canbuffer);
         
-      //  while(input_reader.Run());
+        while(input_reader.Run());
 
         //make sure end simulation is sent in CAN frame before exiting
         future.wait_for(std::chrono::milliseconds(1));
