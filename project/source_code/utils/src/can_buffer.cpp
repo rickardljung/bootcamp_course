@@ -12,11 +12,10 @@
 void CanBuffer::Add(const uint32_t& id, uint8_t payload[],const uint8_t& length)
 {
     std::lock_guard<std::mutex> lock(buffer_mutex);
-    CanData data; 
+    CanData data;
     data.id = id;
     data.length = length;
     memcpy(data.payload,payload,length);
-    std::cout << "Data ID is " << data.id << std::endl;
     candata[id] = data;
 }
 
