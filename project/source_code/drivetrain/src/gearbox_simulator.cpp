@@ -10,7 +10,7 @@ void Gearbox::initialize(const float gear_ratio[], const uint8_t &gear_ratio_siz
 {
     this->gear_ratio = gear_ratio;
     this->max_gear_number = gear_ratio_size - 1; //-1 since reverse is included
-    this->gear_lever_position = P;
+    this->gear_lever_position = gear_lever_position::P;
     this->gear_number = 1;
 }
 /*!
@@ -23,12 +23,12 @@ void Gearbox::initialize(const float gear_ratio[], const uint8_t &gear_ratio_siz
 void Gearbox::GearLeverPosition(const uint8_t &gear_position_request, const uint8_t &speed, const uint8_t &brake_pedal)
 {
     //only change if brake is pressed and speed = 0. TODO: make it possible to change to N in speed?
-    if(brake_pedal >= break_position_to_change_gear_lever &&
+    if(brake_pedal >= gearbox_constants::break_position_to_change_gear_lever &&
        this->gear_lever_position != gear_position_request && speed == 0)
     {
         this->gear_lever_position = gear_position_request;
 
-        if(this->gear_lever_position == R)
+        if(this->gear_lever_position == gear_lever_position::R)
         {
             this->gear_number = 0;
         } else
@@ -45,13 +45,13 @@ void Gearbox::GearLeverPosition(const uint8_t &gear_position_request, const uint
 bool Gearbox::GearNumberChange(const float &engine_rpm)
 {
     bool gear_number_change = false;
-    if (this->gear_lever_position == D) //TODO: should D be a global parameter?
+    if (this->gear_lever_position == gear_lever_position::D)
     {
-        if(engine_rpm >= this->RPM_to_increase_gear_number && this->gear_number != this->max_gear_number)
+        if(engine_rpm >= gearbox_constants::RPM_to_increase_gear_number && this->gear_number != this->max_gear_number)
         {
             this->gear_number += 1;
             gear_number_change = true;
-        } else if(engine_rpm <= this->RPM_to_decrease_gear_number && this->gear_number != 1)
+        } else if(engine_rpm <= gearbox_constants::RPM_to_decrease_gear_number && this->gear_number != 1)
         {
             this->gear_number -= 1;
             gear_number_change = true;

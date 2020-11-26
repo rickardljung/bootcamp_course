@@ -5,12 +5,9 @@ include_directories(include ../utils/include)
 add_executable(drivetrain
                     src/main.cpp
                     src/gearbox_simulator.cpp
-                    src/engine_simulator.cpp
+                    src/engine_simulator.cpp)
 
-                    ../utils/src/can_buffer.cpp
-                    ../utils/src/can_io_thread.cpp
-                    ../utils/src/socketcan.cpp)
-target_link_libraries(drivetrain PUBLIC pthread)
+target_link_libraries(drivetrain PUBLIC pthread can_lib)
 
 add_subdirectory(test)
 
