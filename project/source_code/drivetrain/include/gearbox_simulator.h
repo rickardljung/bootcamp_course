@@ -14,12 +14,9 @@ namespace gearbox_constants
 class Gearbox {
     private:
         const float *gear_ratio;
-        uint8_t gear_lever_position;
-        uint8_t gear_number;
+        uint8_t gear_lever_position = P;
+        uint8_t gear_number = 1;
         uint8_t max_gear_number;
-
-
-
     public:
         Gearbox() = default;
         void initialize(const float gear_ratio[], const uint8_t &gear_ratio_size);

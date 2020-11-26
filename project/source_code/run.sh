@@ -12,7 +12,7 @@ function usage
     "Script $SCRIPT that enables only executing simulation or rebuilding it and then executing."
     "Programs are executed in separate terminal tabs and after execution is terminated they"
     "wait for any user input to be closed."
-    "" 
+    ""
     "Usage: bash $SCRIPT [options]"
     ""
     "Options:"
@@ -21,6 +21,8 @@ function usage
     "  --build,   -b  Rebuild old version"
     "  --run,     -r  Run without rebuild"
     "  --doxygen, -d  Run doxygen script execution, checks if installed, if no then it does it for you"
+    "  --check,   -c  Run cppcheck --enable=all"
+    "  --test,    -t  Run unit tests"
   )
   printf "%s\n" "${txt[@]}"
 }
@@ -38,7 +40,7 @@ function badUsage
   [[ $message ]] && printf "$message\n"
 
   printf "%s\n" "${txt[@]}"
-  printf "\n" 
+  printf "\n"
   usage
 
 }
@@ -49,7 +51,7 @@ function version
     "$SCRIPT version $VERSION"
   )
   printf "%s\n" "${txt[@]}"
-  
+
 }
 
 function build
@@ -62,20 +64,25 @@ function build
   if [ -d "build" ]; then
     rm -rf build
   fi
+
+  #fetch submodules like the google test repo
+  git submodule init
+  git submodule update
+
   mkdir build
   cd build
   cmake ..
   make
-  if [ "$?" -eq 0 ] 
+  if [ "$?" -eq 0 ]
   then
     echo "make succeeded"
     run
-  else 
+  else
     echo "make failed"
     echo "Check log for errors in code"
   fi
 
-  
+
 }
 
 function run
@@ -88,8 +95,18 @@ function run
   gnome-terminal --geometry=260x25-0+0 --tab --title="input_handler" -e "bash -c './input_handler/input_handler; read -n1'" \
                                        --tab --title="drivetrain" -e "bash -c './drivetrain/drivetrain; read -n1' " \
                                        --tab --title="output_handler" -e "bash -c './output_handler/output_handler; read -n1' "
-  
+  ./utils/output_panel/app/avic/avic -c "vcan0"
 }
+
+function cppcheck
+{
+  local txt=(
+    "Running cppcheck"
+  )
+  printf "%s\n" "${txt[@]}"
+  bash -c 'cppcheck --enable=all -I drivetrain/include/ -I utils/include -I input_handler/include drivetrain/src/ utils/src input_handler/src/'
+}
+
 
 function doxygen
 {
@@ -114,13 +131,23 @@ function doxygen
   echo Checking for $REQUIRED_PKG: $PKG_OK
   if [ "" = "$PKG_OK" ]; then
     echo "No $REQUIRED_PKG. Setting up $REQUIRED_PKG."
-    sudo apt-get --yes install $REQUIRED_PKG 
+    sudo apt-get --yes install $REQUIRED_PKG
   fi
 
-  gnome-terminal --geometry=260x25-0+0 --tab --title="input_handler" -e "bash -c 'doxygen'" 
+  gnome-terminal --geometry=260x25-0+0 --tab --title="input_handler" -e "bash -c 'doxygen'"
 
   firefox html/index.html
 
+}
+
+function test
+{
+  local txt=(
+    "Executing unit tests"
+  )
+  printf "%s\n" "${txt[@]}"
+
+  ./build/drivetrain/test/engine_test
 }
 
 while (( $# ))
@@ -146,7 +173,14 @@ do
           doxygen
           exit 0
       ;;
-
+      --check | -c)
+          cppcheck
+          exit 0
+      ;;
+      --test | -t)
+          test
+          exit 0
+      ;;
       *)
         badUsage #"Option/command not recognized"
         exit 1

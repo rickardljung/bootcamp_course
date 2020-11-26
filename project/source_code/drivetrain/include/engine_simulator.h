@@ -13,8 +13,8 @@ namespace eng_rpm
 
 class Engine {
     private:
-        bool eng_sts;
-        float eng_rpm;
+        bool eng_sts = false;
+        float eng_rpm = 0;
         uint16_t eng_hp;
         uint16_t eng_max_rpm;
     public:
