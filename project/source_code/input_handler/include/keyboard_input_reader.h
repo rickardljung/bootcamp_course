@@ -52,7 +52,7 @@ class InputReader{
         void Acceleration();
         void LeftBlinkerLight();
         void RightBlinkerLight();
-        void display_misc(){std::cout << std::bitset<1>(user_misc_input.hand_brake) << std::endl;} // remove
+        void display_misc(){std::cout << std::bitset<8>(user_misc_input.hand_brake) << std::endl;} // remove
     private:
         int s;
         P& canbuffer;
@@ -114,6 +114,7 @@ bool InputReader<P>::Run()
     {
         return_val = InterpretInput();
         canbuffer.Add(msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), msg_len);
+        canbuffer.Add(misc_msg_id, reinterpret_cast<uint8_t*>(&user_misc_input), misc_msg_len);
         
       //  std::this_thread::sleep_for(std::chrono::microseconds(200));
         // uint8_t *misc = reinterpret_cast<uint8_t*>(&user_misc_input);

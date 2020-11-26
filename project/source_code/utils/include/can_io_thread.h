@@ -79,9 +79,10 @@ void CanIOThread<P>::Run(std::future<void> *future, uint8_t *receive_message_id,
 
         if(!candata_tx.empty()) //do not transmit until data is added to the tranmit buffer. 0 as init
         {
-            for(int i = 0; i<candata_tx.size(); i++)
+            //for(int i = 0; i<candata_tx.size(); i++)
+            for(auto const& x : candata_tx)
             {
-                this->socket->write(candata_tx[i].payload, candata_tx[i].id, candata_tx[i].length);
+                this->socket->write(x.second.payload, x.second.id, x.second.length);
             }
         }
 
