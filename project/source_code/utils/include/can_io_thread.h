@@ -20,7 +20,7 @@ class CanIOThread {
         std::unordered_map<int, CanData> candata_tx;
     public:
         CanIOThread(scpp::SocketCan *socket,  std::future<void> *future, uint8_t *receive_message_id,
-                    const size_t &receive_message_id_size, P& canbuffer);
+                    const size_t &receive_message_id_size, P& _canbuffer);
         ~CanIOThread();
         scpp::SocketCan * get_socket();
         P& canbuffer_tx;
@@ -36,7 +36,7 @@ class CanIOThread {
 */
 template <typename P>
 CanIOThread<P>::CanIOThread(scpp::SocketCan *_socket, std::future<void> *future, uint8_t *receive_message_id,
-                         const size_t &receive_message_id_size, P& canbuffer_tx, P& canbuffer_tx)
+                         const size_t &receive_message_id_size, P& _canbuffer)
                          : socket(_socket),
                            canbuffer_tx(_canbuffer),
                            canbuffer_rx(_canbuffer),
@@ -76,9 +76,10 @@ void CanIOThread<P>::Run(std::future<void> *future, uint8_t *receive_message_id,
         //if (!CanBuffer::GetInstance().TransmitBufferEmpty())
         //TODO: might not work with ringbuffer
         candata_tx = canbuffer_tx.Pull();
-        if(transmit_data.id != 0) //do not transmit until data is added to the tranmit buffer. 0 as init
+
+        if(!candata_tx.empty()) //do not transmit until data is added to the tranmit buffer. 0 as init
         {
-            for(int i = 0, i<candata_tx.size(), i++)
+            for(int i = 0; i<candata_tx.size(); i++)
             {
                 this->socket->write(candata_tx[i].payload, candata_tx[i].id, candata_tx[i].length);
             }
