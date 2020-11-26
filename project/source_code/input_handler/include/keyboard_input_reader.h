@@ -6,6 +6,7 @@
 
 #include <mutex>
 #include <thread>
+#include <bitset>
 #include <cstring>
 #include <iostream>
 #include <X11/Xlib.h>
@@ -51,6 +52,7 @@ class InputReader{
         void Acceleration();
         void LeftBlinkerLight();
         void RightBlinkerLight();
+        void display_misc(){std::cout << std::bitset<1>(user_misc_input.hand_brake) << std::endl;} // remove
     private:
         int s;
         P& canbuffer;
@@ -75,6 +77,7 @@ InputReader<P>::InputReader(P& _canbuffer) : canbuffer(_canbuffer)
     std::memset(&user_misc_input,0,sizeof(UserInput));
     /*add empty frame to the CAN buffer*/
     canbuffer.Add(msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), msg_len);
+    canbuffer.Add(misc_msg_id, reinterpret_cast<uint8_t*>(&user_misc_input), misc_msg_len);
     /* open connection with the server */
     display = XOpenDisplay(NULL);
     if (display == NULL)
@@ -271,6 +274,8 @@ template <typename P>
 void InputReader<P>::Handbrake()
 {
     user_misc_input.hand_brake = ~user_misc_input.hand_brake;
+    std::cout << "Handbrake: " << std::endl;
+    InputReader::display_misc();
 }
 /*!
 	* Toggles the ignition request, stores it in temp_user_input.
