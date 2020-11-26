@@ -1,8 +1,37 @@
-#include "can_io_thread.h"
-
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include <functional>
+
+#include "can_io_thread.h"
+
+using CANidFunction = std::function<bool(uint8_t*)>;
+using CANidActions = std::unordered_map<uint32_t, CANidFunction>;
+
+bool CANid1(uint8_t *payload)
+{
+    bool return_val = 1;
+    UserInput *input = reinterpret_cast<UserInput*>(payload);
+    std::cout << "=============== ID = 1 ===============" << std::endl;
+    std::cout << "Acc: " << static_cast<int>(input->accelerator_pedal) << std::endl;
+    std::cout << "Brake: " << static_cast<int>(input->brake_pedal) << std::endl;
+    std::cout << "---------------------------------" << std::endl;
+
+    if (input->end_simulation) {
+        return_val = 0;
+    }
+    return return_val;
+}
+
+bool CANid2(uint8_t *payload)
+{
+    std::cout << "=============== ID = 2 ===============" << std::endl;
+    std::cout << "EngSts: " << static_cast<int>(payload[0]) << std::endl;
+    std::cout << "RPM: " << static_cast<int>(payload[1] * (int)37) << std::endl;
+    std::cout << "---------------------------------" << std::endl;
+
+    return 0;
+}
 
 int main(){
 
@@ -21,6 +50,10 @@ int main(){
         //starts new thread handling input and output on CAN. Uses can_buffer
         CanIOThread<CanBuffer> io_thread(&socket, &future, receive_message_id, receive_message_id_size, canbuffer);
 
+        CANidActions can_actions;
+        can_actions[1] = CANid1;
+        can_actions[2] = CANid2;
+
         bool simulation_running = true;
         while (simulation_running) {
             std::this_thread::sleep_for(std::chrono::microseconds(5));
@@ -29,26 +62,7 @@ int main(){
             for (auto const &element : candata_map)
             {
                 CanData can = element.second;
-                if (can.id == 1)
-                {
-                    UserInput *input = reinterpret_cast<UserInput*>(can.payload);
-                    std::cout << "=============== ID = 1 ===============" << std::endl;
-                    std::cout << "Acc: " << static_cast<int>(input->accelerator_pedal) << std::endl;
-                    std::cout << "Brake: " << static_cast<int>(input->brake_pedal * (int)37) << std::endl;
-                    std::cout << "---------------------------------" << std::endl;
-
-                    if (input->end_simulation) {
-                        simulation_running = false;
-                        break;
-                    }
-                }
-                if (can.id == 2)
-                {
-                    std::cout << "=============== ID = 2 ===============" << std::endl;
-                    std::cout << "EngSts: " << static_cast<int>(can.payload[0]) << std::endl;
-                    std::cout << "RPM: " << static_cast<int>(can.payload[1] * (int)37) << std::endl;
-                    std::cout << "---------------------------------" << std::endl;
-                }
+                simulation_running = can_actions[can.id](can.payload);
             }
         }
         promise.set_value();
