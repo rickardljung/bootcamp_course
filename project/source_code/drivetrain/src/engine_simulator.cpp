@@ -1,7 +1,4 @@
-#include <iostream>
 #include "engine_simulator.h"
-#include "user_input.h"
-
 
 /*!
 	* Initializes Engine, sets horsepower and max rpm.
@@ -23,11 +20,13 @@ void Engine::initialize(const uint16_t &hp, const uint16_t &max_rpm)
 */
 void Engine::Ignition(const bool &ign_req, const uint8_t &speed, const uint8_t &brk_pedal, const uint8_t &gear_position)
 {
-    if(ign_req && !this->eng_sts && (speed > 0 || brk_pedal > 0) && (gear_position == P || gear_position == N))
+    if(ign_req && !this->eng_sts && (speed > 0 || brk_pedal > 0) &&
+        (gear_position == gear_lever_position::P || gear_position == gear_lever_position::N))
     {
         this->eng_sts = true;
     }
-    else if(!ign_req && this->eng_sts && speed == 0 && (gear_position == P || gear_position == N))
+    else if(!ign_req && this->eng_sts && speed == 0 &&
+            (gear_position == gear_lever_position::P || gear_position == gear_lever_position::N))
     {
         this->eng_sts = false;
     }
@@ -45,17 +44,17 @@ void Engine::RPM(const uint8_t &acc_pedal, const uint8_t &brk_pedal, const uint1
         //if RPM = 0 (engine was just started), set idle RPM
         if(this->eng_rpm == 0)
         {
-            this->eng_rpm = eng_idle_rpm;
+            this->eng_rpm = eng_rpm::idle;
         }
         //if acc pedal is pressed and brake is not, increase rpm based on how much it is pressed
         if(acc_pedal > 0 && brk_pedal == 0)
         {
-            this->eng_rpm+= acc_pedal*this->eng_hp*sampletime*rpm_simulation_constant;
+            this->eng_rpm+= acc_pedal*this->eng_hp*sampletime*eng_rpm::simulation_constant;
         }
         //if RPM is max decrease RPM by rpm_max_dec
         if(this->eng_rpm > this->eng_max_rpm)
         {
-            this->eng_rpm -= this->rpm_max_dec;
+            this->eng_rpm -= eng_rpm::maximum_decrease;
         }
     }
     //if engine is off set 0 rpm
@@ -78,19 +77,15 @@ void Engine::ActualRPM(const float &speed, const float &speed_to_rpm_factor)
         this->eng_rpm = speed/speed_to_rpm_factor;
 
         //if RPM is below idle set idle
-        if(this->eng_rpm < this->eng_min_rpm)
+        if(this->eng_rpm < eng_rpm::minimum)
         {
-            this->eng_rpm = this->eng_idle_rpm;
+            this->eng_rpm = eng_rpm::idle;
         }
     }
     else
     {
         this->eng_rpm = 0;
     }
-
-
-    //check if rpm is high enough to shift gear in here or gearbox?
-
 }
 
 /*!
