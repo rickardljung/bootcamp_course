@@ -21,7 +21,6 @@ CanIOThread::CanIOThread(scpp::SocketCan *_socket, std::future<void> *future, ui
 */
 void CanIOThread::Run(std::future<void> *future, uint8_t *receive_message_id, const size_t &receive_message_id_size)
 {
-    size_t i = 0;
     std::future_status future_status;
     do
     {

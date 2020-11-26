@@ -20,7 +20,7 @@ TEST(engine_simulator, Ignition_off)
 
 TEST(engine_simulator, Ignition_on)
 {
-    engine.Ignition(true, 0, 100, P);
+    engine.Ignition(true, 0, 100, gear_lever_position::P);
     GTEST_ASSERT_EQ(engine.get_eng_sts(), true);
 }
 

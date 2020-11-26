@@ -72,7 +72,6 @@ bool Vehicle<T>::Run()
     uint8_t payload[vehicle_msg::length];
     std::memset(&payload, 0, vehicle_msg::length);
     bool return_value = 1;
-    float rpm_to_speed_factor;
 
 
     CanData data =  CanBuffer::GetInstance().PullRx();
@@ -83,6 +82,8 @@ bool Vehicle<T>::Run()
             return_value = 0;
         } else
         {
+            float rpm_to_speed_factor;
+
             this->engine.Ignition(input->ignition, this->vehicle_speed, input->brake_pedal, this->gearbox.get_gear_lever_position());
             this->engine.RPM(input->accelerator_pedal, input->brake_pedal, sampletime_micro);
             this->gearbox.GearLeverPosition(input->gear_position, this->vehicle_speed, input->brake_pedal);
