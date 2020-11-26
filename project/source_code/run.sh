@@ -92,9 +92,9 @@ function run
   )
   printf "%s\n" "${txt[@]}"
   cd build
-  gnome-terminal --geometry=260x25-0+0 --tab --title="input_handler" -e "bash -c './input_handler/input_handler; read -n1'" \
-                                       --tab --title="drivetrain" -e "bash -c './drivetrain/drivetrain; read -n1' " \
-                                       --tab --title="output_handler" -e "bash -c './output_handler/output_handler; read -n1' "
+  gnome-terminal --geometry=260x25-0+0 --tab --title="input_handler" -e "bash -c './input_handler/input_handler vcan0; read -n1'" \
+                                       --tab --title="drivetrain" -e "bash -c './drivetrain/drivetrain vcan0; read -n1' " \
+                                       --tab --title="output_handler" -e "bash -c './output_handler/output_handler vcan0; read -n1' "
   ./utils/output_panel/app/avic/avic -c "vcan0"
 }
 

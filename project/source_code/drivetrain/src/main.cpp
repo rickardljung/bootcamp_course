@@ -2,12 +2,12 @@
 #include "vehicle.h"
 #include "can_io_thread.h"
 
-int main()
+int main(int argc, char *argv[])
 {
     bool return_value = 0;
 
     scpp::SocketCan socket;
-    auto result = socket.open("vcan0");
+    auto result = socket.open(argv[1]);
     if (result == scpp::STATUS_OK)
     {
         std::promise<void> promise;
@@ -16,7 +16,7 @@ int main()
         size_t receive_message_id_size = 1;
         //starts new thread handling input and output on CAN. Uses can_buffer
         CanIOThread io_thread(&socket, &future, receive_message_id, receive_message_id_size);
-        Vehicle<VolvoXC60> vehicle;
+        myVolvoXC60 vehicle;
 
         int i = 0;
         while (vehicle.Run())

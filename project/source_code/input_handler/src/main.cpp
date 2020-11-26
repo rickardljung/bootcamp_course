@@ -9,18 +9,18 @@
 #include "can_io_thread.h"
 #include "can_buffer.h"
 
-int main(){
+int main(int argc, char *argv[]){
     int returnval = 0;
     //initiate vcan0
     scpp::SocketCan socket;
-    auto result = socket.open("vcan0");
+    auto result = socket.open(argv[1]);
     if(result != scpp::STATUS_OK){
         std::cout << "Failed to open socket: " << result <<std::endl;
         returnval = 1;
     }
     else
     {
-    
+
     std::promise<void> promise;
     std::future<void> future = promise.get_future();
 
@@ -28,8 +28,8 @@ int main(){
     InputReader input_reader;
 
     //spawn a thread transmitting CAN messages
-    CanIOThread io_thread(&socket, &future, 0, 0);
-    
+    CanIOThread io_thread(&socket, &future, nullptr, 0);
+
     while(input_reader.Run());
 
     //make sure end simulation is sent in CAN frame before exiting
