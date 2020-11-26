@@ -1,6 +1,7 @@
 #include <iostream>
-#include "engine_simulator.h"
 #include "user_input.h"
+#include "engine_simulator.h"
+#include "gearbox_simulator.h"
 
 
 /*!

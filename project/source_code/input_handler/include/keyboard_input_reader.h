@@ -52,7 +52,6 @@ class InputReader{
         void Acceleration();
         void LeftBlinkerLight();
         void RightBlinkerLight();
-        void display_misc(){std::cout << std::bitset<8>(user_misc_input.hand_brake) << std::endl;} // remove
     private:
         int s;
         P& canbuffer;
@@ -114,7 +113,7 @@ bool InputReader<P>::Run()
     {
         return_val = InterpretInput();
         canbuffer.Add(msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), msg_len);
-        canbuffer.Add(misc_msg_id, reinterpret_cast<uint8_t*>(&user_misc_input), misc_msg_len);
+        canbuffer.Add(misc_msg_id, reinterpret_cast<uint8_t*>(&user_misc_input), misc_msg_len); // Can be improved with if statements checking which struct has been updated
         
       //  std::this_thread::sleep_for(std::chrono::microseconds(200));
         // uint8_t *misc = reinterpret_cast<uint8_t*>(&user_misc_input);
@@ -275,8 +274,6 @@ template <typename P>
 void InputReader<P>::Handbrake()
 {
     user_misc_input.hand_brake = ~user_misc_input.hand_brake;
-    std::cout << "Handbrake: " << std::endl;
-    InputReader::display_misc();
 }
 /*!
 	* Toggles the ignition request, stores it in temp_user_input.
