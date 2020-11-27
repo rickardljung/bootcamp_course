@@ -60,7 +60,7 @@ bool CanBuffer::ReceiveBufferEmpty()
 * Check if transmit buffer contains any elements
 * @return TRUE if transmit buffer is empty
 */
-bool CanBuffer::TransmitBufferEmpty()
+/*bool CanBuffer::TransmitBufferEmpty()
 {
     return this->transmit_empty;
-}
+}*/

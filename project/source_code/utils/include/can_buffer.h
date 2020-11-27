@@ -24,7 +24,7 @@ class CanBuffer
         CanData PullTx();
         CanData PullRx();
         bool ReceiveBufferEmpty();
-        bool TransmitBufferEmpty();
+        //bool TransmitBufferEmpty();
     private:
         CanBuffer() {};
         //UserInput received_CanData; //this will be replaced by ringbuffer

@@ -93,18 +93,59 @@ function run
   printf "%s\n" "${txt[@]}"
   cd build
   gnome-terminal --geometry=260x25-0+0 --tab --title="input_handler" -e "bash -c './input_handler/input_handler vcan0; read -n1'" \
-                                       --tab --title="drivetrain" -e "bash -c './drivetrain/drivetrain vcan0; read -n1' " \
-                                       --tab --title="output_handler" -e "bash -c './output_handler/output_handler vcan0; read -n1' "
+                                       --tab --title="drivetrain" -e "bash -c './drivetrain/drivetrain vcan0; read -n1' "
+                                       #--tab --title="output_handler" -e "bash -c './output_handler/output_handler vcan0; read -n1' "
   ./utils/output_panel/app/avic/avic -c "vcan0"
 }
 
-function cppcheck
+function codecheck
 {
   local txt=(
     "Running cppcheck"
   )
   printf "%s\n" "${txt[@]}"
-  bash -c 'cppcheck --enable=all -I drivetrain/include/ -I utils/include -I input_handler/include drivetrain/src/ utils/src input_handler/src/'
+  printf "%s\n"
+  bash -c 'cppcheck --enable=all -I drivetrain/include/ -I utils/include -I input_handler/include \
+            drivetrain/src drivetrain/include utils/src utils/include input_handler/src input_handler/include'
+
+  REQUIRED_PKG="llvm clang clang-tools"
+  PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG|grep "install ok installed")
+  echo "Checking for $REQUIRED_PKG: $PKG_OK"
+  if [ "" = "$PKG_OK" ]; then
+    echo "No $REQUIRED_PKG. Setting up $REQUIRED_PKG."
+    sudo apt-get --yes install $REQUIRED_PKG
+  fi
+  if [ -d "build_codecheck" ]; then
+    rm -rf build_codecheck
+  fi
+  mkdir build_codecheck
+  cd build_codecheck
+  local txt=(
+    "Running Clang Analyzer"
+  )
+  printf "%s\n" "${txt[@]}"
+  printf "%s\n"
+  scan-build cmake ..
+  scan-build -o scanbuild/ make
+
+
+  REQUIRED_PKG="clang-tidy"
+  PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG|grep "install ok installed")
+  echo "Checking for $REQUIRED_PKG: $PKG_OK"
+  if [ "" = "$PKG_OK" ]; then
+    echo "No $REQUIRED_PKG. Setting up $REQUIRED_PKG."
+    sudo apt-get --yes install $REQUIRED_PKG
+  fi
+  local txt=(
+    "Running Clang Tidy"
+  )
+  printf "%s\n" "${txt[@]}"
+  printf "%s\n"
+  cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..
+  clang-tidy -p .  $(find ../drivetrain/src/ -name *.cpp) $(find ../drivetrain/include/ -name *.h) \
+                   $(find ../input_handler/src/ -name *.cpp) $(find ../input_handler/include/ -name *.h) \
+                   $(find ../utils/src/ -name *.cpp) $(find ../utils/include -name *.h) \
+                   --checks=* --export-fixes=fixes.yml >> output.txt
 }
 
 
@@ -174,7 +215,7 @@ do
           exit 0
       ;;
       --check | -c)
-          cppcheck
+          codecheck
           exit 0
       ;;
       --test | -t)
