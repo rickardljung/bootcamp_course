@@ -4,6 +4,8 @@ https://github.com/rickardljung/bootcamp_course
 For demo applications see:
 https://github.com/mrashidz/CXX_Course_Demo
 
+For engine and gearbox simulator project information see project folder.
+
 OTHER LINKS:
 Tutorial:
 http://www.cplusplus.com/doc/tutorial/
