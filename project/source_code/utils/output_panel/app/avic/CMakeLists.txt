@@ -1,6 +1,7 @@
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+cmake_minimum_required(VERSION 3.5.1)
 
 
 find_package(Qt5 COMPONENTS Core Gui QuickControls2 QuickWidgets REQUIRED)
@@ -20,7 +21,6 @@ include_directories(include
                     include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
                     ${QTAPPFW_INCLUDE_DIRS})
 target_link_libraries(avic
-    
     Qt5::Core
     Qt5::QuickControls2
     Qt5::QuickWidgets

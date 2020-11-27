@@ -1,17 +1,21 @@
 #ifndef VEHICLE_H
 #define VEHICLE_H
 
-#include "user_input.h"
-#include "can_buffer.h"
-#include "engine_simulator.h"
-#include "gearbox_simulator.h"
-
+#include <iostream>
 #include <thread>
 #include <math.h>
-#include <iostream>
+#include <cstring>
+#include "engine_simulator.h"
+#include "gearbox_simulator.h"
+#include "user_input.h"
+#include "can_buffer.h"
 
-const uint32_t transmit_id = 2;
-const uint8_t transmit_length = 5;
+namespace vehicle_msg
+{
+    const uint32_t id = 2;
+    const uint8_t length = 5;
+}
+
 const uint16_t sampletime_micro = 5;
 
 typedef struct xc60_struct {
@@ -72,21 +76,22 @@ template <typename T, typename P>
 bool Vehicle<T, P>::Run()
 {
     //payload to be sent in canframe
-    uint8_t payload[8] = {0,0,0,0,0,0,0,0};
+    uint8_t payload[vehicle_msg::length];
+    std::memset(&payload, 0, vehicle_msg::length);
     bool return_value = 1;
-    float rpm_to_speed_factor;
 
     candata_rx = canbuffer_rx.Pull();
     if (candata_rx[1].id == 1) //can data from input_handler
     {
         UserInput *input = reinterpret_cast<UserInput*>(candata_rx[1].payload);
         if (input->end_simulation) {
-            std::cout << "END SIMULATION" << std::endl;
             return_value = 0;
         } else
         {
             this->engine.Ignition(input->ignition, this->vehicle_speed, input->brake_pedal,
                                   this->gearbox.get_gear_lever_position());
+            float rpm_to_speed_factor;
+
             this->engine.RPM(input->accelerator_pedal, input->brake_pedal, sampletime_micro);
             this->gearbox.GearLeverPosition(input->gear_position, this->vehicle_speed, input->brake_pedal);
             // if gear number has changed recalc factor and RPM
@@ -107,13 +112,12 @@ bool Vehicle<T, P>::Run()
             // std::cout << "Gear number: " << (int)this->gearbox.get_gear_number() << std::endl;
             // std::cout << "Speed: " << this->vehicle_speed << std::endl << std::endl;
 
-
             payload[0] = static_cast<uint8_t>(this->engine.get_eng_sts());
             payload[1] = static_cast<uint8_t>(this->engine.get_eng_rpm()/37);
             payload[2] = static_cast<uint8_t>(vehicle_speed);
             payload[3] = this->gearbox.get_gear_lever_position();
             payload[4] = this->gearbox.get_gear_number();
-            canbuffer_tx.Add(transmit_id, payload, transmit_length);
+            canbuffer_tx.Add(vehicle_msg::id, payload, vehicle_msg::length);
             return_value = 1;
         }
     }
@@ -174,7 +178,8 @@ inline float Vehicle<T, P>::RPMToSpeedFactor()
 template <typename T, typename P>
 void Vehicle<T, P>::VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_speed)
 {
-    if(this->gearbox.get_gear_lever_position() == D||this->gearbox.get_gear_lever_position() == R)
+    if(this->gearbox.get_gear_lever_position() == gear_lever_position::D ||
+        this->gearbox.get_gear_lever_position() == gear_lever_position::R)
     {
 
         this->vehicle_speed = ((this->engine.get_eng_rpm())*rpm_to_speed)-
@@ -186,5 +191,8 @@ void Vehicle<T, P>::VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_s
         }
     }
 }
+
+typedef Vehicle<VolvoXC60, CanBuffer>myVolvoXC60;
+typedef Vehicle<VolvoV90, CanBuffer> myVolvoV90;
 
 #endif

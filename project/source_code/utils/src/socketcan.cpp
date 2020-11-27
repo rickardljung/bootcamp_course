@@ -46,9 +46,9 @@ SocketCanStatus SocketCan::open(const char *can_interface) {
     addr.can_family = AF_CAN;
     addr.can_ifindex = ifr.ifr_ifindex;
 
-    struct timeval tv;
-    tv.tv_sec = 0;  /* 30 Secs Timeout */
-//    tv.tv_usec = m_read_timeout_ms * 1000;  // Not init'ing this can cause strange errors
+    //struct timeval tv;
+    //tv.tv_sec = 0;  /* 30 Secs Timeout */
+    //tv.tv_usec = m_read_timeout_ms * 1000;  // Not init'ing this can cause strange errors
     int optval = 7;
 
     if (!SetSocketBlockingEnabled(m_socket,false)) {

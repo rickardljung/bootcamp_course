@@ -11,29 +11,25 @@
 #include <iostream>
 #include <X11/Xlib.h>
 
-const unsigned int key_escape = 9;
-const unsigned int key_r = 27;
-const unsigned int key_p = 33;
-const unsigned int key_d = 40;
-const unsigned int key_n = 57;
 const unsigned int key_h = 43;
 const unsigned int key_a = 38;
 const unsigned int key_blinker_left = 59;
 const unsigned int key_blinker_right = 60;
-const unsigned int key_up = 111;
-const unsigned int key_down = 116;
-const unsigned int key_left = 113;
-const unsigned int key_right = 114;
-const unsigned int key_space = 65;
-const unsigned int acc_inc = 10;
-const unsigned int acc_dec = 10;
-const unsigned int acc_max = 100;
-const unsigned int acc_min = 0;
-const unsigned int brk_inc = 20;
-const unsigned int brk_dec = 20;
-const unsigned int brk_max = 100;
-const unsigned int brk_min = 0;
 
+
+namespace key
+{
+    const uint8_t escape = 9;
+    const uint8_t r = 27;
+    const uint8_t p = 33;
+    const uint8_t d = 40;
+    const uint8_t n = 57;
+    const uint8_t up = 111;
+    const uint8_t down = 116;
+    const uint8_t left = 113;
+    const uint8_t right = 114;
+    const uint8_t space = 65;
+}
 
 template <typename P>
 class InputReader{
@@ -75,7 +71,7 @@ InputReader<P>::InputReader(P& _canbuffer) : canbuffer(_canbuffer)
     /* initialize user_misc_input with 0*/
     std::memset(&user_misc_input,0,sizeof(UserInput));
     /*add empty frame to the CAN buffer*/
-    canbuffer.Add(msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), msg_len);
+    canbuffer.Add(user_input::msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), user_input::msg_len);
     canbuffer.Add(misc_msg_id, reinterpret_cast<uint8_t*>(&user_misc_input), misc_msg_len);
     /* open connection with the server */
     display = XOpenDisplay(NULL);
@@ -112,9 +108,9 @@ bool InputReader<P>::Run()
     if(ReadInputs())
     {
         return_val = InterpretInput();
-        canbuffer.Add(msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), msg_len);
+        canbuffer.Add(user_input::msg_id, reinterpret_cast<uint8_t*>(&temp_user_input), user_input::msg_len);
         canbuffer.Add(misc_msg_id, reinterpret_cast<uint8_t*>(&user_misc_input), misc_msg_len); // Can be improved with if statements checking which struct has been updated
-        
+
       //  std::this_thread::sleep_for(std::chrono::microseconds(200));
         // uint8_t *misc = reinterpret_cast<uint8_t*>(&user_misc_input);
       //  CanBuffer::GetInstance().AddTx(&misc_msg_id, reinterpret_cast<uint8_t*>(&user_misc_input), &misc_msg_len);
@@ -156,24 +152,24 @@ template <typename P>
 bool InputReader<P>::InterpretInput()
 {
     bool return_val = true;
-    if(event.xkey.keycode == key_up || event.xkey.keycode == key_down)
+    if(event.xkey.keycode == key::up || event.xkey.keycode == key::down)
     {
         Acceleration();
     }
-    else if(event.xkey.keycode == key_left || event.xkey.keycode == key_right)
+    else if(event.xkey.keycode == key::left || event.xkey.keycode == key::right)
     {
         Braking();
     }
-    else if(event.xkey.keycode == key_p || event.xkey.keycode == key_n ||
-             event.xkey.keycode == key_d || event.xkey.keycode == key_r)
+    else if(event.xkey.keycode == key::p || event.xkey.keycode == key::n ||
+             event.xkey.keycode == key::d || event.xkey.keycode == key::r)
     {
         GearPosReq();
     }
-    else if(event.xkey.keycode == key_space)
+    else if(event.xkey.keycode == key::space)
     {
         IgnitionReq();
     }
-    else if(event.xkey.keycode == key_escape)
+    else if(event.xkey.keycode == key::escape)
     {
         return_val = EndSimulation();
     }
@@ -202,18 +198,18 @@ bool InputReader<P>::InterpretInput()
 template <typename P>
 void InputReader<P>::Acceleration()
 {
-    if(event.xkey.keycode == key_up)
+    if(event.xkey.keycode == key::up)
     {
-        if(temp_user_input.accelerator_pedal < acc_max)
+        if(temp_user_input.accelerator_pedal < user_input::acceleration::max)
         {
-            temp_user_input.accelerator_pedal+=acc_inc;
+            temp_user_input.accelerator_pedal+=user_input::acceleration::increase;
         }
     }
-    else if(event.xkey.keycode == key_down)
+    else if(event.xkey.keycode == key::down)
     {
-        if(temp_user_input.accelerator_pedal > acc_min)
+        if(temp_user_input.accelerator_pedal > user_input::acceleration::min)
         {
-            temp_user_input.accelerator_pedal-=acc_dec;
+            temp_user_input.accelerator_pedal-= user_input::acceleration::decrease;
         }
     }
 }
@@ -224,18 +220,18 @@ void InputReader<P>::Acceleration()
 template <typename P>
 void InputReader<P>::Braking()
 {
-    if(event.xkey.keycode == key_left) //user pressing brake pedal
+    if(event.xkey.keycode == key::left) //user pressing brake pedal
     {
-        if(temp_user_input.brake_pedal < brk_max)
+        if(temp_user_input.brake_pedal < user_input::braking::max)
         {
-            temp_user_input.brake_pedal+=20;
+            temp_user_input.brake_pedal+= user_input::braking::increase;
         }
     }
-    else if(event.xkey.keycode == key_right) //user releasing brake pedal
+    else if(event.xkey.keycode == key::right) //user releasing brake pedal
     {
-        if(temp_user_input.brake_pedal > brk_min)
+        if(temp_user_input.brake_pedal > user_input::braking::min)
         {
-            temp_user_input.brake_pedal-=20;
+            temp_user_input.brake_pedal-= user_input::braking::decrease;
         }
     }
 }
@@ -282,13 +278,13 @@ void InputReader<P>::Handbrake()
 template <typename P>
 void InputReader<P>::IgnitionReq()
 {
-    if(temp_user_input.ignition == ignition_on)
+    if(temp_user_input.ignition == user_input::ignition_on)
     {
-        temp_user_input.ignition = ignition_off;
+        temp_user_input.ignition = user_input::ignition_off;
     }
     else
     {
-        temp_user_input.ignition = ignition_on;
+        temp_user_input.ignition = user_input::ignition_on;
     }
 }
 /*!
@@ -298,21 +294,21 @@ void InputReader<P>::IgnitionReq()
 template <typename Y>
 void InputReader<Y>::GearPosReq()
 {
-    if(event.xkey.keycode == key_p)
+    if(event.xkey.keycode == key::p)
     {
-        temp_user_input.gear_position = P;
+        temp_user_input.gear_position = gear_lever_position::P;
     }
-    else if(event.xkey.keycode == key_n)
+    else if(event.xkey.keycode == key::n)
     {
-        temp_user_input.gear_position = N;
+        temp_user_input.gear_position = gear_lever_position::N;
     }
-    else if(event.xkey.keycode == key_d)
+    else if(event.xkey.keycode == key::d)
     {
-        temp_user_input.gear_position = D;
+        temp_user_input.gear_position = gear_lever_position::D;
     }
-    else if(event.xkey.keycode == key_r)
+    else if(event.xkey.keycode == key::r)
     {
-        temp_user_input.gear_position = R;
+        temp_user_input.gear_position = gear_lever_position::R;
     }
 }
 /*!
@@ -322,7 +318,7 @@ void InputReader<Y>::GearPosReq()
 template <typename P>
 bool InputReader<P>::EndSimulation()
 {
-    temp_user_input.end_simulation = end;
+    temp_user_input.end_simulation = user_input::end_simulation;
     return false;
 }
 

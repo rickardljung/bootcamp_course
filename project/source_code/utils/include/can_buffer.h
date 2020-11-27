@@ -22,7 +22,7 @@ class CanBuffer
         void Add(const uint32_t& id, uint8_t payload[],const uint8_t& length);
         std::unordered_map<int, CanData> Pull();
         bool GotNewInput(void);
-    private:    
+    private:
         bool gotnewinput = 0;
         std::mutex buffer_mutex;
         std::unordered_map<int, CanData> candata;

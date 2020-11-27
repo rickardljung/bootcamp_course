@@ -33,12 +33,12 @@ bool CANid2(uint8_t *payload)
     return true;
 }
 
-int main(){
+int main(int argc, char *argv[]){
 
     bool return_value = 0;
 
     scpp::SocketCan socket;
-    auto result = socket.open("vcan0");
+    auto result = socket.open(argv[1]);
 
     if (result == scpp::STATUS_OK)
     {

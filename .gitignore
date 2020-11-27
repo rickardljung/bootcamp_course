@@ -3,8 +3,9 @@ notes
 *.out
 *.vscode
 *.gch
-build
+build*
 *.so
 *.o
 html
 latex
+
