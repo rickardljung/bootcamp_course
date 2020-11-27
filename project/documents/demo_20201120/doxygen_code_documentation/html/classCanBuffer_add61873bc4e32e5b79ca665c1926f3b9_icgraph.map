@@ -1,9 +1,0 @@
-<map id="CanBuffer::GetInstance" name="CanBuffer::GetInstance">
-<area shape="rect" id="node2" href="$drivetrain_2src_2main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="501,9,552,35"/>
-<area shape="rect" id="node3" href="$classVehicle.html#a407e09d1ff69f43d3c4aa77f4f32a51c" title="Vehicle::Run" alt="" coords="251,34,348,61"/>
-<area shape="rect" id="node4" href="$classInputReader.html#a258e1e58806e172a4339bb2aec9a85f0" title="InputReader::Run" alt="" coords="237,85,362,111"/>
-<area shape="rect" id="node6" href="$classInputReader.html#ae7d7eaec9edd0b8a5e6c5870f23070c3" title="InputReader::InputReader" alt="" coords="213,135,385,162"/>
-<area shape="rect" id="node7" href="$classCanIOThread.html#a1dfe981584e3e558df59211571ac9860" title="CanIOThread::Run" alt="" coords="233,186,365,213"/>
-<area shape="rect" id="node5" href="$input__handler_2src_2main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="501,85,552,111"/>
-<area shape="rect" id="node8" href="$classCanIOThread.html#a5ab76331e5bd6ce26fcad85e8bd5d9f4" title="CanIOThread::CanIOThread" alt="" coords="433,186,620,213"/>
-</map>

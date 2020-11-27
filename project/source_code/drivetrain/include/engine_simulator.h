@@ -1,6 +1,6 @@
 #ifndef ENGINE_SIMULATOR_H
 #define ENGINE_SIMULATOR_H
-#include "user_input.h"
+//
 #include <math.h>
 
 namespace eng_rpm

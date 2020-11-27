@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5.1)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-add_library(can_lib SHARED src/can_buffer.cpp src/can_io_thread.cpp src/socketcan.cpp)
+add_library(can_lib SHARED src/can_buffer.cpp src/socketcan.cpp)
 
 target_include_directories(can_lib PUBLIC include)
 

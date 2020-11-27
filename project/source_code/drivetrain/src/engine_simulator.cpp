@@ -1,3 +1,5 @@
+#include <iostream>
+#include "user_input.h"
 #include "engine_simulator.h"
 
 /*!

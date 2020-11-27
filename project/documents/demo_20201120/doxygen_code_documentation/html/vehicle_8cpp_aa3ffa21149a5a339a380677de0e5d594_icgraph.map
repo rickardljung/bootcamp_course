@@ -1,5 +1,0 @@
-<map id="calculate_brake_tq" name="calculate_brake_tq">
-<area shape="rect" id="node2" href="$classVehicle.html#a0967229be7b0b40b3f84c86942e43a52" title="Vehicle::VehicleSpeed" alt="" coords="184,5,337,32"/>
-<area shape="rect" id="node3" href="$classVehicle.html#a407e09d1ff69f43d3c4aa77f4f32a51c" title="Vehicle::Run" alt="" coords="385,5,483,32"/>
-<area shape="rect" id="node4" href="$drivetrain_2src_2main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="531,5,581,32"/>
-</map>

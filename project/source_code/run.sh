@@ -94,7 +94,7 @@ function run
   cd build
   gnome-terminal --geometry=260x25-0+0 --tab --title="input_handler" -e "bash -c './input_handler/input_handler vcan0; read -n1'" \
                                        --tab --title="drivetrain" -e "bash -c './drivetrain/drivetrain vcan0; read -n1' "
-                                       #--tab --title="output_handler" -e "bash -c './output_handler/output_handler vcan0; read -n1' "
+                                       --tab --title="output_handler" -e "bash -c './output_handler/output_handler vcan0; read -n1' "
   ./utils/output_panel/app/avic/avic -c "vcan0"
 }
 
@@ -155,9 +155,7 @@ function doxygen
     "Executing doxygen script"
   )
   printf "%s\n" "${txt[@]}"
-  cd ..
-  cd documents
-  cd doxygen_code_documentation
+  cd utils
   if [ -d "html" ]; then
     echo removing html folder
     rm -rf html
@@ -174,11 +172,9 @@ function doxygen
     echo "No $REQUIRED_PKG. Setting up $REQUIRED_PKG."
     sudo apt-get --yes install $REQUIRED_PKG
   fi
-
-  gnome-terminal --geometry=260x25-0+0 --tab --title="input_handler" -e "bash -c 'doxygen'"
+  gnome-terminal --geometry=260x25-0+0 --tab --title="doxygen" -e "bash -c 'doxygen'"
 
   firefox html/index.html
-
 }
 
 function test

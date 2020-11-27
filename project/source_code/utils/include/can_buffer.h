@@ -2,7 +2,12 @@
 //https://stackoverflow.com/questions/1008019/c-singleton-design-pattern
 #ifndef CAN_BUFFER_H
 #define CAN_BUFFER_H
+#include "can_buffer.h"
 #include "user_input.h"
+
+#include <unordered_map>
+
+const int NBR_TX_FRAMES = 2;
 
 typedef struct CanData_struct{
     uint32_t id = 0;
@@ -13,27 +18,14 @@ typedef struct CanData_struct{
 class CanBuffer
 {
     public:
-        static CanBuffer& GetInstance(){
-            static CanBuffer    instance;
-            return instance;
-        }
-        CanBuffer(CanBuffer const&)       = delete;
-        void operator=(CanBuffer const&)  = delete;
-        void AddTx(const uint32_t *id, uint8_t payload[], const uint8_t *length);
-        void AddRx(const uint32_t *id, uint8_t payload[], const uint8_t *length);
-        CanData PullTx();
-        CanData PullRx();
-        bool ReceiveBufferEmpty();
-        //bool TransmitBufferEmpty();
+        CanBuffer()=default;
+        void Add(const uint32_t& id, uint8_t payload[],const uint8_t& length);
+        std::unordered_map<int, CanData> Pull();
+        bool GotNewInput(void);
     private:
-        CanBuffer() {};
-        //UserInput received_CanData; //this will be replaced by ringbuffer
-        CanData receive_candata;
-        CanData transmit_candata;
-        bool receive_empty = true;
-        bool transmit_empty = true;
-        std::mutex receive_buffer_mutex;
-        std::mutex transmit_buffer_mutex;
+        bool gotnewinput = 0;
+        std::mutex buffer_mutex;
+        std::unordered_map<int, CanData> candata;
 };
 
 #endif

@@ -1,5 +1,7 @@
 #ifndef VEHICLE_H
 #define VEHICLE_H
+
+#include <iostream>
 #include <thread>
 #include <math.h>
 #include <cstring>
@@ -36,7 +38,7 @@ typedef struct v90_struct {
     const uint8_t gear_ratios_size = 7;
 } VolvoV90;
 
-template <typename T>
+template <typename T, typename P>
 class Vehicle {
     private:
         Engine engine;
@@ -44,10 +46,13 @@ class Vehicle {
         float vehicle_speed = 0;
         const T veh_spec;
     public:
-        Vehicle();
+        Vehicle(P& _canbuffer_tx, P& _canbuffer_rx);
         float RPMToSpeedFactor();
         void VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_speed);
         bool Run();
+        P& canbuffer_tx;
+        P& canbuffer_rx;
+        std::unordered_map<int, CanData> candata_rx;
 };
 
 /*!
@@ -55,8 +60,10 @@ class Vehicle {
 * @param gearbox gearbox simulation object
 * @param engine engine simulation object
 */
-template <typename T>
-Vehicle<T>::Vehicle() {
+template <typename T, typename P>
+Vehicle<T, P>::Vehicle(P& _canbuffer_tx, P& _canbuffer_rx) :canbuffer_tx(_canbuffer_tx),
+                                                            canbuffer_rx(_canbuffer_rx)
+{
     engine.initialize(this->veh_spec.engine_horsepower, this->veh_spec.engine_max_rpm);
     gearbox.initialize(this->veh_spec.gear_ratios, this->veh_spec.gear_ratios_size);
 }
@@ -65,29 +72,29 @@ Vehicle<T>::Vehicle() {
 * Pulls a CAN message from the receive buffer, checks the ID of the message and performs actions depending on the message.
 * The output data will be put on the transmit buffer.
 */
-template <typename T>
-bool Vehicle<T>::Run()
+template <typename T, typename P>
+bool Vehicle<T, P>::Run()
 {
     //payload to be sent in canframe
     uint8_t payload[vehicle_msg::length];
     std::memset(&payload, 0, vehicle_msg::length);
     bool return_value = 1;
 
-
-    CanData data =  CanBuffer::GetInstance().PullRx();
-    if (data.id == 1) //can data from input_handler
+    candata_rx = canbuffer_rx.Pull();
+    if (candata_rx[1].id == 1) //can data from input_handler
     {
-        UserInput *input = reinterpret_cast<UserInput*>(data.payload);
+        UserInput *input = reinterpret_cast<UserInput*>(candata_rx[1].payload);
         if (input->end_simulation) {
             return_value = 0;
         } else
         {
+            this->engine.Ignition(input->ignition, this->vehicle_speed, input->brake_pedal,
+                                  this->gearbox.get_gear_lever_position());
             float rpm_to_speed_factor;
 
-            this->engine.Ignition(input->ignition, this->vehicle_speed, input->brake_pedal, this->gearbox.get_gear_lever_position());
             this->engine.RPM(input->accelerator_pedal, input->brake_pedal, sampletime_micro);
             this->gearbox.GearLeverPosition(input->gear_position, this->vehicle_speed, input->brake_pedal);
-            //if gear number has changed recalc factor and RPM
+            // if gear number has changed recalc factor and RPM
             if(this->gearbox.GearNumberChange(this->engine.get_eng_rpm()))
             {
                 rpm_to_speed_factor = this->RPMToSpeedFactor();
@@ -100,18 +107,17 @@ bool Vehicle<T>::Run()
             this->VehicleSpeed(input->brake_pedal, rpm_to_speed_factor);
             engine.ActualRPM(this->vehicle_speed, rpm_to_speed_factor);
 
-            /*std::cout << "RPM: " << this->engine.get_eng_rpm() << std::endl;
-            std::cout << "Gear lever position: " << (int)this->gearbox.get_gear_lever_position() << std::endl;
-            std::cout << "Gear number: " << (int)this->gearbox.get_gear_number() << std::endl;
-            std::cout << "Speed: " << this->vehicle_speed << std::endl << std::endl;*/
-
+            // std::cout << "RPM: " << this->engine.get_eng_rpm() << std::endl;
+            // std::cout << "Gear lever position: " << (int)this->gearbox.get_gear_lever_position() << std::endl;
+            // std::cout << "Gear number: " << (int)this->gearbox.get_gear_number() << std::endl;
+            // std::cout << "Speed: " << this->vehicle_speed << std::endl << std::endl;
 
             payload[0] = static_cast<uint8_t>(this->engine.get_eng_sts());
             payload[1] = static_cast<uint8_t>(this->engine.get_eng_rpm()/37);
             payload[2] = static_cast<uint8_t>(vehicle_speed);
             payload[3] = this->gearbox.get_gear_lever_position();
             payload[4] = this->gearbox.get_gear_number();
-            CanBuffer::GetInstance().AddTx(&vehicle_msg::id, payload, &vehicle_msg::length);
+            canbuffer_tx.Add(vehicle_msg::id, payload, vehicle_msg::length);
             return_value = 1;
         }
     }
@@ -158,8 +164,8 @@ inline float calculate_brake_tq(uint8_t brake_pedal)
 * @param brake_pedal brake pedal position
 * @return calculated constant parapeter that can be used in the engine to
 */
-template <typename T>
-inline float Vehicle<T>::RPMToSpeedFactor()
+template <typename T, typename P>
+inline float Vehicle<T, P>::RPMToSpeedFactor()
 {
     return (((3.6*M_PI*(veh_spec.tire_diameter))/(this->gearbox.get_gear_ratio()*60*(veh_spec.diff_ratio)))*0.621371);
 }
@@ -169,8 +175,8 @@ inline float Vehicle<T>::RPMToSpeedFactor()
 * @param brake_pedal brake pedal position
 * @return calculated constant parapeter that can be used in the engine to
 */
-template <typename T>
-void Vehicle<T>::VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_speed)
+template <typename T, typename P>
+void Vehicle<T, P>::VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_speed)
 {
     if(this->gearbox.get_gear_lever_position() == gear_lever_position::D ||
         this->gearbox.get_gear_lever_position() == gear_lever_position::R)
@@ -186,7 +192,7 @@ void Vehicle<T>::VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_spee
     }
 }
 
-typedef Vehicle<VolvoXC60> myVolvoXC60;
-typedef Vehicle<VolvoV90> myVolvoV90;
+typedef Vehicle<VolvoXC60, CanBuffer>myVolvoXC60;
+typedef Vehicle<VolvoV90, CanBuffer> myVolvoV90;
 
 #endif

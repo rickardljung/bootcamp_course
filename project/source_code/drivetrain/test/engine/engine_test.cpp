@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
-#include "engine_simulator.h"
 #include <iostream>
+#include "engine_simulator.h"
+#include "user_input.h"
 
 Engine engine;
 void initialize_engine()

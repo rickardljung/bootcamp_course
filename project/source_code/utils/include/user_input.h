@@ -3,6 +3,9 @@
 #include <cstdint>
 #include <mutex>
 
+const uint32_t misc_msg_id = 3;
+const uint8_t misc_msg_len = 1;
+
 namespace gear_lever_position
 {
     const uint8_t P = 0;
@@ -43,5 +46,13 @@ typedef struct user_input_struct {
     uint8_t end_simulation  : 1;
     uint8_t reserved        : 4;
 } UserInput;
+
+typedef struct misc_input_struct {
+    uint8_t hazard_light     : 1; // a
+    uint8_t right_blinker    : 1; // .
+    uint8_t left_blinker     : 1; // ,
+    uint8_t hand_brake       : 1; // h should be in user_input_struct
+    uint8_t _reserved_pad    : 4;
+} MiscInput;
 
 #endif
