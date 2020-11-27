@@ -6,7 +6,7 @@
 #include "can_io_thread.h"
 
 using CANidFunction = std::function<bool(uint8_t*)>;
-using CANidActions = std::unordered_map<uint32_t, CANidFunction>;
+using CANidFunctionsMap = std::unordered_map<uint32_t, CANidFunction>;
 
 bool CANid1(uint8_t *payload)
 {
@@ -50,9 +50,9 @@ int main(){
         //starts new thread handling input and output on CAN. Uses can_buffer
         CanIOThread<CanBuffer> io_thread(&socket, &future, receive_message_id, receive_message_id_size, canbuffer);
 
-        CANidActions can_actions;
-        can_actions[1] = CANid1;
-        can_actions[2] = CANid2;
+        CANidFunctionsMap can_functions;
+        can_functions[1] = CANid1;
+        can_functions[2] = CANid2;
 
         bool simulation_running = true;
         while (simulation_running) {
@@ -62,7 +62,7 @@ int main(){
             for (auto const &element : candata_map)
             {
                 CanData can = element.second;
-                simulation_running = can_actions[can.id](can.payload);
+                simulation_running = can_functions[can.id](can.payload);
             }
         }
         promise.set_value();
