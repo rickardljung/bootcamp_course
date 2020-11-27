@@ -10,7 +10,7 @@ using CANidFunctionsMap = std::unordered_map<uint32_t, CANidFunction>;
 
 bool CANid1(uint8_t *payload)
 {
-    bool return_val = 1;
+    bool return_val = true;
     UserInput *input = reinterpret_cast<UserInput*>(payload);
     std::cout << "=============== ID = 1 ===============" << std::endl;
     std::cout << "Acc: " << static_cast<int>(input->accelerator_pedal) << std::endl;
@@ -18,7 +18,7 @@ bool CANid1(uint8_t *payload)
     std::cout << "---------------------------------" << std::endl;
 
     if (input->end_simulation) {
-        return_val = 0;
+        return_val = false;
     }
     return return_val;
 }
@@ -30,7 +30,7 @@ bool CANid2(uint8_t *payload)
     std::cout << "RPM: " << static_cast<int>(payload[1] * (int)37) << std::endl;
     std::cout << "---------------------------------" << std::endl;
 
-    return 0;
+    return true;
 }
 
 int main(){
@@ -62,7 +62,7 @@ int main(){
             for (auto const &element : candata_map)
             {
                 CanData can = element.second;
-                simulation_running = can_functions[can.id](can.payload);
+                simulation_running &= can_functions[can.id](can.payload);
             }
         }
         promise.set_value();
