@@ -31,7 +31,9 @@ int main()
     while (vehicle.Run())
     {
         std::this_thread::sleep_for(std::chrono::microseconds(sampletime_micro));
-        if (!canbuffer_rx.GotNewInput())
+        // std::cout << "Got new input is: " << canbuffer_rx.GotNewInput() << std::endl;
+        // std::cout << "I is: " << i << std::endl;
+        if (canbuffer_rx.GotNewInput())
         {
             i = 0;
 

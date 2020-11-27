@@ -42,13 +42,13 @@ int main(){
 
     if (result == scpp::STATUS_OK)
     {
-        CanBuffer canbuffer;
+        CanBuffer canbuffer_rx, canbuffer_dummy;
         std::promise<void> promise;
         std::future<void> future = promise.get_future();
         uint8_t receive_message_id[2] = {1,2};
         size_t receive_message_id_size = 2; //TODO: replace with siceof??
         //starts new thread handling input and output on CAN. Uses can_buffer
-        CanIOThread<CanBuffer> io_thread(&socket, &future, receive_message_id, receive_message_id_size, canbuffer);
+        CanIOThread<CanBuffer> io_thread(&socket, &future, receive_message_id, receive_message_id_size, canbuffer_dummy, canbuffer_rx);
 
         CANidFunctionsMap can_functions;
         can_functions[1] = CANid1;
@@ -58,7 +58,7 @@ int main(){
         while (simulation_running) {
             std::this_thread::sleep_for(std::chrono::microseconds(5));
 
-            std::unordered_map<int, CanData> candata_map = canbuffer.Pull();
+            std::unordered_map<int, CanData> candata_map = canbuffer_rx.Pull();
             for (auto const &element : candata_map)
             {
                 CanData can = element.second;
