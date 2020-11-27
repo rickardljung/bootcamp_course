@@ -1,7 +1,8 @@
-#include <iostream>
-#include "engine_simulator.h"
 #include "user_input.h"
+#include "engine_simulator.h"
+#include "gearbox_simulator.h"
 
+#include <iostream>
 
 /*!
 	* Initializes Engine, sets horsepower and max rpm.

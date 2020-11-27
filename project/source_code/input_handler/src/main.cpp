@@ -30,8 +30,8 @@ int main(){ //int argc,char** argv
         InputReader<CanBuffer> input_reader(canbuffer);
 
         //spawn a thread transmitting CAN messages
-        CanIOThread<CanBuffer> io_thread(&socket, &future, nullptr, 0, canbuffer);
-        
+        CanIOThread<CanBuffer> io_thread(&socket, &future, nullptr, 0, canbuffer, canbuffer); //Problem is that reference can't be null, could use dummy can buffer istead perhaps?
+                                                                                            // perhaps more thinking needed
         while(input_reader.Run());
 
         //make sure end simulation is sent in CAN frame before exiting

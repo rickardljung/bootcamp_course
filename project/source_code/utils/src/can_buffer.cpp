@@ -11,12 +11,15 @@
 */
 void CanBuffer::Add(const uint32_t& id, uint8_t payload[],const uint8_t& length)
 {
-    std::lock_guard<std::mutex> lock(buffer_mutex);
-    CanData data;
+    CanData data; 
     data.id = id;
     data.length = length;
     memcpy(data.payload,payload,length);
-    candata[id] = data;
+    {
+        std::lock_guard<std::mutex> lock(buffer_mutex);
+        candata[id] = std::move(data);
+    }
+    gotnewinput = 1;
 }
 
 /*!
@@ -27,4 +30,14 @@ std::unordered_map<int, CanData> CanBuffer::Pull()
 {
     std::lock_guard<std::mutex> lock(buffer_mutex);
     return candata;
+}
+
+/*!
+* Gives feedback about incoming new data from CAN, used in vehicle
+* to detect lost communication and terminate thread
+* @return new data is received
+*/
+bool CanBuffer::GotNewInput(void)
+{
+    return gotnewinput;
 }

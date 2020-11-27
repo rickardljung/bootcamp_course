@@ -42,11 +42,13 @@ class Vehicle {
         float vehicle_speed = 0;
         const T veh_spec;
     public:
-        Vehicle(const P& _canbuffer);
+        Vehicle(P& _canbuffer_tx, P& _canbuffer_rx);
         float RPMToSpeedFactor();
         void VehicleSpeed(const uint8_t &brk_pedal, const float &rpm_to_speed);
         bool Run();
-        P& canbuffer;
+        P& canbuffer_tx;
+        P& canbuffer_rx;
+        std::unordered_map<int, CanData> candata_rx;
 };
 
 /*!
@@ -55,7 +57,9 @@ class Vehicle {
 * @param engine engine simulation object
 */
 template <typename T, typename P>
-Vehicle<T, P>::Vehicle(const P& _canbuffer) :canbuffer(_canbuffer) {
+Vehicle<T, P>::Vehicle(P& _canbuffer_tx, P& _canbuffer_rx) :canbuffer_tx(_canbuffer_tx),
+                                                            canbuffer_rx(_canbuffer_rx)
+{
     engine.initialize(this->veh_spec.engine_horsepower, this->veh_spec.engine_max_rpm);
     gearbox.initialize(this->veh_spec.gear_ratios, this->veh_spec.gear_ratios_size);
 }
@@ -72,11 +76,11 @@ bool Vehicle<T, P>::Run()
     bool return_value = 1;
     float rpm_to_speed_factor;
 
-
-    CanData data =  canbuffer.PullRx();
-    if (data.id == 1) //can data from input_handler
+    candata_rx = canbuffer_rx.Pull();
+    canbuffer_rx.gotnewinput = 0;
+    if (candata_rx[1].id == 1) //can data from input_handler
     {
-        UserInput *input = reinterpret_cast<UserInput*>(data.payload);
+        UserInput *input = reinterpret_cast<UserInput*>(candata_rx[1].payload);
         if (input->end_simulation) {
             return_value = 0;
         } else
@@ -85,7 +89,7 @@ bool Vehicle<T, P>::Run()
                                   this->gearbox.get_gear_lever_position());
             this->engine.RPM(input->accelerator_pedal, input->brake_pedal, sampletime_micro);
             this->gearbox.GearLeverPosition(input->gear_position, this->vehicle_speed, input->brake_pedal);
-            //if gear number has changed recalc factor and RPM
+            // if gear number has changed recalc factor and RPM
             if(this->gearbox.GearNumberChange(this->engine.get_eng_rpm()))
             {
                 rpm_to_speed_factor = this->RPMToSpeedFactor();
@@ -109,7 +113,7 @@ bool Vehicle<T, P>::Run()
             payload[2] = static_cast<uint8_t>(vehicle_speed);
             payload[3] = this->gearbox.get_gear_lever_position();
             payload[4] = this->gearbox.get_gear_number();
-            canbuffer.AddTx(&transmit_id, payload, &transmit_length);
+            canbuffer_tx.Add(transmit_id, payload, transmit_length);
             return_value = 1;
         }
     }
