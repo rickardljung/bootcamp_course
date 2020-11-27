@@ -89,7 +89,7 @@ bool Vehicle<T, P>::Run()
                                   this->gearbox.get_gear_lever_position());
             this->engine.RPM(input->accelerator_pedal, input->brake_pedal, sampletime_micro);
             this->gearbox.GearLeverPosition(input->gear_position, this->vehicle_speed, input->brake_pedal);
-            //if gear number has changed recalc factor and RPM
+            // if gear number has changed recalc factor and RPM
             if(this->gearbox.GearNumberChange(this->engine.get_eng_rpm()))
             {
                 rpm_to_speed_factor = this->RPMToSpeedFactor();
