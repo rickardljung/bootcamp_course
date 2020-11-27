@@ -29,6 +29,7 @@ void CanBuffer::Add(const uint32_t& id, uint8_t payload[],const uint8_t& length)
 std::unordered_map<int, CanData> CanBuffer::Pull()
 {
     std::lock_guard<std::mutex> lock(buffer_mutex);
+    gotnewinput = 0;
     return candata;
 }
 

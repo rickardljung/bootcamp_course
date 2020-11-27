@@ -77,11 +77,11 @@ bool Vehicle<T, P>::Run()
     float rpm_to_speed_factor;
 
     candata_rx = canbuffer_rx.Pull();
-    canbuffer_rx.gotnewinput = 0;
     if (candata_rx[1].id == 1) //can data from input_handler
     {
         UserInput *input = reinterpret_cast<UserInput*>(candata_rx[1].payload);
         if (input->end_simulation) {
+            std::cout << "END SIMULATION" << std::endl;
             return_value = 0;
         } else
         {
@@ -102,10 +102,10 @@ bool Vehicle<T, P>::Run()
             this->VehicleSpeed(input->brake_pedal, rpm_to_speed_factor);
             engine.ActualRPM(this->vehicle_speed, rpm_to_speed_factor);
 
-            std::cout << "RPM: " << this->engine.get_eng_rpm() << std::endl;
-            std::cout << "Gear lever position: " << (int)this->gearbox.get_gear_lever_position() << std::endl;
-            std::cout << "Gear number: " << (int)this->gearbox.get_gear_number() << std::endl;
-            std::cout << "Speed: " << this->vehicle_speed << std::endl << std::endl;
+            // std::cout << "RPM: " << this->engine.get_eng_rpm() << std::endl;
+            // std::cout << "Gear lever position: " << (int)this->gearbox.get_gear_lever_position() << std::endl;
+            // std::cout << "Gear number: " << (int)this->gearbox.get_gear_number() << std::endl;
+            // std::cout << "Speed: " << this->vehicle_speed << std::endl << std::endl;
 
 
             payload[0] = static_cast<uint8_t>(this->engine.get_eng_sts());
