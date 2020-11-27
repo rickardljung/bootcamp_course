@@ -1,6 +1,0 @@
-<map id="main" name="main">
-<area shape="rect" id="node2" href="$classscpp_1_1SocketCan.html#aa1ff7b90193c5beee33947a59c2e63bc" title="scpp::SocketCan::open" alt="" coords="105,5,263,32"/>
-<area shape="rect" id="node4" href="$classCanBuffer.html#add61873bc4e32e5b79ca665c1926f3b9" title="CanBuffer::GetInstance" alt="" coords="104,56,264,83"/>
-<area shape="rect" id="node5" href="$classCanBuffer.html#a66691d3306e47774f768fd391fff1802" title="CanBuffer::PullRx" alt="" coords="120,107,248,133"/>
-<area shape="rect" id="node3" href="$namespacescpp.html#a7acc4f95274c9fdd3fccecbb5e0a9b4c" title="scpp::SetSocketBlockingEnabled" alt="" coords="312,5,528,32"/>
-</map>

@@ -1,3 +1,0 @@
-<map id="CanIOThread" name="CanIOThread">
-<area shape="rect" id="node2" href="$classscpp_1_1SocketCan.html" title="{scpp::SocketCan\n|&#45; m_socket\l&#45; m_read_timeout_ms\l|+ SocketCan()\l+ SocketCan()\l+ operator=()\l+ open()\l+ write()\l+ write()\l+ write()\l+ read()\l+ ~SocketCan()\l}" alt="" coords="5,5,153,215"/>
-</map>

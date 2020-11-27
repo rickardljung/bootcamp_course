@@ -1,8 +1,0 @@
-<map id="CanIOThread::CanIOThread" name="CanIOThread::CanIOThread">
-<area shape="rect" id="node2" href="$classCanIOThread.html#a1dfe981584e3e558df59211571ac9860" title="CanIOThread::Run" alt="" coords="240,107,372,133"/>
-<area shape="rect" id="node3" href="$classscpp_1_1SocketCan.html#aa104c900d3e10722e3c1326c1322ee91" title="scpp::SocketCan::read" alt="" coords="422,5,578,32"/>
-<area shape="rect" id="node4" href="$classCanBuffer.html#add61873bc4e32e5b79ca665c1926f3b9" title="CanBuffer::GetInstance" alt="" coords="420,56,580,83"/>
-<area shape="rect" id="node5" href="$classCanBuffer.html#a2038c19fd2b63223a86a48a8faef2996" title="CanBuffer::AddRx" alt="" coords="435,107,565,133"/>
-<area shape="rect" id="node6" href="$classCanBuffer.html#a06cbabdf2a97378a2d4cd9120e909d53" title="CanBuffer::PullTx" alt="" coords="437,157,563,184"/>
-<area shape="rect" id="node7" href="$classscpp_1_1SocketCan.html#af0e968a352380922dcde307e73b76f12" title="scpp::SocketCan::write" alt="" coords="421,208,579,235"/>
-</map>

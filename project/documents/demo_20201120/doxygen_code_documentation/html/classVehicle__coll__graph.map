@@ -1,4 +1,0 @@
-<map id="Vehicle" name="Vehicle">
-<area shape="rect" id="node2" href="$classGearbox.html" title="{Gearbox\n|&#45; gear_ratio\l&#45; gear_lever_position\l&#45; gear_number\l&#45; max_gear_number\l&#45; break_position_to_change\l_gear_lever\l&#45; RPM_to_increase_gear\l_number\l&#45; RPM_to_decrease_gear\l_number\l|+ Gearbox()\l+ ~Gearbox()\l+ GearLeverPosition()\l+ GearNumberChange()\l+ get_gear_ratio()\l+ get_gear_lever_position()\l+ get_gear_number()\l}" alt="" coords="5,5,187,303"/>
-<area shape="rect" id="node3" href="$classEngine.html" title="{Engine\n|&#45; eng_sts\l&#45; eng_rpm\l&#45; eng_hp\l&#45; eng_max_rpm\l&#45; eng_idle_rpm\l&#45; eng_min_rpm\l&#45; rpm_max_dec\l&#45; rpm_simulation_constant\l|+ Engine()\l+ Ignition()\l+ RPM()\l+ ActualRPM()\l+ get_eng_rpm()\l+ get_eng_sts()\l}" alt="" coords="211,27,386,281"/>
-</map>

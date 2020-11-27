@@ -1,7 +1,0 @@
-<map id="InputReader::InterpretInput" name="InputReader::InterpretInput">
-<area shape="rect" id="node2" href="$classInputReader.html#a0740495343639fcf0759a1b8fe0fe2e0" title="InputReader::Acceleration" alt="" coords="238,5,411,32"/>
-<area shape="rect" id="node3" href="$classInputReader.html#ad35d36c2bac3f4b6bae2d2ad501873cb" title="InputReader::Braking" alt="" coords="252,56,397,83"/>
-<area shape="rect" id="node4" href="$classInputReader.html#aec41f6307eb1f4ca8308d4f002ce1cf0" title="InputReader::GearPosReq" alt="" coords="237,107,413,133"/>
-<area shape="rect" id="node5" href="$classInputReader.html#a0a4c53621f5b7c8e3373341c1f383001" title="InputReader::IgnitionReq" alt="" coords="241,157,408,184"/>
-<area shape="rect" id="node6" href="$classInputReader.html#af314d9877257c41a41d937e3ca00c679" title="InputReader::EndSimulation" alt="" coords="232,208,417,235"/>
-</map>
